@@ -1,0 +1,88 @@
+{
+  "tools": [
+    { "id": 1, "name": "Cursor", "description": "AI-powered code editor", "url": "https://cursor.sh", "type": "Development" },
+    { "id": 2, "name": "Vercel", "description": "Deployment and hosting platform", "url": "https://vercel.com", "type": "Development" },
+    { "id": 3, "name": "Next.js", "description": "React framework for production", "url": "https://nextjs.org", "type": "Development" },
+    { "id": 4, "name": "Tailwind CSS", "description": "Utility-first CSS framework", "url": "https://tailwindcss.com", "type": "Design" },
+    { "id": 5, "name": "VS Code", "description": "Code editor", "url": "https://code.visualstudio.com", "type": "Development" },
+    { "id": 6, "name": "GitHub", "description": "Version control and CI/CD", "url": "https://github.com", "type": "Development" },
+    { "id": 7, "name": "Figma", "description": "Collaborative design tool", "url": "https://figma.com", "type": "Design" },
+    { "id": 8, "name": "Notion", "description": "All-in-one workspace", "url": "https://notion.so", "type": "Productivity" },
+    { "id": 9, "name": "Arc Browser", "description": "Browser built for productivity", "url": "https://arc.net", "type": "Productivity" },
+    { "id": 10, "name": "Obsidian", "description": "Knowledge base and note-taking", "url": "https://obsidian.md", "type": "Productivity" }
+  ],
+  "products": [
+    { "id": 1, "name": "Toyota 4Runner", "description": "2021 model - reliable off-road SUV", "url": "https://www.toyota.com/4runner/", "type": "Vehicles" },
+    { "id": 2, "name": "Suzuki DR650", "description": "2019 model - dual sport motorcycle", "url": "https://suzukicycles.com/", "type": "Vehicles" },
+    { "id": 3, "name": "MacBook Pro M2", "description": "Daily driver laptop with excellent performance", "url": "https://www.apple.com/macbook-pro/", "type": "Tech" },
+    { "id": 4, "name": "iPhone 14 Pro", "description": "Mobile device with great camera", "url": "https://www.apple.com/iphone/", "type": "Tech" },
+    { "id": 5, "name": "Sony WH-1000XM4", "description": "Best noise-cancelling headphones", "url": "https://electronics.sony.com/audio/headphones/all-headphones/p/wh1000xm4-b", "type": "Audio" },
+    { "id": 6, "name": "Kindle Paperwhite", "description": "E-reader with great battery life", "url": "https://www.amazon.com/kindle-paperwhite/", "type": "Tech" },
+    { "id": 7, "name": "Peak Design Everyday Backpack", "description": "Versatile photography and everyday backpack", "url": "https://www.peakdesign.com/products/everyday-backpack", "type": "Gear" },
+    { "id": 8, "name": "Aeropress", "description": "Compact coffee maker for travel and home", "url": "https://aeropress.com/", "type": "Home Goods" },
+    { "id": 9, "name": "Fellow Stagg EKG Kettle", "description": "Electric gooseneck kettle for pour-over coffee", "url": "https://fellowproducts.com/products/stagg-ekg-electric-pour-over-kettle", "type": "Home Goods" },
+    { "id": 10, "name": "Field Notes", "description": "Pocket notebooks for everyday use", "url": "https://fieldnotesbrand.com/", "type": "Productivity" }
+  ],
+  "media": {
+    "books": [
+      { "id": 1, "title": "Zero to One", "author": "Peter Thiel", "description": "Notes on startups, or how to build the future", "url": "https://www.amazon.com/Zero-One-Notes-Startups-Future/dp/0804139296", "tag": "Business" },
+      { "id": 2, "title": "The Hard Thing About Hard Things", "author": "Ben Horowitz", "description": "Building a business when there are no easy answers", "url": "https://www.amazon.com/Hard-Thing-About-Things-Building/dp/0062273205", "tag": "Business" },
+      { "id": 3, "title": "The Four", "author": "Scott Galloway", "description": "The hidden DNA of Amazon, Apple, Facebook, and Google", "url": "https://www.amazon.com/Four-Hidden-Amazon-Facebook-Google/dp/0735213658", "tag": "Business" },
+      { "id": 4, "title": "Atomic Habits", "author": "James Clear", "description": "An easy & proven way to build good habits & break bad ones", "url": "https://www.amazon.com/Atomic-Habits-Proven-Build-Break/dp/0735211299", "tag": "Psychology" },
+      { "id": 5, "title": "Shoe Dog", "author": "Phil Knight", "description": "A memoir by the creator of Nike", "url": "https://www.amazon.com/Shoe-Dog-Memoir-Creator-Nike-ebook/dp/B0176M1A44", "tag": "Biography" },
+      { "id": 6, "title": "Principles", "author": "Ray Dalio", "description": "Life and work principles", "url": "https://www.amazon.com/Principles-Life-Work-Ray-Dalio/dp/1501124021", "tag": "Business" },
+      { "id": 7, "title": "Dune", "author": "Frank Herbert", "description": "Science fiction masterpiece", "url": "https://www.amazon.com/Dune-Frank-Herbert/dp/0441172717", "tag": "Fiction" },
+      { "id": 8, "title": "Meditations", "author": "Marcus Aurelius", "description": "Stoic philosophy from a Roman emperor", "url": "https://www.amazon.com/Meditations-New-Translation-Marcus-Aurelius/dp/0812968255", "tag": "Philosophy" },
+      { "id": 9, "title": "Thinking, Fast and Slow", "author": "Daniel Kahneman", "description": "How we think and make decisions", "url": "https://www.amazon.com/Thinking-Fast-Slow-Daniel-Kahneman/dp/0374533555", "tag": "Psychology" },
+      { "id": 10, "title": "Bad Blood", "author": "John Carreyrou", "description": "The rise and fall of Theranos", "url": "https://www.amazon.com/Bad-Blood-Secrets-Silicon-Startup/dp/152473165X", "tag": "Business" }
+    ],
+    "podcasts": [
+      { "id": 1, "name": "The Tim Ferriss Show", "hosts": "Tim Ferriss", "description": "Tools, tactics, and routines of world-class performers", "url": "https://tim.blog/podcast/", "type": "Interview" },
+      { "id": 2, "name": "All-In Podcast", "hosts": "Chamath, Jason, Sacks & Friedberg", "description": "Industry veterans discussing tech, economics, and politics", "url": "https://www.allinpodcast.co/", "type": "Technology" },
+      { "id": 3, "name": "Hardcore History", "hosts": "Dan Carlin", "description": "Deeply researched historical narratives", "url": "https://www.dancarlin.com/hardcore-history-series/", "type": "History" },
+      { "id": 4, "name": "How I Built This", "hosts": "Guy Raz", "description": "Stories behind successful companies", "url": "https://www.npr.org/series/490248027/how-i-built-this", "type": "Business" },
+      { "id": 5, "name": "Lex Fridman Podcast", "hosts": "Lex Fridman", "description": "Conversations with thought leaders in science and technology", "url": "https://lexfridman.com/podcast/", "type": "Interview" },
+      { "id": 6, "name": "Acquired", "hosts": "Ben Gilbert and David Rosenthal", "description": "Stories of great companies and their acquisitions", "url": "https://www.acquired.fm/", "type": "Business" },
+      { "id": 7, "name": "Huberman Lab", "hosts": "Andrew Huberman", "description": "Science-based tools for everyday life", "url": "https://hubermanlab.com/", "type": "Science" },
+      { "id": 8, "name": "99% Invisible", "hosts": "Roman Mars", "description": "The unseen design and architecture that shapes our world", "url": "https://99percentinvisible.org/", "type": "Design" },
+      { "id": 9, "name": "Freakonomics Radio", "hosts": "Stephen Dubner", "description": "Exploring the hidden side of everything", "url": "https://freakonomics.com/", "type": "Economics" },
+      { "id": 10, "name": "The Daily", "hosts": "Michael Barbaro", "description": "News and current events from The New York Times", "url": "https://www.nytimes.com/column/the-daily", "type": "News" }
+    ],
+    "tvfilm": [
+      { "id": 1, "name": "Succession", "description": "Drama about a dysfunctional media family", "url": "https://www.hbo.com/succession", "type": "Drama" },
+      { "id": 2, "name": "The Wire", "description": "Crime drama set in Baltimore", "url": "https://www.hbo.com/the-wire", "type": "Drama" },
+      { "id": 3, "name": "Dune", "description": "Epic sci-fi adaptation of Frank Herbert's novel", "url": "https://www.dunemovie.com/", "type": "Sci-Fi" },
+      { "id": 4, "name": "Chef's Table", "description": "Documentary series about world-renowned chefs", "url": "https://www.netflix.com/title/80007945", "type": "Documentary" },
+      { "id": 5, "name": "The Social Dilemma", "description": "Documentary about social media's impact", "url": "https://www.thesocialdilemma.com/", "type": "Documentary" },
+      { "id": 6, "name": "Blade Runner 2049", "description": "Sci-fi noir sequel", "url": "https://www.warnerbros.com/movies/blade-runner-2049", "type": "Sci-Fi" },
+      { "id": 7, "name": "Parasite", "description": "Korean thriller about class inequality", "url": "https://www.imdb.com/title/tt6751668/", "type": "Thriller" },
+      { "id": 8, "name": "Breaking Bad", "description": "Chemistry teacher turned meth manufacturer", "url": "https://www.imdb.com/title/tt0903747/", "type": "Drama" },
+      { "id": 9, "name": "Everything Everywhere All at Once", "description": "Mind-bending multiverse adventure", "url": "https://everythingeverywheremovie.com/", "type": "Sci-Fi" },
+      { "id": 10, "name": "Oppenheimer", "description": "Christopher Nolan's biopic of J. Robert Oppenheimer", "url": "https://www.universalpictures.com/movies/oppenheimer", "type": "Biography" }
+    ],
+    "music": [
+      { "id": 1, "song": "Wish You Were Here", "artist": "Pink Floyd", "album": "Wish You Were Here", "description": "Classic rock masterpiece", "url": "https://open.spotify.com/track/6mFkJmJqdDVQ1REhVfGgd1", "type": "Rock" },
+      { "id": 2, "song": "Redbone", "artist": "Childish Gambino", "album": "Awaken, My Love!", "description": "Funky hit with social themes", "url": "https://open.spotify.com/track/3kxfsdsCpFgN412fpnW85Y", "type": "R&B" },
+      { "id": 3, "song": "DNA.", "artist": "Kendrick Lamar", "album": "DAMN.", "description": "Hard-hitting rap track", "url": "https://open.spotify.com/track/6HZILIRieu8S0iqY8kIKhj", "type": "Hip-Hop" },
+      { "id": 4, "song": "Midnight City", "artist": "M83", "album": "Hurry Up, We're Dreaming", "description": "Iconic electronic anthem", "url": "https://open.spotify.com/track/1eyzqe2QqGZUmfcPZtrIyt", "type": "Electronic" },
+      { "id": 5, "song": "Bohemian Rhapsody", "artist": "Queen", "album": "A Night at the Opera", "description": "Epic rock opera", "url": "https://open.spotify.com/track/6l8GvAyoUZwWDgF1e4822w", "type": "Rock" },
+      { "id": 6, "song": "Alright", "artist": "Kendrick Lamar", "album": "To Pimp a Butterfly", "description": "Powerful anthem of resilience", "url": "https://open.spotify.com/track/3iVcZ5G6tvkXZkZKlMpIUs", "type": "Hip-Hop" },
+      { "id": 7, "song": "Everlong", "artist": "Foo Fighters", "album": "The Colour and the Shape", "description": "Iconic rock ballad", "url": "https://open.spotify.com/track/5UWwZ5lm5PKu6eKsHAGxOk", "type": "Rock" },
+      { "id": 8, "song": "White Ferrari", "artist": "Frank Ocean", "album": "Blonde", "description": "Ethereal, emotional R&B", "url": "https://open.spotify.com/track/2LMkwUfqC6S6s6qDVlEuzV", "type": "R&B" },
+      { "id": 9, "song": "Idioteque", "artist": "Radiohead", "album": "Kid A", "description": "Experimental electronic rock", "url": "https://open.spotify.com/track/5YvoW1pZ8nkOzPdP5kZQXy", "type": "Alternative" },
+      { "id": 10, "song": "Flashing Lights", "artist": "Kanye West", "album": "Graduation", "description": "Innovative hip-hop production", "url": "https://open.spotify.com/track/5TRPicyLGbAF2LGBFbHGvO", "type": "Hip-Hop" }
+    ]
+  },
+  "people": [
+    { "id": 1, "name": "Paul Graham", "description": "Y Combinator founder and essayist", "url": "http://paulgraham.com", "type": "Entrepreneur" },
+    { "id": 2, "name": "Naval Ravikant", "description": "AngelList founder and philosopher", "url": "https://nav.al", "type": "Entrepreneur" },
+    { "id": 3, "name": "Tobi Lütke", "description": "Shopify founder and CEO", "url": "https://twitter.com/tobi", "type": "Entrepreneur" },
+    { "id": 4, "name": "Sam Altman", "description": "OpenAI CEO and former Y Combinator president", "url": "https://twitter.com/sama", "type": "Tech Leader" },
+    { "id": 5, "name": "Elon Musk", "description": "Tesla/SpaceX/X CEO and innovator", "url": "https://twitter.com/elonmusk", "type": "Entrepreneur" },
+    { "id": 6, "name": "Tim Ferriss", "description": "Author, investor, and podcaster", "url": "https://tim.blog", "type": "Author" },
+    { "id": 7, "name": "Lex Fridman", "description": "AI researcher and podcaster", "url": "https://lexfridman.com", "type": "Academic" },
+    { "id": 8, "name": "Patrick Collison", "description": "Stripe co-founder and CEO", "url": "https://patrickcollison.com", "type": "Entrepreneur" },
+    { "id": 9, "name": "Andrew Huberman", "description": "Neuroscientist and podcaster", "url": "https://hubermanlab.com", "type": "Academic" },
+    { "id": 10, "name": "Maria Popova", "description": "Writer and founder of The Marginalian", "url": "https://themarginalian.org", "type": "Writer" }
+  ]
+}
