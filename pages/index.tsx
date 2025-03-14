@@ -6,21 +6,21 @@ import { useEffect, useState } from 'react';
 
 const Home: NextPage = () => {
   const [currentTime, setCurrentTime] = useState<string>('');
-  
+
   useEffect(() => {
     // Update time based on MST timezone
     const updateTime = () => {
-      const options: Intl.DateTimeFormatOptions = { 
-        hour: '2-digit', 
+      const options: Intl.DateTimeFormatOptions = {
+        hour: '2-digit',
         minute: '2-digit',
-        timeZone: 'America/Denver' 
+        timeZone: 'America/Denver'
       };
       setCurrentTime(new Date().toLocaleTimeString('en-US', options) + ' MST');
     };
-    
+
     updateTime();
     const timer = setInterval(updateTime, 60000); // Update every minute
-    
+
     return () => clearInterval(timer);
   }, []);
 
@@ -44,7 +44,7 @@ const Home: NextPage = () => {
             <p className="text-gray-400">Digital and analogue builder</p>
             <p className="text-gray-500 text-sm">Boulder, CO · {currentTime}</p>
           </div>
-          
+
           {/* Navigation Links */}
           <nav className="mt-4 md:mt-0">
             <ul className="flex space-x-6">
@@ -86,7 +86,7 @@ const Home: NextPage = () => {
               {/* Past Section */}
               <section>
                 <h2 className="text-gray-400 text-sm uppercase tracking-wider mb-2">Past</h2>
-                
+
                 <div className="space-y-3">
                   <div>
                     <h3 className="text-base font-medium group">
@@ -122,17 +122,13 @@ const Home: NextPage = () => {
               <h2 className="text-gray-400 text-sm uppercase tracking-wider mb-2">Bio</h2>
               <div className="text-gray-200 text-sm leading-relaxed space-y-4">
                 <p>
-                  I don't know if it's undiagnosed ADHD or just insatiable curiosity, but I've spent my life relentlessly
-                  chasing whatever captures my interest. As a result, I'm not exceptional at any one thing - but I can
-                  build, and I can sell.
+                  My life has always been guided by curiosity—a drive to explore how things work, why they matter, and how they can be improved. Raised between cultures, from Iranian heritage in London to my current life in the US, I've learned that meaningful connections often come from blending perspectives.
                 </p>
                 <p>
-                  Whether digital or physical, I'm drawn to both the technical and the tactile. I'm fascinated by
-                  structures and systems, breaking them apart, and making them better. I feel most at peace in nature
-                  and most alive when taking strategic risks. I love motorcycles, mountain adventures, and technology.
+                  Whether it's building startups that help small businesses harness AI, fine-tuning motorcycles to perfection, or seeking clarity in mountain adventures, I'm fascinated by the interplay between technology, craftsmanship, and nature. I believe there's a quiet philosophy in creating things with intention, taking thoughtful risks, and embracing hands-on experiences.
                 </p>
                 <p>
-                  Most of all, I love my family.
+                  Above all, my deepest joy comes from family—the ultimate reminder of what's truly valuable.
                 </p>
               </div>
             </section>
@@ -150,7 +146,7 @@ const Home: NextPage = () => {
             </div>
             <div>
               <p className="text-xs text-gray-400">
-                Say hello: 
+                Say hello:
                 <a href="mailto:hello@keyana.io" className="ml-2 text-gray-300 hover:text-white transition duration-300">Email</a>
                 <span className="mx-2 text-gray-600">·</span>
                 <a href="https://twitter.com/keyanasapp" className="text-gray-300 hover:text-white transition duration-300">X</a>
