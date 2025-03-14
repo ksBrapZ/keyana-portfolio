@@ -49,17 +49,17 @@ const Home: NextPage = () => {
           <nav className="mt-4 md:mt-0">
             <ul className="flex space-x-6">
               <li>
-                <Link href="/writing" className="text-gray-400 hover:text-white transition duration-300 text-sm uppercase tracking-wider">
+                <Link href="/writing" className="text-gray-400 hover:text-white transition duration-300 text-sm uppercase tracking-wider" target="_blank" rel="noopener noreferrer">
                   Writing
                 </Link>
               </li>
               <li>
-                <Link href="/photos" className="text-gray-400 hover:text-white transition duration-300 text-sm uppercase tracking-wider">
+                <Link href="/photos" className="text-gray-400 hover:text-white transition duration-300 text-sm uppercase tracking-wider" target="_blank" rel="noopener noreferrer">
                   Photos
                 </Link>
               </li>
               <li>
-                <Link href="/toolkit" className="text-gray-400 hover:text-white transition duration-300 text-sm uppercase tracking-wider">
+                <Link href="/toolkit" className="text-gray-400 hover:text-white transition duration-300 text-sm uppercase tracking-wider" target="_blank" rel="noopener noreferrer">
                   Toolkit
                 </Link>
               </li>
@@ -78,7 +78,7 @@ const Home: NextPage = () => {
                 <h2 className="text-gray-400 text-sm uppercase tracking-wider mb-2">Focus</h2>
                 <div>
                   <h3 className="text-lg font-medium group">
-                    Co-Founder & CEO, <a href="https://getindigo.ai" className="text-white group-hover:text-gray-300 transition duration-300"><i>Indigo</i></a>
+                    Co-Founder & CEO, <a href="https://getindigo.ai" className="text-white group-hover:text-gray-300 transition duration-300" target="_blank" rel="noopener noreferrer"><i>Indigo</i></a>
                   </h3>
                   <p className="text-gray-300 italic text-sm">The ultimate AI productivity suite for cracked teams.</p>
                   <p className="text-gray-400 text-sm">All-in-one platform for startups to build commands, assistants and agents on top of their existing data.</p>
@@ -92,21 +92,21 @@ const Home: NextPage = () => {
                 <div className="space-y-3">
                   <div>
                     <h3 className="text-base font-medium group">
-                      Co-Founder, <a href="https://www.shopswap.com" className="text-white group-hover:text-gray-300 transition duration-300"><i>ShopSwap</i></a>
+                      Co-Founder, <a href="https://www.shopswap.com" className="text-white group-hover:text-gray-300 transition duration-300" target="_blank" rel="noopener noreferrer"><i>ShopSwap</i></a>
                     </h3>
                     <p className="text-gray-400 text-sm">Collaborative growth network for DTC brands. 600+ brands in the network.</p>
                   </div>
 
                   <div>
                     <h3 className="text-base font-medium group">
-                      Partnership Lead, <a href="https://www.appsumo.com" className="text-white group-hover:text-gray-300 transition duration-300"><i>AppSumo</i></a>
+                      Partnership Lead, <a href="https://www.appsumo.com" className="text-white group-hover:text-gray-300 transition duration-300" target="_blank" rel="noopener noreferrer"><i>AppSumo</i></a>
                     </h3>
                     <p className="text-gray-400 text-sm">Groupon for software. Launched 50+ apps to network of 1.5M entrepreneurs</p>
                   </div>
 
                   <div>
                     <h3 className="text-base font-medium group">
-                      Event Lead, <a href="https://www.openroomevents.com" className="text-white group-hover:text-gray-300 transition duration-300"><i>OpenRoom</i></a>
+                      Event Lead, <a href="https://www.openroomevents.com" className="text-white group-hover:text-gray-300 transition duration-300" target="_blank" rel="noopener noreferrer"><i>OpenRoom</i></a>
                     </h3>
                     <p className="text-gray-400 text-sm">B2B Forums for Dentists, Vets and Pharmacists. Launched APAC region's 1st veterinary trade show</p>
                   </div>
@@ -155,11 +155,11 @@ const Home: NextPage = () => {
             <div>
               <p className="text-xs text-gray-400">
                 Say hello:
-                <a href="mailto:hello@keyana.io" className="ml-2 text-gray-300 hover:text-white transition duration-300">Email</a>
+                <a href="mailto:hello@keyana.io" className="ml-2 text-gray-300 hover:text-white transition duration-300" target="_blank" rel="noopener noreferrer">Email</a>
                 <span className="mx-2 text-gray-600">·</span>
-                <a href="https://twitter.com/keyanasapp" className="text-gray-300 hover:text-white transition duration-300">X</a>
+                <a href="https://twitter.com/keyanasapp" className="text-gray-300 hover:text-white transition duration-300" target="_blank" rel="noopener noreferrer">X</a>
                 <span className="mx-2 text-gray-600">·</span>
-                <a href="https://linkedin.com/in/keyanasapp" className="text-gray-300 hover:text-white transition duration-300">LinkedIn</a>
+                <a href="https://linkedin.com/in/keyanasapp" className="text-gray-300 hover:text-white transition duration-300" target="_blank" rel="noopener noreferrer">LinkedIn</a>
               </p>
             </div>
           </div>
