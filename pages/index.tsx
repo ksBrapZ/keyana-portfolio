@@ -77,7 +77,9 @@ const Home: NextPage = () => {
               <section className="mb-6">
                 <h2 className="text-gray-400 text-sm uppercase tracking-wider mb-2">Focus</h2>
                 <div>
-                  <h3 className="text-lg font-medium">Co-Founder & CEO, Indigo</h3>
+                  <h3 className="text-lg font-medium group">
+                    Co-Founder & CEO, <a href="https://getindigo.ai" className="text-white group-hover:text-gray-300 transition duration-300"><i>Indigo</i></a>
+                  </h3>
                   <p className="text-gray-300 italic text-sm">The ultimate AI productivity suite for cracked teams.</p>
                   <p className="text-gray-400 text-sm">All-in-one platform for startups to build commands, assistants and agents on top of their existing data.</p>
                 </div>
@@ -90,27 +92,27 @@ const Home: NextPage = () => {
                 <div className="space-y-3">
                   <div>
                     <h3 className="text-base font-medium group">
-                      Co-Founder, <a href="#" className="text-white group-hover:text-gray-300 transition duration-300">ShopSwap</a>
+                      Co-Founder, <a href="https://www.shopswap.com" className="text-white group-hover:text-gray-300 transition duration-300"><i>ShopSwap</i></a>
                     </h3>
                     <p className="text-gray-400 text-sm">Collaborative growth network for DTC brands. 600+ brands in the network.</p>
                   </div>
 
                   <div>
                     <h3 className="text-base font-medium group">
-                      Partnership Lead, <a href="#" className="text-white group-hover:text-gray-300 transition duration-300">AppSumo</a>
+                      Partnership Lead, <a href="https://www.appsumo.com" className="text-white group-hover:text-gray-300 transition duration-300"><i>AppSumo</i></a>
                     </h3>
                     <p className="text-gray-400 text-sm">Groupon for software. Launched 50+ apps to network of 1.5M entrepreneurs</p>
                   </div>
 
                   <div>
                     <h3 className="text-base font-medium group">
-                      Event Lead, <a href="#" className="text-white group-hover:text-gray-300 transition duration-300">OpenRoom</a>
+                      Event Lead, <a href="https://www.openroomevents.com" className="text-white group-hover:text-gray-300 transition duration-300"><i>OpenRoom</i></a>
                     </h3>
                     <p className="text-gray-400 text-sm">B2B Forums for Dentists, Vets and Pharmacists. Launched APAC region's 1st veterinary trade show</p>
                   </div>
 
                   <div>
-                    <h3 className="text-base font-medium">PhD dropout, Philosophy</h3>
+                    <h3 className="text-base font-medium">PhD dropout, <i>Philosophy</i></h3>
                     <p className="text-gray-400 text-sm">Funding fell through before my 1st year. Entered the workforce instead. Thank god.</p>
                   </div>
                 </div>
@@ -122,13 +124,19 @@ const Home: NextPage = () => {
               <h2 className="text-gray-400 text-sm uppercase tracking-wider mb-2">Bio</h2>
               <div className="text-gray-200 text-sm leading-relaxed space-y-4">
                 <p>
-                  My life has always been guided by curiosity—a drive to explore how things work, why they matter, and how they can be improved. Raised between cultures, from Iranian heritage in London to my current life in the US, I've learned that meaningful connections often come from blending perspectives.
+                  My life has always been guided by curiosity - a drive to explore how things work, why they matter, and how they can be improved. 
+                  <br />
+                  <br />
+                  Raised between cultures, by an Iranian mother and American father, I've learned that meaningful connections often come from blending perspectives.
                 </p>
                 <p>
-                  Whether it's building startups that help small businesses harness AI, fine-tuning motorcycles to perfection, or seeking clarity in mountain adventures, I'm fascinated by the interplay between technology, craftsmanship, and nature. I believe there's a quiet philosophy in creating things with intention, taking thoughtful risks, and embracing hands-on experiences.
+                  Whether it's building startups that help small businesses harness AI, tuning my Suzuki DR650, or seeking clarity in mountain adventures, <em>I'm fascinated by the interplay between technology, craftsmanship, and nature.</em> 
+                  <br />
+                  <br />
+                  I believe there's a quiet philosophy in creating things with intention, taking thoughtful risks, and embracing hands-on experiences.
                 </p>
                 <p>
-                  Above all, my deepest joy comes from family—the ultimate reminder of what's truly valuable.
+                <span className="font-semibold">Above all, my deepest joy comes from my (currently small) family - the ultimate reminder of what's truly valuable.</span>
                 </p>
               </div>
             </section>
