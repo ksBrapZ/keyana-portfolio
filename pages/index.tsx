@@ -49,17 +49,17 @@ const Home: NextPage = () => {
           <nav className="mt-4 md:mt-0">
             <ul className="flex space-x-6">
               <li>
-                <Link href="/writing" className="text-gray-400 hover:text-white transition duration-300 text-sm uppercase tracking-wider" target="_blank" rel="noopener noreferrer">
+                <Link href="/writing" className="text-gray-400 hover:text-white transition duration-300 text-sm uppercase tracking-wider">
                   Writing
                 </Link>
               </li>
               <li>
-                <Link href="/photos" className="text-gray-400 hover:text-white transition duration-300 text-sm uppercase tracking-wider" target="_blank" rel="noopener noreferrer">
+                <Link href="/photos" className="text-gray-400 hover:text-white transition duration-300 text-sm uppercase tracking-wider">
                   Photos
                 </Link>
               </li>
               <li>
-                <Link href="/toolkit" className="text-gray-400 hover:text-white transition duration-300 text-sm uppercase tracking-wider" target="_blank" rel="noopener noreferrer">
+                <Link href="/toolkit" className="text-gray-400 hover:text-white transition duration-300 text-sm uppercase tracking-wider">
                   Toolkit
                 </Link>
               </li>

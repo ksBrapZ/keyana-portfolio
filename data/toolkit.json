@@ -1,15 +1,15 @@
 {
   "tools": [
-    { "id": 1, "name": "Cursor", "description": "AI-powered code editor", "url": "https://cursor.sh", "type": "Development" },
+    { "id": 1, "name": "Cursor", "description": "The best AI code editor", "url": "https://cursor.sh", "type": "Development" },
     { "id": 2, "name": "Vercel", "description": "Deployment and hosting platform", "url": "https://vercel.com", "type": "Development" },
     { "id": 3, "name": "Next.js", "description": "React framework for production", "url": "https://nextjs.org", "type": "Development" },
     { "id": 4, "name": "Tailwind CSS", "description": "Utility-first CSS framework", "url": "https://tailwindcss.com", "type": "Design" },
     { "id": 5, "name": "VS Code", "description": "Code editor", "url": "https://code.visualstudio.com", "type": "Development" },
     { "id": 6, "name": "GitHub", "description": "Version control and CI/CD", "url": "https://github.com", "type": "Development" },
-    { "id": 7, "name": "Figma", "description": "Collaborative design tool", "url": "https://figma.com", "type": "Design" },
+    { "id": 7, "name": "Figma", "description": "Only real choice for product design", "url": "https://figma.com", "type": "Design" },
     { "id": 8, "name": "Notion", "description": "All-in-one workspace", "url": "https://notion.so", "type": "Productivity" },
-    { "id": 9, "name": "Arc Browser", "description": "Browser built for productivity", "url": "https://arc.net", "type": "Productivity" },
-    { "id": 10, "name": "Obsidian", "description": "Knowledge base and note-taking", "url": "https://obsidian.md", "type": "Productivity" }
+    { "id": 9, "name": "Brave Browser", "description": "Privacy-first Browser", "url": "https://brave.com/", "type": "Productivity" },
+    { "id": 10, "name": "Bear", "description": "The cleanest cloud-based note app", "url": "https://bear.app/", "type": "Productivity" }
   ],
   "products": [
     { "id": 1, "name": "Toyota 4Runner", "description": "2021 model - reliable off-road SUV", "url": "https://www.toyota.com/4runner/", "type": "Vehicles" },
