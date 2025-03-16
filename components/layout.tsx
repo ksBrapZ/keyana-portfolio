@@ -44,6 +44,7 @@ export default function Layout({ children }: LayoutProps) {
         </aside>
         
         {children}
+        <Analytics />
       </main>
       
       {/* Footer */}
@@ -66,9 +67,6 @@ export default function Layout({ children }: LayoutProps) {
           </div>
         </div>
       </footer>
-      
-      {/* Vercel Analytics */}
-      <Analytics />
     </div>
   );
 }
