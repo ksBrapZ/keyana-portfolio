@@ -1,6 +1,7 @@
-import Link from 'next/link';
+  import Link from 'next/link';
 import { Separator } from "@/components/ui/separator";
-import { Mail, Twitter, Linkedin } from "lucide-react";
+import { Mail, Linkedin } from "lucide-react";
+import XLogo from './icons/XLogo';
 
 const Footer = () => {
   return (
@@ -32,7 +33,7 @@ const Footer = () => {
               className="text-muted-foreground hover:text-primary transition-colors p-1"
               aria-label="Twitter/X"
             >
-              <Twitter size={16} />
+              <XLogo size={16} />
             </Link>
             
             <Link 
