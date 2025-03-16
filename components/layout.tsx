@@ -68,7 +68,7 @@ export default function Layout({ children }: LayoutProps) {
       </footer>
 
       {/* Vercel Analytics */}
-      <Analytics />
+      <Analytics debug={true} />
     </div>
   );
 }
