@@ -65,14 +65,14 @@ export function ExpandableTabs({
   };
 
   const Separator = () => (
-    <div className="mx-1 h-[24px] w-[1.2px] bg-border" aria-hidden="true" />
+    <div className="mx-0.5 sm:mx-1 h-[24px] w-[1.2px] bg-border" aria-hidden="true" />
   );
 
   return (
     <div
       ref={outsideClickRef}
       className={cn(
-        "flex flex-wrap items-center justify-center gap-2 rounded-2xl bg-background p-1 shadow-sm",
+        "flex flex-wrap items-center justify-center gap-1 sm:gap-2 rounded-2xl bg-background p-1 shadow-sm",
         className
       )}
     >
@@ -92,13 +92,13 @@ export function ExpandableTabs({
             onClick={() => handleSelect(index)}
             transition={transition}
             className={cn(
-              "relative flex items-center rounded-xl px-2 sm:px-4 py-2 text-sm font-medium transition-colors duration-300 whitespace-nowrap",
+              "relative flex items-center rounded-xl px-1.5 sm:px-4 py-1.5 sm:py-2 text-sm font-medium transition-colors duration-300 whitespace-nowrap",
               selected === index
                 ? cn("bg-muted", activeColor)
                 : "text-muted-foreground hover:bg-muted hover:text-foreground"
             )}
           >
-            <Icon size={20} />
+            <Icon size={18} className="sm:size-5" />
             <AnimatePresence initial={false}>
               {selected === index && (
                 <motion.span
