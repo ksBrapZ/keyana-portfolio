@@ -2,10 +2,10 @@
 import Head from 'next/head';
 import { useState } from 'react';
 import { NextPage } from 'next';
-import { ExternalLink } from 'lucide-react';
+import { ExternalLink, Wrench, Package, BookOpen, Users, Music, Film, Mic, Book } from 'lucide-react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { ExpandableTabs, type TabItem } from "@/components/ui/expandable-tabs";
 import { Badge } from "@/components/ui/badge";
 import { 
   Table,
@@ -101,9 +101,20 @@ const getTypeVariant = (type: string): "default" | "secondary" | "destructive" |
 };
 
 const Toolkit: NextPage = () => {
-  const [activeMainTab, setActiveMainTab] = useState<string>('tools');
-  const [activeMediaTab, setActiveMediaTab] = useState<string>('books');
+  const [activeTab, setActiveTab] = useState<number>(0);
   
+  const tabs: TabItem[] = [
+    { title: "Tools", icon: Wrench },
+    { title: "Products", icon: Package },
+    { type: "separator" as const },
+    { title: "Books", icon: Book },
+    { title: "Podcasts", icon: Mic },
+    { title: "TV & Film", icon: Film },
+    { title: "Music", icon: Music },
+    { type: "separator" as const },
+    { title: "People", icon: Users },
+  ];
+
   // Reusable link component
   const ExternalItemLink = ({ href, children }: { href: string; children: React.ReactNode }) => (
     <a 
@@ -116,6 +127,224 @@ const Toolkit: NextPage = () => {
       <ExternalLink size={14} className="ml-1 opacity-70" />
     </a>
   );
+
+  const renderContent = () => {
+    switch (activeTab) {
+      case 0: // Tools
+        return (
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead className="w-[200px]">Name</TableHead>
+                <TableHead>Description</TableHead>
+                <TableHead className="w-[100px]">Type</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {toolkitData.tools.map((tool) => (
+                <TableRow key={tool.id}>
+                  <TableCell className="font-medium">
+                    <ExternalItemLink href={tool.url}>
+                      {tool.name}
+                    </ExternalItemLink>
+                  </TableCell>
+                  <TableCell className="text-muted-foreground">{tool.description}</TableCell>
+                  <TableCell>
+                    <Badge variant={getTypeVariant(tool.type)}>
+                      {tool.type}
+                    </Badge>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        );
+      case 1: // Products
+        return (
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead className="w-[200px]">Name</TableHead>
+                <TableHead>Description</TableHead>
+                <TableHead className="w-[100px]">Type</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {toolkitData.products.map((product) => (
+                <TableRow key={product.id}>
+                  <TableCell className="font-medium">
+                    <ExternalItemLink href={product.url}>
+                      {product.name}
+                    </ExternalItemLink>
+                  </TableCell>
+                  <TableCell className="text-muted-foreground">{product.description}</TableCell>
+                  <TableCell>
+                    <Badge variant={getTypeVariant(product.type)}>
+                      {product.type}
+                    </Badge>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        );
+      case 3: // Books
+        return (
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead className="w-[200px]">Title</TableHead>
+                <TableHead className="w-[150px]">Author</TableHead>
+                <TableHead>Description</TableHead>
+                <TableHead className="w-[100px]">Genre</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {toolkitData.media.books.map((book) => (
+                <TableRow key={book.id}>
+                  <TableCell className="font-medium">
+                    <ExternalItemLink href={book.url}>
+                      {book.title}
+                    </ExternalItemLink>
+                  </TableCell>
+                  <TableCell>{book.author}</TableCell>
+                  <TableCell className="text-muted-foreground">{book.description}</TableCell>
+                  <TableCell>
+                    <Badge variant={getTypeVariant(book.tag)}>
+                      {book.tag}
+                    </Badge>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        );
+      case 4: // Podcasts
+        return (
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead className="w-[200px]">Name</TableHead>
+                <TableHead className="w-[150px]">Hosts</TableHead>
+                <TableHead>Description</TableHead>
+                <TableHead className="w-[100px]">Type</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {toolkitData.media.podcasts.map((podcast) => (
+                <TableRow key={podcast.id}>
+                  <TableCell className="font-medium">
+                    <ExternalItemLink href={podcast.url}>
+                      {podcast.name}
+                    </ExternalItemLink>
+                  </TableCell>
+                  <TableCell>{podcast.hosts}</TableCell>
+                  <TableCell className="text-muted-foreground">{podcast.description}</TableCell>
+                  <TableCell>
+                    <Badge variant={getTypeVariant(podcast.type)}>
+                      {podcast.type}
+                    </Badge>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        );
+      case 5: // TV & Film
+        return (
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead className="w-[200px]">Name</TableHead>
+                <TableHead>Description</TableHead>
+                <TableHead className="w-[100px]">Type</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {toolkitData.media.tvfilm.map((item) => (
+                <TableRow key={item.id}>
+                  <TableCell className="font-medium">
+                    <ExternalItemLink href={item.url}>
+                      {item.name}
+                    </ExternalItemLink>
+                  </TableCell>
+                  <TableCell className="text-muted-foreground">{item.description}</TableCell>
+                  <TableCell>
+                    <Badge variant={getTypeVariant(item.type)}>
+                      {item.type}
+                    </Badge>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        );
+      case 6: // Music
+        return (
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead className="w-[200px]">Song</TableHead>
+                <TableHead className="w-[150px]">Artist</TableHead>
+                <TableHead className="w-[150px]">Album</TableHead>
+                <TableHead>Description</TableHead>
+                <TableHead className="w-[100px]">Type</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {toolkitData.media.music.map((item) => (
+                <TableRow key={item.id}>
+                  <TableCell className="font-medium">
+                    <ExternalItemLink href={item.url}>
+                      {item.song}
+                    </ExternalItemLink>
+                  </TableCell>
+                  <TableCell>{item.artist}</TableCell>
+                  <TableCell>{item.album}</TableCell>
+                  <TableCell className="text-muted-foreground">{item.description}</TableCell>
+                  <TableCell>
+                    <Badge variant={getTypeVariant(item.type)}>
+                      {item.type}
+                    </Badge>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        );
+      case 8: // People
+        return (
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead className="w-[200px]">Name</TableHead>
+                <TableHead>Description</TableHead>
+                <TableHead className="w-[100px]">Type</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {toolkitData.people.map((person) => (
+                <TableRow key={person.id}>
+                  <TableCell className="font-medium">
+                    <ExternalItemLink href={person.url}>
+                      {person.name}
+                    </ExternalItemLink>
+                  </TableCell>
+                  <TableCell className="text-muted-foreground">{person.description}</TableCell>
+                  <TableCell>
+                    <Badge variant={getTypeVariant(person.type)}>
+                      {person.type}
+                    </Badge>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        );
+      default:
+        return null;
+    }
+  };
 
   return (
     <div className="min-h-screen flex flex-col bg-background text-foreground font-light">
@@ -145,244 +374,15 @@ const Toolkit: NextPage = () => {
           </div>
 
           <div className="w-full max-w-4xl mx-auto">
-            <Tabs defaultValue="tools" onValueChange={setActiveMainTab} value={activeMainTab} className="w-full">
-              <TabsList className="grid grid-cols-4 mb-6">
-                <TabsTrigger value="tools">Tools</TabsTrigger>
-                <TabsTrigger value="products">Products</TabsTrigger>
-                <TabsTrigger value="media">Media</TabsTrigger>
-                <TabsTrigger value="people">People</TabsTrigger>
-              </TabsList>
-
-              {/* Tools Tab */}
-              <TabsContent value="tools">
-                <Table>
-                  <TableHeader>
-                    <TableRow>
-                      <TableHead className="w-[200px]">Name</TableHead>
-                      <TableHead>Description</TableHead>
-                      <TableHead className="w-[100px]">Type</TableHead>
-                    </TableRow>
-                  </TableHeader>
-                  <TableBody>
-                    {toolkitData.tools.map((tool) => (
-                      <TableRow key={tool.id}>
-                        <TableCell className="font-medium">
-                          <ExternalItemLink href={tool.url}>
-                            {tool.name}
-                          </ExternalItemLink>
-                        </TableCell>
-                        <TableCell className="text-muted-foreground">{tool.description}</TableCell>
-                        <TableCell>
-                          <Badge variant={getTypeVariant(tool.type)}>
-                            {tool.type}
-                          </Badge>
-                        </TableCell>
-                      </TableRow>
-                    ))}
-                  </TableBody>
-                </Table>
-              </TabsContent>
-
-              {/* Products Tab */}
-              <TabsContent value="products">
-                <Table>
-                  <TableHeader>
-                    <TableRow>
-                      <TableHead className="w-[200px]">Name</TableHead>
-                      <TableHead>Description</TableHead>
-                      <TableHead className="w-[100px]">Type</TableHead>
-                    </TableRow>
-                  </TableHeader>
-                  <TableBody>
-                    {toolkitData.products.map((product) => (
-                      <TableRow key={product.id}>
-                        <TableCell className="font-medium">
-                          <ExternalItemLink href={product.url}>
-                            {product.name}
-                          </ExternalItemLink>
-                        </TableCell>
-                        <TableCell className="text-muted-foreground">{product.description}</TableCell>
-                        <TableCell>
-                          <Badge variant={getTypeVariant(product.type)}>
-                            {product.type}
-                          </Badge>
-                        </TableCell>
-                      </TableRow>
-                    ))}
-                  </TableBody>
-                </Table>
-              </TabsContent>
-
-              {/* Media Tab */}
-              <TabsContent value="media">
-                <Tabs defaultValue="books" onValueChange={setActiveMediaTab} value={activeMediaTab} className="w-full">
-                  <TabsList className="grid grid-cols-4 mb-6 w-full">
-                    <TabsTrigger value="books">Books</TabsTrigger>
-                    <TabsTrigger value="podcasts">Podcasts</TabsTrigger>
-                    <TabsTrigger value="tvfilm">TV & Film</TabsTrigger>
-                    <TabsTrigger value="music">Music</TabsTrigger>
-                  </TabsList>
-
-                  {/* Books Tab */}
-                  <TabsContent value="books">
-                    <Table>
-                      <TableHeader>
-                        <TableRow>
-                          <TableHead className="w-[200px]">Title</TableHead>
-                          <TableHead className="w-[150px]">Author</TableHead>
-                          <TableHead>Description</TableHead>
-                          <TableHead className="w-[100px]">Genre</TableHead>
-                        </TableRow>
-                      </TableHeader>
-                      <TableBody>
-                        {toolkitData.media.books.map((book) => (
-                          <TableRow key={book.id}>
-                            <TableCell className="font-medium">
-                              <ExternalItemLink href={book.url}>
-                                {book.title}
-                              </ExternalItemLink>
-                            </TableCell>
-                            <TableCell>{book.author}</TableCell>
-                            <TableCell className="text-muted-foreground">{book.description}</TableCell>
-                            <TableCell>
-                              <Badge variant={getTypeVariant(book.tag)}>
-                                {book.tag}
-                              </Badge>
-                            </TableCell>
-                          </TableRow>
-                        ))}
-                      </TableBody>
-                    </Table>
-                  </TabsContent>
-
-                  {/* Podcasts Tab */}
-                  <TabsContent value="podcasts">
-                    <Table>
-                      <TableHeader>
-                        <TableRow>
-                          <TableHead className="w-[200px]">Name</TableHead>
-                          <TableHead className="w-[150px]">Hosts</TableHead>
-                          <TableHead>Description</TableHead>
-                          <TableHead className="w-[100px]">Type</TableHead>
-                        </TableRow>
-                      </TableHeader>
-                      <TableBody>
-                        {toolkitData.media.podcasts.map((podcast) => (
-                          <TableRow key={podcast.id}>
-                            <TableCell className="font-medium">
-                              <ExternalItemLink href={podcast.url}>
-                                {podcast.name}
-                              </ExternalItemLink>
-                            </TableCell>
-                            <TableCell>{podcast.hosts}</TableCell>
-                            <TableCell className="text-muted-foreground">{podcast.description}</TableCell>
-                            <TableCell>
-                              <Badge variant={getTypeVariant(podcast.type)}>
-                                {podcast.type}
-                              </Badge>
-                            </TableCell>
-                          </TableRow>
-                        ))}
-                      </TableBody>
-                    </Table>
-                  </TabsContent>
-
-                  {/* TV & Film Tab */}
-                  <TabsContent value="tvfilm">
-                    <Table>
-                      <TableHeader>
-                        <TableRow>
-                          <TableHead className="w-[200px]">Name</TableHead>
-                          <TableHead>Description</TableHead>
-                          <TableHead className="w-[100px]">Type</TableHead>
-                        </TableRow>
-                      </TableHeader>
-                      <TableBody>
-                        {toolkitData.media.tvfilm.map((item) => (
-                          <TableRow key={item.id}>
-                            <TableCell className="font-medium">
-                              <ExternalItemLink href={item.url}>
-                                {item.name}
-                              </ExternalItemLink>
-                            </TableCell>
-                            <TableCell className="text-muted-foreground">{item.description}</TableCell>
-                            <TableCell>
-                              <Badge variant={getTypeVariant(item.type)}>
-                                {item.type}
-                              </Badge>
-                            </TableCell>
-                          </TableRow>
-                        ))}
-                      </TableBody>
-                    </Table>
-                  </TabsContent>
-
-                  {/* Music Tab */}
-                  <TabsContent value="music">
-                    <Table>
-                      <TableHeader>
-                        <TableRow>
-                          <TableHead className="w-[200px]">Song</TableHead>
-                          <TableHead className="w-[150px]">Artist</TableHead>
-                          <TableHead className="w-[150px]">Album</TableHead>
-                          <TableHead>Description</TableHead>
-                          <TableHead className="w-[100px]">Type</TableHead>
-                        </TableRow>
-                      </TableHeader>
-                      <TableBody>
-                        {toolkitData.media.music.map((item) => (
-                          <TableRow key={item.id}>
-                            <TableCell className="font-medium">
-                              <ExternalItemLink href={item.url}>
-                                {item.song}
-                              </ExternalItemLink>
-                            </TableCell>
-                            <TableCell>{item.artist}</TableCell>
-                            <TableCell>{item.album}</TableCell>
-                            <TableCell className="text-muted-foreground">{item.description}</TableCell>
-                            <TableCell>
-                              <Badge variant={getTypeVariant(item.type)}>
-                                {item.type}
-                              </Badge>
-                            </TableCell>
-                          </TableRow>
-                        ))}
-                      </TableBody>
-                    </Table>
-                  </TabsContent>
-                </Tabs>
-              </TabsContent>
-
-              {/* People Tab */}
-              <TabsContent value="people">
-                <Table>
-                  <TableHeader>
-                    <TableRow>
-                      <TableHead className="w-[200px]">Name</TableHead>
-                      <TableHead>Description</TableHead>
-                      <TableHead className="w-[100px]">Type</TableHead>
-                    </TableRow>
-                  </TableHeader>
-                  <TableBody>
-                    {toolkitData.people.map((person) => (
-                      <TableRow key={person.id}>
-                        <TableCell className="font-medium">
-                          <ExternalItemLink href={person.url}>
-                            {person.name}
-                          </ExternalItemLink>
-                        </TableCell>
-                        <TableCell className="text-muted-foreground">{person.description}</TableCell>
-                        <TableCell>
-                          <Badge variant={getTypeVariant(person.type)}>
-                            {person.type}
-                          </Badge>
-                        </TableCell>
-                      </TableRow>
-                    ))}
-                  </TableBody>
-                </Table>
-              </TabsContent>
-            </Tabs>
+            <div className="mb-2">
+              <ExpandableTabs 
+                tabs={tabs} 
+                onChange={setActiveTab}
+                defaultValue={0}
+                className="w-full"
+              />
+            </div>
+            {renderContent()}
           </div>
         </div>
       </main>
