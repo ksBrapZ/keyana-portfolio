@@ -1,7 +1,6 @@
 // components/Layout.tsx
 import { ReactNode } from 'react';
 import Link from 'next/link';
-import { Analytics } from '@vercel/analytics/react';
 import { useRouter } from 'next/router';
 
 interface LayoutProps {
@@ -66,9 +65,6 @@ export default function Layout({ children }: LayoutProps) {
           </div>
         </div>
       </footer>
-
-      {/* Vercel Analytics */}
-      <Analytics debug={true} />
     </div>
   );
 }
