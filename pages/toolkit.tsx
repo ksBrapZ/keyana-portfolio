@@ -1,6 +1,6 @@
 // pages/toolkit.tsx
 import Head from 'next/head';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { NextPage } from 'next';
 import { ExternalLink, Wrench, Package, BookOpen, Users, Music, Film, Mic, Book } from 'lucide-react';
 import Header from '@/components/Header';
@@ -102,7 +102,68 @@ const getTypeVariant = (type: string): "default" | "secondary" | "destructive" |
 
 const Toolkit: NextPage = () => {
   const [activeTab, setActiveTab] = useState<number>(0);
+  const [tableHeight, setTableHeight] = useState<string>("500px");
   
+  // Adjust table height based on window size
+  useEffect(() => {
+    const updateTableHeight = () => {
+      // Calculate available height (viewport height minus header, tabs, and footer)
+      const headerHeight = 200; // Approximate header height
+      const tabsHeight = 60;    // Approximate tabs height
+      const footerHeight = 100; // Approximate footer height
+      const padding = 80;       // Additional padding
+      
+      const availableHeight = window.innerHeight - (headerHeight + tabsHeight + footerHeight + padding);
+      // Set a minimum height to prevent tiny tables
+      const finalHeight = Math.max(300, availableHeight);
+      
+      setTableHeight(`${finalHeight}px`);
+    };
+    
+    // Initial calculation
+    updateTableHeight();
+    
+    // Update on resize
+    window.addEventListener('resize', updateTableHeight);
+    return () => window.removeEventListener('resize', updateTableHeight);
+  }, []);
+
+  // Add custom scrollbar styles
+  useEffect(() => {
+    // Create style element
+    const styleEl = document.createElement('style');
+    
+    // Define scrollbar styles
+    const scrollbarStyles = `
+      .custom-scrollbar::-webkit-scrollbar {
+        width: 6px;
+      }
+      .custom-scrollbar::-webkit-scrollbar-track {
+        background: transparent;
+      }
+      .custom-scrollbar::-webkit-scrollbar-thumb {
+        background-color: rgba(155, 155, 155, 0.5);
+        border-radius: 20px;
+        border: transparent;
+      }
+      .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+        background-color: rgba(155, 155, 155, 0.7);
+      }
+      .custom-scrollbar {
+        scrollbar-width: thin;
+        scrollbar-color: rgba(155, 155, 155, 0.5) transparent;
+      }
+    `;
+    
+    styleEl.textContent = scrollbarStyles;
+    document.head.appendChild(styleEl);
+    
+    // Clean up on unmount
+    return () => {
+      document.head.removeChild(styleEl);
+    };
+  }, []);
+
   const tabs: TabItem[] = [
     { title: "Tools", icon: Wrench },
     { title: "Products", icon: Package },
@@ -119,227 +180,293 @@ const Toolkit: NextPage = () => {
   const ExternalItemLink = ({ href, children }: { href: string; children: React.ReactNode }) => (
     <a 
       href={href} 
-      className="text-primary hover:text-primary/80 transition-colors flex items-center" 
+      className="text-primary hover:text-primary/80 transition-colors inline-flex items-center" 
       target="_blank" 
       rel="noopener noreferrer"
     >
       {children}
-      <ExternalLink size={14} className="ml-1 opacity-70" />
+      <ExternalLink size={14} className="ml-1 inline-flex opacity-70 flex-shrink-0" />
     </a>
+  );
+
+  // Table wrapper component with scrolling - completely redesigned approach
+  const ScrollableTable = ({ headers, children }: { headers: React.ReactNode, children: React.ReactNode }) => (
+    <div className="rounded-md border dark:border-gray-800 overflow-hidden">
+      {/* Fixed header */}
+      <div className="bg-background border-b dark:border-gray-800 sticky top-0 left-0 right-0 z-10">
+        {headers}
+      </div>
+      
+      {/* Scrollable content */}
+      <div 
+        style={{ 
+          height: tableHeight, 
+          overflowY: 'auto',
+          // Custom scrollbar styling
+          scrollbarWidth: 'thin',
+          scrollbarColor: 'rgba(155, 155, 155, 0.5) transparent'
+        }} 
+        className="custom-scrollbar"
+      >
+        {children}
+      </div>
+    </div>
   );
 
   const renderContent = () => {
     switch (activeTab) {
       case 0: // Tools
         return (
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead className="w-[200px]">Name</TableHead>
-                <TableHead>Description</TableHead>
-                <TableHead className="w-[100px]">Type</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {toolkitData.tools.map((tool) => (
-                <TableRow key={tool.id}>
-                  <TableCell className="font-medium">
+          <ScrollableTable
+            headers={
+              <div className="grid grid-cols-[200px_1fr_120px] w-full px-4 py-3 text-sm font-medium text-muted-foreground">
+                <div className="text-left">Name</div>
+                <div className="text-left">Description</div>
+                <div className="text-left">Type</div>
+              </div>
+            }
+          >
+            <div>
+              {toolkitData.tools.map((tool, index) => (
+                <div 
+                  key={tool.id} 
+                  className={`grid grid-cols-[200px_1fr_120px] w-full px-4 py-3 items-center border-b dark:border-gray-800 ${
+                    index === toolkitData.tools.length - 1 ? 'border-b-0' : ''
+                  }`}
+                >
+                  <div className="font-medium">
                     <ExternalItemLink href={tool.url}>
                       {tool.name}
                     </ExternalItemLink>
-                  </TableCell>
-                  <TableCell className="text-muted-foreground">{tool.description}</TableCell>
-                  <TableCell>
+                  </div>
+                  <div className="text-muted-foreground">{tool.description}</div>
+                  <div>
                     <Badge variant={getTypeVariant(tool.type)}>
                       {tool.type}
                     </Badge>
-                  </TableCell>
-                </TableRow>
+                  </div>
+                </div>
               ))}
-            </TableBody>
-          </Table>
+            </div>
+          </ScrollableTable>
         );
       case 1: // Products
         return (
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead className="w-[200px]">Name</TableHead>
-                <TableHead>Description</TableHead>
-                <TableHead className="w-[100px]">Type</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {toolkitData.products.map((product) => (
-                <TableRow key={product.id}>
-                  <TableCell className="font-medium">
+          <ScrollableTable
+            headers={
+              <div className="grid grid-cols-[200px_1fr_120px] w-full px-4 py-3 text-sm font-medium text-muted-foreground">
+                <div className="text-left">Name</div>
+                <div className="text-left">Description</div>
+                <div className="text-left">Type</div>
+              </div>
+            }
+          >
+            <div>
+              {toolkitData.products.map((product, index) => (
+                <div 
+                  key={product.id} 
+                  className={`grid grid-cols-[200px_1fr_120px] w-full px-4 py-3 items-center border-b dark:border-gray-800 ${
+                    index === toolkitData.products.length - 1 ? 'border-b-0' : ''
+                  }`}
+                >
+                  <div className="font-medium">
                     <ExternalItemLink href={product.url}>
                       {product.name}
                     </ExternalItemLink>
-                  </TableCell>
-                  <TableCell className="text-muted-foreground">{product.description}</TableCell>
-                  <TableCell>
+                  </div>
+                  <div className="text-muted-foreground">{product.description}</div>
+                  <div>
                     <Badge variant={getTypeVariant(product.type)}>
                       {product.type}
                     </Badge>
-                  </TableCell>
-                </TableRow>
+                  </div>
+                </div>
               ))}
-            </TableBody>
-          </Table>
+            </div>
+          </ScrollableTable>
         );
       case 3: // Books
         return (
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead className="w-[200px]">Title</TableHead>
-                <TableHead className="w-[150px]">Author</TableHead>
-                <TableHead>Description</TableHead>
-                <TableHead className="w-[100px]">Genre</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {toolkitData.media.books.map((book) => (
-                <TableRow key={book.id}>
-                  <TableCell className="font-medium">
+          <ScrollableTable
+            headers={
+              <div className="grid grid-cols-[200px_150px_1fr_120px] w-full px-4 py-3 text-sm font-medium text-muted-foreground">
+                <div className="text-left">Title</div>
+                <div className="text-left">Author</div>
+                <div className="text-left">Description</div>
+                <div className="text-left">Genre</div>
+              </div>
+            }
+          >
+            <div>
+              {toolkitData.media.books.map((book, index) => (
+                <div 
+                  key={book.id} 
+                  className={`grid grid-cols-[200px_150px_1fr_120px] w-full px-4 py-3 items-center border-b dark:border-gray-800 ${
+                    index === toolkitData.media.books.length - 1 ? 'border-b-0' : ''
+                  }`}
+                >
+                  <div className="font-medium">
                     <ExternalItemLink href={book.url}>
                       {book.title}
                     </ExternalItemLink>
-                  </TableCell>
-                  <TableCell>{book.author}</TableCell>
-                  <TableCell className="text-muted-foreground">{book.description}</TableCell>
-                  <TableCell>
+                  </div>
+                  <div>{book.author}</div>
+                  <div className="text-muted-foreground">{book.description}</div>
+                  <div>
                     <Badge variant={getTypeVariant(book.tag)}>
                       {book.tag}
                     </Badge>
-                  </TableCell>
-                </TableRow>
+                  </div>
+                </div>
               ))}
-            </TableBody>
-          </Table>
+            </div>
+          </ScrollableTable>
         );
       case 4: // Podcasts
         return (
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead className="w-[200px]">Name</TableHead>
-                <TableHead className="w-[150px]">Hosts</TableHead>
-                <TableHead>Description</TableHead>
-                <TableHead className="w-[100px]">Type</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {toolkitData.media.podcasts.map((podcast) => (
-                <TableRow key={podcast.id}>
-                  <TableCell className="font-medium">
+          <ScrollableTable
+            headers={
+              <div className="grid grid-cols-[200px_150px_1fr_120px] w-full px-4 py-3 text-sm font-medium text-muted-foreground">
+                <div className="text-left">Name</div>
+                <div className="text-left">Hosts</div>
+                <div className="text-left">Description</div>
+                <div className="text-left">Type</div>
+              </div>
+            }
+          >
+            <div>
+              {toolkitData.media.podcasts.map((podcast, index) => (
+                <div 
+                  key={podcast.id} 
+                  className={`grid grid-cols-[200px_150px_1fr_120px] w-full px-4 py-3 items-center border-b dark:border-gray-800 ${
+                    index === toolkitData.media.podcasts.length - 1 ? 'border-b-0' : ''
+                  }`}
+                >
+                  <div className="font-medium">
                     <ExternalItemLink href={podcast.url}>
                       {podcast.name}
                     </ExternalItemLink>
-                  </TableCell>
-                  <TableCell>{podcast.hosts}</TableCell>
-                  <TableCell className="text-muted-foreground">{podcast.description}</TableCell>
-                  <TableCell>
+                  </div>
+                  <div>{podcast.hosts}</div>
+                  <div className="text-muted-foreground">{podcast.description}</div>
+                  <div>
                     <Badge variant={getTypeVariant(podcast.type)}>
                       {podcast.type}
                     </Badge>
-                  </TableCell>
-                </TableRow>
+                  </div>
+                </div>
               ))}
-            </TableBody>
-          </Table>
+            </div>
+          </ScrollableTable>
         );
       case 5: // TV & Film
         return (
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead className="w-[200px]">Name</TableHead>
-                <TableHead>Description</TableHead>
-                <TableHead className="w-[100px]">Type</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {toolkitData.media.tvfilm.map((item) => (
-                <TableRow key={item.id}>
-                  <TableCell className="font-medium">
+          <ScrollableTable
+            headers={
+              <div className="grid grid-cols-[200px_1fr_120px] w-full px-4 py-3 text-sm font-medium text-muted-foreground">
+                <div className="text-left">Name</div>
+                <div className="text-left">Description</div>
+                <div className="text-left">Type</div>
+              </div>
+            }
+          >
+            <div>
+              {toolkitData.media.tvfilm.map((item, index) => (
+                <div 
+                  key={item.id} 
+                  className={`grid grid-cols-[200px_1fr_120px] w-full px-4 py-3 items-center border-b dark:border-gray-800 ${
+                    index === toolkitData.media.tvfilm.length - 1 ? 'border-b-0' : ''
+                  }`}
+                >
+                  <div className="font-medium">
                     <ExternalItemLink href={item.url}>
                       {item.name}
                     </ExternalItemLink>
-                  </TableCell>
-                  <TableCell className="text-muted-foreground">{item.description}</TableCell>
-                  <TableCell>
+                  </div>
+                  <div className="text-muted-foreground">{item.description}</div>
+                  <div>
                     <Badge variant={getTypeVariant(item.type)}>
                       {item.type}
                     </Badge>
-                  </TableCell>
-                </TableRow>
+                  </div>
+                </div>
               ))}
-            </TableBody>
-          </Table>
+            </div>
+          </ScrollableTable>
         );
       case 6: // Music
         return (
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead className="w-[200px]">Song</TableHead>
-                <TableHead className="w-[150px]">Artist</TableHead>
-                <TableHead className="w-[150px]">Album</TableHead>
-                <TableHead>Description</TableHead>
-                <TableHead className="w-[100px]">Type</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {toolkitData.media.music.map((item) => (
-                <TableRow key={item.id}>
-                  <TableCell className="font-medium">
+          <ScrollableTable
+            headers={
+              <div className="grid grid-cols-[200px_150px_150px_1fr_120px] w-full px-4 py-3 text-sm font-medium text-muted-foreground">
+                <div className="text-left">Song</div>
+                <div className="text-left">Artist</div>
+                <div className="text-left">Album</div>
+                <div className="text-left">Description</div>
+                <div className="text-left">Type</div>
+              </div>
+            }
+          >
+            <div>
+              {toolkitData.media.music.map((item, index) => (
+                <div 
+                  key={item.id} 
+                  className={`grid grid-cols-[200px_150px_150px_1fr_120px] w-full px-4 py-3 items-center border-b dark:border-gray-800 ${
+                    index === toolkitData.media.music.length - 1 ? 'border-b-0' : ''
+                  }`}
+                >
+                  <div className="font-medium">
                     <ExternalItemLink href={item.url}>
                       {item.song}
                     </ExternalItemLink>
-                  </TableCell>
-                  <TableCell>{item.artist}</TableCell>
-                  <TableCell>{item.album}</TableCell>
-                  <TableCell className="text-muted-foreground">{item.description}</TableCell>
-                  <TableCell>
+                  </div>
+                  <div>{item.artist}</div>
+                  <div>{item.album}</div>
+                  <div className="text-muted-foreground">{item.description}</div>
+                  <div>
                     <Badge variant={getTypeVariant(item.type)}>
                       {item.type}
                     </Badge>
-                  </TableCell>
-                </TableRow>
+                  </div>
+                </div>
               ))}
-            </TableBody>
-          </Table>
+            </div>
+          </ScrollableTable>
         );
       case 8: // People
         return (
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead className="w-[200px]">Name</TableHead>
-                <TableHead>Description</TableHead>
-                <TableHead className="w-[100px]">Type</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {toolkitData.people.map((person) => (
-                <TableRow key={person.id}>
-                  <TableCell className="font-medium">
+          <ScrollableTable
+            headers={
+              <div className="grid grid-cols-[200px_1fr_120px] w-full px-4 py-3 text-sm font-medium text-muted-foreground">
+                <div className="text-left">Name</div>
+                <div className="text-left">Description</div>
+                <div className="text-left">Type</div>
+              </div>
+            }
+          >
+            <div>
+              {toolkitData.people.map((person, index) => (
+                <div 
+                  key={person.id} 
+                  className={`grid grid-cols-[200px_1fr_120px] w-full px-4 py-3 items-center border-b dark:border-gray-800 ${
+                    index === toolkitData.people.length - 1 ? 'border-b-0' : ''
+                  }`}
+                >
+                  <div className="font-medium">
                     <ExternalItemLink href={person.url}>
                       {person.name}
                     </ExternalItemLink>
-                  </TableCell>
-                  <TableCell className="text-muted-foreground">{person.description}</TableCell>
-                  <TableCell>
+                  </div>
+                  <div className="text-muted-foreground">{person.description}</div>
+                  <div>
                     <Badge variant={getTypeVariant(person.type)}>
                       {person.type}
                     </Badge>
-                  </TableCell>
-                </TableRow>
+                  </div>
+                </div>
               ))}
-            </TableBody>
-          </Table>
+            </div>
+          </ScrollableTable>
         );
       default:
         return null;

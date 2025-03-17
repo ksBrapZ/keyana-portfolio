@@ -9,7 +9,12 @@
     { "id": 7, "name": "Figma", "description": "Only real choice for product design", "url": "https://figma.com", "type": "Design" },
     { "id": 8, "name": "Notion", "description": "All-in-one workspace", "url": "https://notion.so", "type": "Productivity" },
     { "id": 9, "name": "Brave Browser", "description": "Privacy-first Browser", "url": "https://brave.com/", "type": "Productivity" },
-    { "id": 10, "name": "Bear", "description": "The cleanest cloud-based note app", "url": "https://bear.app/", "type": "Productivity" }
+    { "id": 10, "name": "Bear", "description": "The cleanest cloud-based note app", "url": "https://bear.app/", "type": "Productivity" },
+    { "id": 11, "name": "Postman", "description": "API development and testing platform", "url": "https://www.postman.com", "type": "Development" },
+    { "id": 12, "name": "Docker", "description": "Containerization platform for applications", "url": "https://www.docker.com", "type": "Development" },
+    { "id": 13, "name": "Adobe Creative Suite", "description": "Professional creative software suite", "url": "https://www.adobe.com/creativecloud.html", "type": "Design" },
+    { "id": 14, "name": "Slack", "description": "Team communication platform", "url": "https://slack.com", "type": "Productivity" },
+    { "id": 15, "name": "1Password", "description": "Secure password manager", "url": "https://1password.com", "type": "Productivity" }
   ],
   "products": [
     { "id": 1, "name": "Toyota 4Runner", "description": "2021 model - reliable off-road SUV", "url": "https://www.toyota.com/4runner/", "type": "Vehicles" },
@@ -21,7 +26,12 @@
     { "id": 7, "name": "Peak Design Everyday Backpack", "description": "Versatile photography and everyday backpack", "url": "https://www.peakdesign.com/products/everyday-backpack", "type": "Gear" },
     { "id": 8, "name": "Aeropress", "description": "Compact coffee maker for travel and home", "url": "https://aeropress.com/", "type": "Home Goods" },
     { "id": 9, "name": "Fellow Stagg EKG Kettle", "description": "Electric gooseneck kettle for pour-over coffee", "url": "https://fellowproducts.com/products/stagg-ekg-electric-pour-over-kettle", "type": "Home Goods" },
-    { "id": 10, "name": "Field Notes", "description": "Pocket notebooks for everyday use", "url": "https://fieldnotesbrand.com/", "type": "Productivity" }
+    { "id": 10, "name": "Field Notes", "description": "Pocket notebooks for everyday use", "url": "https://fieldnotesbrand.com/", "type": "Productivity" },
+    { "id": 11, "name": "DJI Mini 3 Pro", "description": "Compact drone for aerial photography", "url": "https://www.dji.com/mini-3-pro", "type": "Tech" },
+    { "id": 12, "name": "Sony A7III", "description": "Professional mirrorless camera", "url": "https://electronics.sony.com/imaging/camera/mirrorless/a7iii", "type": "Tech" },
+    { "id": 13, "name": "Apple Watch Ultra", "description": "Premium smartwatch for outdoor activities", "url": "https://www.apple.com/apple-watch-ultra/", "type": "Tech" },
+    { "id": 14, "name": "Yeti Rambler", "description": "Insulated water bottle", "url": "https://www.yeti.com/en_US/drinkware/rambler", "type": "Gear" },
+    { "id": 15, "name": "Leatherman Wave+", "description": "Multi-tool for everyday carry", "url": "https://www.leatherman.com/wave-740.html", "type": "Gear" }
   ],
   "media": {
     "books": [
@@ -34,7 +44,12 @@
       { "id": 7, "title": "Dune", "author": "Frank Herbert", "description": "Science fiction masterpiece", "url": "https://www.amazon.com/Dune-Frank-Herbert/dp/0441172717", "tag": "Fiction" },
       { "id": 8, "title": "Meditations", "author": "Marcus Aurelius", "description": "Stoic philosophy from a Roman emperor", "url": "https://www.amazon.com/Meditations-New-Translation-Marcus-Aurelius/dp/0812968255", "tag": "Philosophy" },
       { "id": 9, "title": "Thinking, Fast and Slow", "author": "Daniel Kahneman", "description": "How we think and make decisions", "url": "https://www.amazon.com/Thinking-Fast-Slow-Daniel-Kahneman/dp/0374533555", "tag": "Psychology" },
-      { "id": 10, "title": "Bad Blood", "author": "John Carreyrou", "description": "The rise and fall of Theranos", "url": "https://www.amazon.com/Bad-Blood-Secrets-Silicon-Startup/dp/152473165X", "tag": "Business" }
+      { "id": 10, "title": "Bad Blood", "author": "John Carreyrou", "description": "The rise and fall of Theranos", "url": "https://www.amazon.com/Bad-Blood-Secrets-Silicon-Startup/dp/152473165X", "tag": "Business" },
+      { "id": 11, "title": "The Psychology of Money", "author": "Morgan Housel", "description": "Timeless lessons on wealth, greed, and happiness", "url": "https://www.amazon.com/Psychology-Money-Timeless-lessons-happiness/dp/0857197681", "tag": "Psychology" },
+      { "id": 12, "title": "The Innovator's Dilemma", "author": "Clayton Christensen", "description": "Why great companies fail to innovate", "url": "https://www.amazon.com/Innovators-Dilemma-Technologies-Management-Innovation/dp/1633691780", "tag": "Business" },
+      { "id": 13, "title": "The Alchemist", "author": "Paulo Coelho", "description": "Philosophical novel about following your dreams", "url": "https://www.amazon.com/Alchemist-Paulo-Coelho/dp/0062315005", "tag": "Fiction" },
+      { "id": 14, "title": "Deep Work", "author": "Cal Newport", "description": "Rules for focused success in a distracted world", "url": "https://www.amazon.com/Deep-Work-Focused-Success-Distracted/dp/1455586692", "tag": "Productivity" },
+      { "id": 15, "title": "The Art of War", "author": "Sun Tzu", "description": "Ancient Chinese military treatise", "url": "https://www.amazon.com/Art-War-Sun-Tzu/dp/1599869772", "tag": "Philosophy" }
     ],
     "podcasts": [
       { "id": 1, "name": "The Tim Ferriss Show", "hosts": "Tim Ferriss", "description": "Tools, tactics, and routines of world-class performers", "url": "https://tim.blog/podcast/", "type": "Interview" },
@@ -46,7 +61,12 @@
       { "id": 7, "name": "Huberman Lab", "hosts": "Andrew Huberman", "description": "Science-based tools for everyday life", "url": "https://hubermanlab.com/", "type": "Science" },
       { "id": 8, "name": "99% Invisible", "hosts": "Roman Mars", "description": "The unseen design and architecture that shapes our world", "url": "https://99percentinvisible.org/", "type": "Design" },
       { "id": 9, "name": "Freakonomics Radio", "hosts": "Stephen Dubner", "description": "Exploring the hidden side of everything", "url": "https://freakonomics.com/", "type": "Economics" },
-      { "id": 10, "name": "The Daily", "hosts": "Michael Barbaro", "description": "News and current events from The New York Times", "url": "https://www.nytimes.com/column/the-daily", "type": "News" }
+      { "id": 10, "name": "The Daily", "hosts": "Michael Barbaro", "description": "News and current events from The New York Times", "url": "https://www.nytimes.com/column/the-daily", "type": "News" },
+      { "id": 11, "name": "The Knowledge Project", "hosts": "Shane Parrish", "description": "Mental models and decision-making frameworks", "url": "https://fs.blog/knowledge-project/", "type": "Education" },
+      { "id": 12, "name": "Planet Money", "hosts": "Various", "description": "Economics explained through stories", "url": "https://www.npr.org/sections/money/", "type": "Economics" },
+      { "id": 13, "name": "The Joe Rogan Experience", "hosts": "Joe Rogan", "description": "Long-form conversations with interesting guests", "url": "https://open.spotify.com/show/4rOoJ6Egrf8K2IrywzwOMk", "type": "Interview" },
+      { "id": 14, "name": "Radiolab", "hosts": "Jad Abumrad and Robert Krulwich", "description": "Investigative journalism meets science", "url": "https://radiolab.org/", "type": "Science" },
+      { "id": 15, "name": "The Indicator", "hosts": "Various", "description": "Short stories about the economy", "url": "https://www.npr.org/podcasts/510325/the-indicator-from-planet-money", "type": "Economics" }
     ],
     "tvfilm": [
       { "id": 1, "name": "Succession", "description": "Drama about a dysfunctional media family", "url": "https://www.hbo.com/succession", "type": "Drama" },
@@ -58,7 +78,12 @@
       { "id": 7, "name": "Parasite", "description": "Korean thriller about class inequality", "url": "https://www.imdb.com/title/tt6751668/", "type": "Thriller" },
       { "id": 8, "name": "Breaking Bad", "description": "Chemistry teacher turned meth manufacturer", "url": "https://www.imdb.com/title/tt0903747/", "type": "Drama" },
       { "id": 9, "name": "Everything Everywhere All at Once", "description": "Mind-bending multiverse adventure", "url": "https://everythingeverywheremovie.com/", "type": "Sci-Fi" },
-      { "id": 10, "name": "Oppenheimer", "description": "Christopher Nolan's biopic of J. Robert Oppenheimer", "url": "https://www.universalpictures.com/movies/oppenheimer", "type": "Biography" }
+      { "id": 10, "name": "Oppenheimer", "description": "Christopher Nolan's biopic of J. Robert Oppenheimer", "url": "https://www.universalpictures.com/movies/oppenheimer", "type": "Biography" },
+      { "id": 11, "name": "Inception", "description": "Mind-bending sci-fi thriller about dreams", "url": "https://www.warnerbros.com/movies/inception", "type": "Sci-Fi" },
+      { "id": 12, "name": "The Last Dance", "description": "Documentary about Michael Jordan and the Chicago Bulls", "url": "https://www.netflix.com/title/80203144", "type": "Documentary" },
+      { "id": 13, "name": "True Detective", "description": "Anthology crime drama series", "url": "https://www.hbo.com/true-detective", "type": "Drama" },
+      { "id": 14, "name": "Jiro Dreams of Sushi", "description": "Documentary about a master sushi chef", "url": "https://www.imdb.com/title/tt1772925/", "type": "Documentary" },
+      { "id": 15, "name": "The Matrix", "description": "Groundbreaking sci-fi action film", "url": "https://www.warnerbros.com/movies/matrix", "type": "Sci-Fi" }
     ],
     "music": [
       { "id": 1, "song": "Wish You Were Here", "artist": "Pink Floyd", "album": "Wish You Were Here", "description": "Classic rock masterpiece", "url": "https://open.spotify.com/track/6mFkJmJqdDVQ1REhVfGgd1", "type": "Rock" },
@@ -70,7 +95,12 @@
       { "id": 7, "song": "Everlong", "artist": "Foo Fighters", "album": "The Colour and the Shape", "description": "Iconic rock ballad", "url": "https://open.spotify.com/track/5UWwZ5lm5PKu6eKsHAGxOk", "type": "Rock" },
       { "id": 8, "song": "White Ferrari", "artist": "Frank Ocean", "album": "Blonde", "description": "Ethereal, emotional R&B", "url": "https://open.spotify.com/track/2LMkwUfqC6S6s6qDVlEuzV", "type": "R&B" },
       { "id": 9, "song": "Idioteque", "artist": "Radiohead", "album": "Kid A", "description": "Experimental electronic rock", "url": "https://open.spotify.com/track/5YvoW1pZ8nkOzPdP5kZQXy", "type": "Alternative" },
-      { "id": 10, "song": "Flashing Lights", "artist": "Kanye West", "album": "Graduation", "description": "Innovative hip-hop production", "url": "https://open.spotify.com/track/5TRPicyLGbAF2LGBFbHGvO", "type": "Hip-Hop" }
+      { "id": 10, "song": "Flashing Lights", "artist": "Kanye West", "album": "Graduation", "description": "Innovative hip-hop production", "url": "https://open.spotify.com/track/5TRPicyLGbAF2LGBFbHGvO", "type": "Hip-Hop" },
+      { "id": 11, "song": "Stairway to Heaven", "artist": "Led Zeppelin", "album": "Led Zeppelin IV", "description": "Epic rock ballad", "url": "https://open.spotify.com/track/5CQ30WqJXcep6fYbBNLhKs", "type": "Rock" },
+      { "id": 12, "song": "Nights", "artist": "Frank Ocean", "album": "Blonde", "description": "Experimental R&B masterpiece", "url": "https://open.spotify.com/track/7eqoqGkKwgOaWNNHx90uEZ", "type": "R&B" },
+      { "id": 13, "song": "Runaway", "artist": "Kanye West", "album": "My Beautiful Dark Twisted Fantasy", "description": "Complex hip-hop production", "url": "https://open.spotify.com/track/3DK6m7It6Pw857FcQftMds", "type": "Hip-Hop" },
+      { "id": 14, "song": "Pyramids", "artist": "Frank Ocean", "album": "Channel Orange", "description": "Epic R&B journey", "url": "https://open.spotify.com/track/4QhWbupniDd44EDtnh2bFj", "type": "R&B" },
+      { "id": 15, "song": "Paranoid Android", "artist": "Radiohead", "album": "OK Computer", "description": "Progressive rock masterpiece", "url": "https://open.spotify.com/track/6L7JQ5g0CxPWAQ2K9jK4BDe", "type": "Alternative" }
     ]
   },
   "people": [
@@ -83,6 +113,11 @@
     { "id": 7, "name": "Lex Fridman", "description": "AI researcher and podcaster", "url": "https://lexfridman.com", "type": "Academic" },
     { "id": 8, "name": "Patrick Collison", "description": "Stripe co-founder and CEO", "url": "https://patrickcollison.com", "type": "Entrepreneur" },
     { "id": 9, "name": "Andrew Huberman", "description": "Neuroscientist and podcaster", "url": "https://hubermanlab.com", "type": "Academic" },
-    { "id": 10, "name": "Maria Popova", "description": "Writer and founder of The Marginalian", "url": "https://themarginalian.org", "type": "Writer" }
+    { "id": 10, "name": "Maria Popova", "description": "Writer and founder of The Marginalian", "url": "https://themarginalian.org", "type": "Writer" },
+    { "id": 11, "name": "Marc Andreessen", "description": "Netscape founder and venture capitalist", "url": "https://a16z.com/author/marc-andreessen/", "type": "Entrepreneur" },
+    { "id": 12, "name": "Susan Wojcicki", "description": "Former YouTube CEO", "url": "https://twitter.com/susanwojcicki", "type": "Tech Leader" },
+    { "id": 13, "name": "Malala Yousafzai", "description": "Nobel Peace Prize winner and education activist", "url": "https://malala.org", "type": "Activist" },
+    { "id": 14, "name": "Yuval Noah Harari", "description": "Historian and author of Sapiens", "url": "https://www.ynharari.com", "type": "Author" },
+    { "id": 15, "name": "Jensen Huang", "description": "NVIDIA founder and CEO", "url": "https://nvidianews.nvidia.com/executives/jensen-huang", "type": "Tech Leader" }
   ]
 }
