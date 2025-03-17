@@ -1,9 +1,27 @@
-  import Link from 'next/link';
+import Link from 'next/link';
 import { Separator } from "@/components/ui/separator";
 import { Mail, Linkedin } from "lucide-react";
 import XLogo from './icons/XLogo';
+import { useEffect, useState } from 'react';
 
 const Footer = () => {
+  const [lastCommitDate, setLastCommitDate] = useState<string>('Loading...');
+
+  useEffect(() => {
+    const fetchLastCommitDate = async () => {
+      try {
+        const response = await fetch('/api/last-commit-date');
+        const data = await response.json();
+        setLastCommitDate(data.date);
+      } catch (error) {
+        console.error('Error fetching last commit date:', error);
+        setLastCommitDate('Unknown date');
+      }
+    };
+
+    fetchLastCommitDate();
+  }, []);
+
   return (
     <footer className="w-full py-4">
       <div className="container mx-auto px-6 md:px-12 lg:px-16 max-w-screen-lg">
@@ -11,7 +29,7 @@ const Footer = () => {
         
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center space-y-3 md:space-y-0">
           <div>
-            <p className="text-xs text-muted-foreground/70">Published 2/26/2025 · © Keyana Sapp</p>
+            <p className="text-xs text-muted-foreground/70">Published {lastCommitDate} · © Keyana Sapp</p>
             <p className="text-xs text-muted-foreground italic">If you want to improve, be content to be thought foolish and stupid</p>
           </div>
           
