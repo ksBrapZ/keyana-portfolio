@@ -103,6 +103,23 @@ const getTypeVariant = (type: string): "default" | "secondary" | "destructive" |
 const Toolkit: NextPage = () => {
   const [activeTab, setActiveTab] = useState<number>(0);
   const [tableHeight, setTableHeight] = useState<string>("500px");
+  const [isMobile, setIsMobile] = useState<boolean>(false);
+  
+  // Check if device is mobile
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    
+    // Initial check
+    checkMobile();
+    
+    // Add event listener for resize
+    window.addEventListener('resize', checkMobile);
+    
+    // Clean up
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
   
   // Adjust table height based on window size
   useEffect(() => {
@@ -189,6 +206,34 @@ const Toolkit: NextPage = () => {
     </a>
   );
 
+  // Mobile card component
+  const MobileCard = ({ 
+    children, 
+    className = ""
+  }: { 
+    children: React.ReactNode, 
+    className?: string 
+  }) => (
+    <div className={`rounded-md border dark:border-gray-800 p-4 mb-4 ${className}`}>
+      {children}
+    </div>
+  );
+
+  // Scrollable container for mobile cards
+  const ScrollableCards = ({ children }: { children: React.ReactNode }) => (
+    <div 
+      style={{ 
+        height: tableHeight, 
+        overflowY: 'auto',
+        scrollbarWidth: 'thin',
+        scrollbarColor: 'rgba(155, 155, 155, 0.5) transparent'
+      }} 
+      className="custom-scrollbar"
+    >
+      {children}
+    </div>
+  );
+
   // Table wrapper component with scrolling - completely redesigned approach
   const ScrollableTable = ({ headers, children }: { headers: React.ReactNode, children: React.ReactNode }) => (
     <div className="rounded-md border dark:border-gray-800 overflow-hidden">
@@ -216,6 +261,28 @@ const Toolkit: NextPage = () => {
   const renderContent = () => {
     switch (activeTab) {
       case 0: // Tools
+        if (isMobile) {
+          return (
+            <ScrollableCards>
+              {toolkitData.tools.map((tool) => (
+                <MobileCard key={tool.id}>
+                  <div className="flex justify-between items-start mb-2">
+                    <h3 className="font-medium text-base">
+                      <ExternalItemLink href={tool.url}>
+                        {tool.name}
+                      </ExternalItemLink>
+                    </h3>
+                    <Badge variant={getTypeVariant(tool.type)} className="ml-2 whitespace-nowrap">
+                      {tool.type}
+                    </Badge>
+                  </div>
+                  <p className="text-muted-foreground text-sm">{tool.description}</p>
+                </MobileCard>
+              ))}
+            </ScrollableCards>
+          );
+        }
+        
         return (
           <ScrollableTable
             headers={
@@ -251,6 +318,28 @@ const Toolkit: NextPage = () => {
           </ScrollableTable>
         );
       case 1: // Products
+        if (isMobile) {
+          return (
+            <ScrollableCards>
+              {toolkitData.products.map((product) => (
+                <MobileCard key={product.id}>
+                  <div className="flex justify-between items-start mb-2">
+                    <h3 className="font-medium text-base">
+                      <ExternalItemLink href={product.url}>
+                        {product.name}
+                      </ExternalItemLink>
+                    </h3>
+                    <Badge variant={getTypeVariant(product.type)} className="ml-2 whitespace-nowrap">
+                      {product.type}
+                    </Badge>
+                  </div>
+                  <p className="text-muted-foreground text-sm">{product.description}</p>
+                </MobileCard>
+              ))}
+            </ScrollableCards>
+          );
+        }
+        
         return (
           <ScrollableTable
             headers={
@@ -286,6 +375,29 @@ const Toolkit: NextPage = () => {
           </ScrollableTable>
         );
       case 3: // Books
+        if (isMobile) {
+          return (
+            <ScrollableCards>
+              {toolkitData.media.books.map((book) => (
+                <MobileCard key={book.id}>
+                  <div className="flex justify-between items-start mb-2">
+                    <h3 className="font-medium text-base">
+                      <ExternalItemLink href={book.url}>
+                        {book.title}
+                      </ExternalItemLink>
+                    </h3>
+                    <Badge variant={getTypeVariant(book.tag)} className="ml-2 whitespace-nowrap">
+                      {book.tag}
+                    </Badge>
+                  </div>
+                  <div className="text-sm mb-2 text-primary/80">by {book.author}</div>
+                  <p className="text-muted-foreground text-sm">{book.description}</p>
+                </MobileCard>
+              ))}
+            </ScrollableCards>
+          );
+        }
+        
         return (
           <ScrollableTable
             headers={
@@ -323,6 +435,29 @@ const Toolkit: NextPage = () => {
           </ScrollableTable>
         );
       case 4: // Podcasts
+        if (isMobile) {
+          return (
+            <ScrollableCards>
+              {toolkitData.media.podcasts.map((podcast) => (
+                <MobileCard key={podcast.id}>
+                  <div className="flex justify-between items-start mb-2">
+                    <h3 className="font-medium text-base">
+                      <ExternalItemLink href={podcast.url}>
+                        {podcast.name}
+                      </ExternalItemLink>
+                    </h3>
+                    <Badge variant={getTypeVariant(podcast.type)} className="ml-2 whitespace-nowrap">
+                      {podcast.type}
+                    </Badge>
+                  </div>
+                  <div className="text-sm mb-2 text-primary/80">Hosted by {podcast.hosts}</div>
+                  <p className="text-muted-foreground text-sm">{podcast.description}</p>
+                </MobileCard>
+              ))}
+            </ScrollableCards>
+          );
+        }
+        
         return (
           <ScrollableTable
             headers={
@@ -360,6 +495,28 @@ const Toolkit: NextPage = () => {
           </ScrollableTable>
         );
       case 5: // TV & Film
+        if (isMobile) {
+          return (
+            <ScrollableCards>
+              {toolkitData.media.tvfilm.map((item) => (
+                <MobileCard key={item.id}>
+                  <div className="flex justify-between items-start mb-2">
+                    <h3 className="font-medium text-base">
+                      <ExternalItemLink href={item.url}>
+                        {item.name}
+                      </ExternalItemLink>
+                    </h3>
+                    <Badge variant={getTypeVariant(item.type)} className="ml-2 whitespace-nowrap">
+                      {item.type}
+                    </Badge>
+                  </div>
+                  <p className="text-muted-foreground text-sm">{item.description}</p>
+                </MobileCard>
+              ))}
+            </ScrollableCards>
+          );
+        }
+        
         return (
           <ScrollableTable
             headers={
@@ -395,6 +552,32 @@ const Toolkit: NextPage = () => {
           </ScrollableTable>
         );
       case 6: // Music
+        if (isMobile) {
+          return (
+            <ScrollableCards>
+              {toolkitData.media.music.map((item) => (
+                <MobileCard key={item.id}>
+                  <div className="flex justify-between items-start mb-2">
+                    <h3 className="font-medium text-base">
+                      <ExternalItemLink href={item.url}>
+                        {item.song}
+                      </ExternalItemLink>
+                    </h3>
+                    <Badge variant={getTypeVariant(item.type)} className="ml-2 whitespace-nowrap">
+                      {item.type}
+                    </Badge>
+                  </div>
+                  <div className="flex flex-col mb-2">
+                    <span className="text-sm text-primary/80">{item.artist}</span>
+                    <span className="text-xs text-muted-foreground">Album: {item.album}</span>
+                  </div>
+                  <p className="text-muted-foreground text-sm">{item.description}</p>
+                </MobileCard>
+              ))}
+            </ScrollableCards>
+          );
+        }
+        
         return (
           <ScrollableTable
             headers={
@@ -434,6 +617,28 @@ const Toolkit: NextPage = () => {
           </ScrollableTable>
         );
       case 8: // People
+        if (isMobile) {
+          return (
+            <ScrollableCards>
+              {toolkitData.people.map((person) => (
+                <MobileCard key={person.id}>
+                  <div className="flex justify-between items-start mb-2">
+                    <h3 className="font-medium text-base">
+                      <ExternalItemLink href={person.url}>
+                        {person.name}
+                      </ExternalItemLink>
+                    </h3>
+                    <Badge variant={getTypeVariant(person.type)} className="ml-2 whitespace-nowrap">
+                      {person.type}
+                    </Badge>
+                  </div>
+                  <p className="text-muted-foreground text-sm">{person.description}</p>
+                </MobileCard>
+              ))}
+            </ScrollableCards>
+          );
+        }
+        
         return (
           <ScrollableTable
             headers={
@@ -492,7 +697,7 @@ const Toolkit: NextPage = () => {
       <Header />
 
       <main className="py-3 flex-1">
-        <div className="container mx-auto px-6 md:px-12 lg:px-16 max-w-screen-lg">
+        <div className="container mx-auto px-4 md:px-12 lg:px-16 max-w-screen-lg">
           <div className="w-full max-w-4xl mx-auto mb-6">
             <h1 className="text-2xl font-medium mb-3">Toolkit</h1>
             <p className="text-muted-foreground">
