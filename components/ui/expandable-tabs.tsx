@@ -92,7 +92,7 @@ export function ExpandableTabs({
             onClick={() => handleSelect(index)}
             transition={transition}
             className={cn(
-              "relative flex items-center rounded-xl px-4 py-2 text-sm font-medium transition-colors duration-300 whitespace-nowrap",
+              "relative flex items-center rounded-xl px-2 sm:px-4 py-2 text-sm font-medium transition-colors duration-300 whitespace-nowrap",
               selected === index
                 ? cn("bg-muted", activeColor)
                 : "text-muted-foreground hover:bg-muted hover:text-foreground"
@@ -107,7 +107,7 @@ export function ExpandableTabs({
                   animate="animate"
                   exit="exit"
                   transition={transition}
-                  className="overflow-hidden whitespace-nowrap"
+                  className="hidden sm:inline overflow-hidden whitespace-nowrap"
                 >
                   {tab.title}
                 </motion.span>
