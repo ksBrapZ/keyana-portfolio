@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "prebuild": "node scripts/generate-build-meta.js"
   },
   "dependencies": {
     "@radix-ui/react-dropdown-menu": "^2.1.6",
