@@ -3,10 +3,10 @@ import { useEffect, useState } from 'react';
 import { usePathname } from 'next/navigation';
 import { NavigationMenu, NavigationMenuContent, NavigationMenuItem, NavigationMenuLink, NavigationMenuList, NavigationMenuTrigger } from "@/components/ui/navigation-menu";
 import { Separator } from "@/components/ui/separator";
-import { ThemeToggle } from "@/components/ThemeToggle";
 import { Button } from "@/components/ui/button";
 import { ChevronLeft } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { Github } from "lucide-react";
 
 const Header = () => {
   const [currentTime, setCurrentTime] = useState<string>('');
@@ -93,7 +93,6 @@ const Header = () => {
                     )}
                   </NavigationMenuList>
                 </NavigationMenu>
-                <ThemeToggle />
               </div>
             </div>
           </div>
