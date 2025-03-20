@@ -9,9 +9,28 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Moon, Sun } from "lucide-react";
+import { useEffect, useState } from "react";
 
 export function ThemeToggle() {
   const { theme, setTheme } = useTheme();
+  const [systemPrefersDark, setSystemPrefersDark] = useState(false);
+  
+  useEffect(() => {
+    // Check system preference
+    const darkModeMediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+    setSystemPrefersDark(darkModeMediaQuery.matches);
+    
+    // Add listener for changes
+    const handleChange = (e: MediaQueryListEvent) => {
+      setSystemPrefersDark(e.matches);
+    };
+    
+    darkModeMediaQuery.addEventListener('change', handleChange);
+    
+    return () => {
+      darkModeMediaQuery.removeEventListener('change', handleChange);
+    };
+  }, []);
 
   return (
     <DropdownMenu>
@@ -28,9 +47,6 @@ export function ThemeToggle() {
         </DropdownMenuItem>
         <DropdownMenuItem onClick={() => setTheme("dark")}>
           Dark
-        </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => setTheme("system")}>
-          System
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
