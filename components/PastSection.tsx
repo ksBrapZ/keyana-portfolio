@@ -45,7 +45,7 @@ const PastSection = () => {
               description="Collaborative growth network for DTC brands. 600+ brands in the network."
             />
             
-            <Separator className="bg-border/10" />
+            <Separator className="bg-border/10 dark:bg-border/5" />
             
             <PastItem 
               title="Partnership Lead"
@@ -54,7 +54,7 @@ const PastSection = () => {
               description="Groupon for software. Launched 50+ apps to network of 1.5M entrepreneurs"
             />
             
-            <Separator className="bg-border/10" />
+            <Separator className="bg-border/10 dark:bg-border/5" />
             
             <PastItem 
               title="Event Lead"
@@ -63,7 +63,7 @@ const PastSection = () => {
               description="B2B Forums for Dentists, Vets and Pharmacists. Launched APAC region's 1st veterinary trade show"
             />
             
-            <Separator className="bg-border/10" />
+            <Separator className="bg-border/10 dark:bg-border/5" />
             
             <PastItem 
               title="PhD dropout"
