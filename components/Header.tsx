@@ -60,15 +60,19 @@ const Header = () => {
               <div className="flex items-center">
                 <NavigationMenu>
                   <NavigationMenuList>
-                    {/* Temporarily hidden until blog is set up
+                    {/* Blog link - now active */}
                     <NavigationMenuItem>
-                      <Link href="/writing" legacyBehavior passHref>
-                        <NavigationMenuLink className="text-sm uppercase tracking-wider px-4 py-2 hover:text-primary transition-colors">
-                          Writing
+                      <Link href="/blog" legacyBehavior passHref>
+                        <NavigationMenuLink 
+                          className={cn(
+                            "text-sm uppercase tracking-wider px-4 py-2 hover:text-primary transition-colors",
+                            pathname === "/blog" || pathname?.startsWith("/blog/") ? "text-primary" : "text-muted-foreground"
+                          )}
+                        >
+                          Blog
                         </NavigationMenuLink>
                       </Link>
                     </NavigationMenuItem>
-                    */}
                     
                     {/* Temporarily hidden until photo gallery is set up
                     <NavigationMenuItem>
