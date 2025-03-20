@@ -43,7 +43,7 @@ export default function BlogContent({ frontmatter, content }: BlogContentProps) 
           ))}
         </div>
         
-        <Separator className="mb-8 bg-border/40" />
+        <Separator className="mb-8 bg-border/50 dark:bg-border/15" />
       </div>
 
       <div className="prose prose-invert prose-zinc max-w-none">
@@ -61,14 +61,17 @@ export default function BlogContent({ frontmatter, content }: BlogContentProps) 
               <a className="text-primary hover:underline" {...props} />
             ),
             blockquote: ({ node, ...props }) => (
-              <blockquote className="pl-4 border-l-2 border-muted-foreground italic my-4" {...props} />
+              <blockquote className="pl-4 border-l-2 border-border/50 dark:border-border/20 italic my-4" {...props} />
             ),
-            code: ({ node, inline, ...props }) => 
-              inline ? 
+            code: ({ node, className, ...props }: any) => {
+              const match = /language-(\w+)/.exec(className || '');
+              const inline = !match;
+              return inline ? 
                 <code className="bg-muted px-1 py-0.5 rounded text-sm" {...props} /> : 
-                <pre className="bg-muted p-4 rounded-md overflow-x-auto my-4 text-sm">
-                  <code {...props} />
+                <pre className="bg-muted p-4 rounded-md overflow-x-auto my-4 text-sm border border-border/50 dark:border-border/20">
+                  <code className={className} {...props} />
                 </pre>
+            }
           }}
         >
           {content}

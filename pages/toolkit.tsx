@@ -214,7 +214,7 @@ const Toolkit: NextPage = () => {
     children: React.ReactNode, 
     className?: string 
   }) => (
-    <div className={`rounded-md border dark:border-gray-800 p-4 mb-4 ${className}`}>
+    <div className={`rounded-xl border border-border/50 dark:border-border/20 bg-card/5 p-4 mb-4 ${className}`}>
       {children}
     </div>
   );
@@ -236,9 +236,9 @@ const Toolkit: NextPage = () => {
 
   // Table wrapper component with scrolling - completely redesigned approach
   const ScrollableTable = ({ headers, children }: { headers: React.ReactNode, children: React.ReactNode }) => (
-    <div className="rounded-md border dark:border-gray-800 overflow-hidden">
+    <div className="rounded-xl border border-border/50 dark:border-border/20 bg-card/5 overflow-hidden">
       {/* Fixed header */}
-      <div className="bg-background border-b dark:border-gray-800 sticky top-0 left-0 right-0 z-10">
+      <div className="bg-background border-b border-border/50 dark:border-border/15 sticky top-0 left-0 right-0 z-10">
         {headers}
       </div>
       
@@ -297,7 +297,7 @@ const Toolkit: NextPage = () => {
               {toolkitData.tools.map((tool, index) => (
                 <div 
                   key={tool.id} 
-                  className={`grid grid-cols-[200px_1fr_120px] w-full px-4 py-3 items-center border-b dark:border-gray-800 ${
+                  className={`grid grid-cols-[200px_1fr_120px] w-full px-4 py-3 items-center border-b border-border/50 dark:border-border/15 ${
                     index === toolkitData.tools.length - 1 ? 'border-b-0' : ''
                   }`}
                 >
@@ -354,7 +354,7 @@ const Toolkit: NextPage = () => {
               {toolkitData.products.map((product, index) => (
                 <div 
                   key={product.id} 
-                  className={`grid grid-cols-[200px_1fr_120px] w-full px-4 py-3 items-center border-b dark:border-gray-800 ${
+                  className={`grid grid-cols-[200px_1fr_120px] w-full px-4 py-3 items-center border-b border-border/50 dark:border-border/15 ${
                     index === toolkitData.products.length - 1 ? 'border-b-0' : ''
                   }`}
                 >
@@ -413,7 +413,7 @@ const Toolkit: NextPage = () => {
               {toolkitData.media.books.map((book, index) => (
                 <div 
                   key={book.id} 
-                  className={`grid grid-cols-[200px_150px_1fr_120px] w-full px-4 py-3 items-center border-b dark:border-gray-800 ${
+                  className={`grid grid-cols-[200px_150px_1fr_120px] w-full px-4 py-3 items-center border-b border-border/50 dark:border-border/15 ${
                     index === toolkitData.media.books.length - 1 ? 'border-b-0' : ''
                   }`}
                 >
@@ -473,7 +473,7 @@ const Toolkit: NextPage = () => {
               {toolkitData.media.podcasts.map((podcast, index) => (
                 <div 
                   key={podcast.id} 
-                  className={`grid grid-cols-[200px_150px_1fr_120px] w-full px-4 py-3 items-center border-b dark:border-gray-800 ${
+                  className={`grid grid-cols-[200px_150px_1fr_120px] w-full px-4 py-3 items-center border-b border-border/50 dark:border-border/15 ${
                     index === toolkitData.media.podcasts.length - 1 ? 'border-b-0' : ''
                   }`}
                 >
@@ -531,7 +531,7 @@ const Toolkit: NextPage = () => {
               {toolkitData.media.tvfilm.map((item, index) => (
                 <div 
                   key={item.id} 
-                  className={`grid grid-cols-[200px_1fr_120px] w-full px-4 py-3 items-center border-b dark:border-gray-800 ${
+                  className={`grid grid-cols-[200px_1fr_120px] w-full px-4 py-3 items-center border-b border-border/50 dark:border-border/15 ${
                     index === toolkitData.media.tvfilm.length - 1 ? 'border-b-0' : ''
                   }`}
                 >
@@ -594,7 +594,7 @@ const Toolkit: NextPage = () => {
               {toolkitData.media.music.map((item, index) => (
                 <div 
                   key={item.id} 
-                  className={`grid grid-cols-[200px_150px_150px_1fr_120px] w-full px-4 py-3 items-center border-b dark:border-gray-800 ${
+                  className={`grid grid-cols-[200px_150px_150px_1fr_120px] w-full px-4 py-3 items-center border-b border-border/50 dark:border-border/15 ${
                     index === toolkitData.media.music.length - 1 ? 'border-b-0' : ''
                   }`}
                 >
@@ -653,7 +653,7 @@ const Toolkit: NextPage = () => {
               {toolkitData.people.map((person, index) => (
                 <div 
                   key={person.id} 
-                  className={`grid grid-cols-[200px_1fr_120px] w-full px-4 py-3 items-center border-b dark:border-gray-800 ${
+                  className={`grid grid-cols-[200px_1fr_120px] w-full px-4 py-3 items-center border-b border-border/50 dark:border-border/15 ${
                     index === toolkitData.people.length - 1 ? 'border-b-0' : ''
                   }`}
                 >

@@ -17,7 +17,7 @@ export default function BlogCard({ slug, frontmatter, content }: BlogCardProps) 
 
   return (
     <Link href={`/blog/${slug}`} className="block transition-transform hover:-translate-y-1">
-      <Card className="h-full border border-border/40 bg-card/30 backdrop-blur-sm">
+      <Card className="h-full rounded-xl border border-border/50 dark:border-border/20 bg-card/5">
         <CardHeader className="pb-2">
           <div className="text-xs text-muted-foreground mb-1">
             {formattedDate} · {readingTime} min read
