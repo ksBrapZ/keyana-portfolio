@@ -13,8 +13,21 @@ const buildMeta = {
   buildDate: buildDate
 };
 
+// Ensure public directory exists
+const publicDir = path.join(process.cwd(), 'public');
+if (!fs.existsSync(publicDir)) {
+  fs.mkdirSync(publicDir, { recursive: true });
+}
+
 // Write to a JSON file
-fs.writeFileSync(
-  path.join(process.cwd(), 'public', 'build-meta.json'),
-  JSON.stringify(buildMeta, null, 2)
-); 
+try {
+  fs.writeFileSync(
+    path.join(publicDir, 'build-meta.json'),
+    JSON.stringify(buildMeta, null, 2)
+  );
+  console.log('Build metadata generated successfully');
+} catch (error) {
+  console.error('Error writing build metadata:', error);
+  // Don't fail the build because of metadata
+  process.exit(0);
+} 

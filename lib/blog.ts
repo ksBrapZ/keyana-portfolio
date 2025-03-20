@@ -1,4 +1,4 @@
-import { readFileSync, readdirSync } from 'fs';
+import { readFileSync, readdirSync, existsSync } from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
 import { format } from 'date-fns';
@@ -19,8 +19,17 @@ export type BlogPost = {
   content: string;
 };
 
+function ensureDirectoryExists(directoryPath: string): boolean {
+  return existsSync(directoryPath);
+}
+
 export function getAllPosts(): BlogPost[] {
   try {
+    if (!ensureDirectoryExists(POSTS_PATH)) {
+      console.warn(`Blog content directory does not exist: ${POSTS_PATH}`);
+      return [];
+    }
+
     const files = readdirSync(POSTS_PATH);
     
     return files
@@ -52,6 +61,12 @@ export function getAllPosts(): BlogPost[] {
 export function getPostBySlug(slug: string): BlogPost | null {
   try {
     const filePath = path.join(POSTS_PATH, `${slug}.md`);
+    
+    if (!existsSync(filePath)) {
+      console.warn(`Blog post file does not exist: ${filePath}`);
+      return null;
+    }
+    
     const fileContent = readFileSync(filePath, 'utf8');
     const { data, content } = matter(fileContent);
     
@@ -68,6 +83,11 @@ export function getPostBySlug(slug: string): BlogPost | null {
 
 export function getPostSlugs(): string[] {
   try {
+    if (!ensureDirectoryExists(POSTS_PATH)) {
+      console.warn(`Blog content directory does not exist: ${POSTS_PATH}`);
+      return [];
+    }
+    
     const files = readdirSync(POSTS_PATH);
     
     return files
