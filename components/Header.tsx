@@ -60,6 +60,21 @@ const Header = () => {
               <div className="flex items-center">
                 <NavigationMenu>
                   <NavigationMenuList>
+                    {pathname !== "/toolkit" && (
+                      <NavigationMenuItem>
+                        <Link href="/toolkit" legacyBehavior passHref>
+                          <NavigationMenuLink 
+                            className={cn(
+                              "text-sm uppercase tracking-wider px-4 py-2 hover:text-primary transition-colors",
+                              pathname === "/toolkit" || pathname?.startsWith("/toolkit/") ? "text-primary" : "text-muted-foreground"
+                            )}
+                          >
+                            Toolkit
+                          </NavigationMenuLink>
+                        </Link>
+                      </NavigationMenuItem>
+                    )}
+                    
                     {/* Blog link - now active */}
                     <NavigationMenuItem>
                       <Link href="/blog" legacyBehavior passHref>
@@ -83,18 +98,6 @@ const Header = () => {
                       </Link>
                     </NavigationMenuItem>
                     */}
-                    
-                    {pathname !== "/toolkit" && (
-                      <NavigationMenuItem>
-                        <Link href="/toolkit" legacyBehavior passHref>
-                          <NavigationMenuLink 
-                            className="text-sm uppercase tracking-wider px-4 py-2 hover:text-primary transition-colors"
-                          >
-                            Toolkit
-                          </NavigationMenuLink>
-                        </Link>
-                      </NavigationMenuItem>
-                    )}
                   </NavigationMenuList>
                 </NavigationMenu>
               </div>

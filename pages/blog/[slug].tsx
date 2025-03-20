@@ -34,7 +34,7 @@ export default function BlogPostPage({ post }: BlogPostPageProps) {
         <meta name="twitter:description" content={frontmatter.description} />
       </Head>
       
-      <div className="min-h-screen flex flex-col">
+      <div className="min-h-screen flex flex-col bg-background text-foreground">
         <Header />
         
         <main className="flex-grow container mx-auto px-6 md:px-12 lg:px-16 max-w-screen-lg py-8">
