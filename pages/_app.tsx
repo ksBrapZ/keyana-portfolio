@@ -1,5 +1,6 @@
 // pages/_app.tsx
 import '../styles/globals.css';
+import '../styles/prism-theme.css';
 import type { AppProps } from 'next/app';
 import { ThemeProvider } from '@/components/ThemeProvider';
 
