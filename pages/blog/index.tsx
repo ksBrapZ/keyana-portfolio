@@ -103,7 +103,7 @@ export default function BlogIndex({ posts }: BlogIndexProps) {
             style={{ height: contentHeight }}
           >
             {posts.length > 0 ? (
-              <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-2 pb-12">
+              <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-2 pt-2 pb-12">
                 {posts.map((post) => (
                   <BlogCard key={post.slug} {...post} />
                 ))}
