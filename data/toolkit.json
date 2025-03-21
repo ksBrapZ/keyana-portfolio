@@ -1,20 +1,21 @@
 {
   "tools": [
     { "id": 1, "name": "Cursor", "description": "The best AI code editor", "url": "https://cursor.sh", "type": "Development" },
-    { "id": 2, "name": "Vercel", "description": "Deployment and hosting platform", "url": "https://vercel.com", "type": "Development" },
-    { "id": 3, "name": "Next.js", "description": "React framework for production", "url": "https://nextjs.org", "type": "Development" },
-    { "id": 4, "name": "Tailwind CSS", "description": "Utility-first CSS framework", "url": "https://tailwindcss.com", "type": "Design" },
-    { "id": 5, "name": "VS Code", "description": "Code editor", "url": "https://code.visualstudio.com", "type": "Development" },
-    { "id": 6, "name": "GitHub", "description": "Version control and CI/CD", "url": "https://github.com", "type": "Development" },
+    { "id": 2, "name": "Vercel", "description": "Deployment and hosting", "url": "https://vercel.com", "type": "Development" },
+    { "id": 3, "name": "Superhuman", "description": "Slickest email client around", "url": "https://superhuman.com/", "type": "Productivity" },
+    { "id": 4, "name": "Raycast", "description": "Spotlight but cracked. Love this", "url": "https://www.raycast.com/", "type": "Productivity" },
+    { "id": 5, "name": "Bartender 5", "description": "Clean up Mac's Menu Bar", "url": "https://www.macbartender.com/", "type": "Development" },
+    { "id": 6, "name": "Screen Studio", "description": "Creates stunning screen recordings", "url": "https://screenstudio.com", "type": "Development" },
     { "id": 7, "name": "Figma", "description": "Only real choice for product design", "url": "https://figma.com", "type": "Design" },
     { "id": 8, "name": "Notion", "description": "All-in-one workspace", "url": "https://notion.so", "type": "Productivity" },
     { "id": 9, "name": "Brave Browser", "description": "Privacy-first Browser", "url": "https://brave.com/", "type": "Productivity" },
     { "id": 10, "name": "Bear", "description": "The cleanest cloud-based note app", "url": "https://bear.app/", "type": "Productivity" },
-    { "id": 11, "name": "Postman", "description": "API development and testing platform", "url": "https://www.postman.com", "type": "Development" },
-    { "id": 12, "name": "Docker", "description": "Containerization platform for applications", "url": "https://www.docker.com", "type": "Development" },
-    { "id": 13, "name": "Adobe Creative Suite", "description": "Professional creative software suite", "url": "https://www.adobe.com/creativecloud.html", "type": "Design" },
-    { "id": 14, "name": "Slack", "description": "Team communication platform", "url": "https://slack.com", "type": "Productivity" },
-    { "id": 15, "name": "1Password", "description": "Secure password manager", "url": "https://1password.com", "type": "Productivity" }
+    { "id": 11, "name": "Attio", "description": "My favorite CRM. Great AI enrichment", "url": "https://attio.com", "type": "Development" },
+    { "id": 13, "name": "Lightroom Classic", "description": "Still my favorite photo editor", "url": "https://www.adobe.com/products/photoshop-lightroom-classic.html", "type": "Design" },
+    { "id": 14, "name": "Slack", "description": "Team communication platform. Hate it but need it", "url": "https://slack.com", "type": "Productivity" },
+    { "id": 15, "name": "1Password", "description": "Best Password Manager", "url": "https://1password.com", "type": "Productivity" },
+    { "id": 16, "name": "Linear", "description": "Cleanest team task management", "url": "https://linear.app/", "type": "Productivity" },
+    { "id": 17, "name": "Todoist", "description": "Favorite personal task management system", "url": "https://todoist.com", "type": "Productivity" }
   ],
   "products": [
     { "id": 1, "name": "Toyota 4Runner", "description": "2021 model - reliable off-road SUV", "url": "https://www.toyota.com/4runner/", "type": "Vehicles" },
@@ -104,7 +105,7 @@
     ]
   },
   "people": [
-    { "id": 1, "name": "Paul Graham", "description": "Y Combinator founder and essayist", "url": "http://paulgraham.com", "type": "Entrepreneur" },
+    { "id": 1, "name": "Paul Graham", "description": "Y Combinator founder and essayist", "url": "https://paulgraham.com", "type": "Entrepreneur" },
     { "id": 2, "name": "Naval Ravikant", "description": "AngelList founder and philosopher", "url": "https://nav.al", "type": "Entrepreneur" },
     { "id": 3, "name": "Tobi Lütke", "description": "Shopify founder and CEO", "url": "https://twitter.com/tobi", "type": "Entrepreneur" },
     { "id": 4, "name": "Sam Altman", "description": "OpenAI CEO and former Y Combinator president", "url": "https://twitter.com/sama", "type": "Tech Leader" },

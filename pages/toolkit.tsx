@@ -15,6 +15,7 @@ import {
   TableHeader,
   TableRow 
 } from "@/components/ui/table";
+import { cn, shuffleArray } from "@/lib/utils";
 
 // Define types for our toolkit data
 interface ToolkitItem {
@@ -104,6 +105,69 @@ const Toolkit: NextPage = () => {
   const [activeTab, setActiveTab] = useState<number>(0);
   const [tableHeight, setTableHeight] = useState<string>("500px");
   const [isMobile, setIsMobile] = useState<boolean>(false);
+  
+  // Create state for randomized data
+  const [randomizedData, setRandomizedData] = useState<ToolkitData>({
+    tools: [],
+    products: [],
+    media: {
+      books: [],
+      podcasts: [],
+      tvfilm: [],
+      music: []
+    },
+    people: []
+  });
+  
+  // Randomize data on initial load
+  useEffect(() => {
+    setRandomizedData({
+      tools: shuffleArray(toolkitData.tools),
+      products: shuffleArray(toolkitData.products),
+      media: {
+        books: shuffleArray(toolkitData.media.books),
+        podcasts: shuffleArray(toolkitData.media.podcasts),
+        tvfilm: shuffleArray(toolkitData.media.tvfilm),
+        music: shuffleArray(toolkitData.media.music)
+      },
+      people: shuffleArray(toolkitData.people)
+    });
+  }, []);
+  
+  // Re-randomize the specific category when tab changes
+  const handleTabChange = (tabIndex: number) => {
+    setActiveTab(tabIndex);
+    
+    // Only re-randomize the data for the selected tab to avoid unnecessary computations
+    const newRandomizedData = { ...randomizedData };
+    
+    // Based on tab index, shuffle the appropriate section
+    switch (tabIndex) {
+      case 0: // Tools
+        newRandomizedData.tools = shuffleArray(toolkitData.tools);
+        break;
+      case 1: // Products
+        newRandomizedData.products = shuffleArray(toolkitData.products);
+        break;
+      case 3: // Books
+        newRandomizedData.media.books = shuffleArray(toolkitData.media.books);
+        break;
+      case 4: // Podcasts
+        newRandomizedData.media.podcasts = shuffleArray(toolkitData.media.podcasts);
+        break;
+      case 5: // TV & Film
+        newRandomizedData.media.tvfilm = shuffleArray(toolkitData.media.tvfilm);
+        break;
+      case 6: // Music
+        newRandomizedData.media.music = shuffleArray(toolkitData.media.music);
+        break;
+      case 8: // People
+        newRandomizedData.people = shuffleArray(toolkitData.people);
+        break;
+    }
+    
+    setRandomizedData(newRandomizedData);
+  };
   
   // Check if device is mobile
   useEffect(() => {
@@ -264,7 +328,7 @@ const Toolkit: NextPage = () => {
         if (isMobile) {
           return (
             <ScrollableCards>
-              {toolkitData.tools.map((tool) => (
+              {randomizedData.tools.map((tool) => (
                 <MobileCard key={tool.id}>
                   <div className="flex justify-between items-start mb-2">
                     <h3 className="font-medium text-base">
@@ -294,11 +358,11 @@ const Toolkit: NextPage = () => {
             }
           >
             <div>
-              {toolkitData.tools.map((tool, index) => (
+              {randomizedData.tools.map((tool, index) => (
                 <div 
                   key={tool.id} 
                   className={`grid grid-cols-[200px_1fr_120px] w-full px-4 py-3 items-center border-b border-border/50 dark:border-border/15 ${
-                    index === toolkitData.tools.length - 1 ? 'border-b-0' : ''
+                    index === randomizedData.tools.length - 1 ? 'border-b-0' : ''
                   }`}
                 >
                   <div className="font-medium">
@@ -321,7 +385,7 @@ const Toolkit: NextPage = () => {
         if (isMobile) {
           return (
             <ScrollableCards>
-              {toolkitData.products.map((product) => (
+              {randomizedData.products.map((product) => (
                 <MobileCard key={product.id}>
                   <div className="flex justify-between items-start mb-2">
                     <h3 className="font-medium text-base">
@@ -351,11 +415,11 @@ const Toolkit: NextPage = () => {
             }
           >
             <div>
-              {toolkitData.products.map((product, index) => (
+              {randomizedData.products.map((product, index) => (
                 <div 
                   key={product.id} 
                   className={`grid grid-cols-[200px_1fr_120px] w-full px-4 py-3 items-center border-b border-border/50 dark:border-border/15 ${
-                    index === toolkitData.products.length - 1 ? 'border-b-0' : ''
+                    index === randomizedData.products.length - 1 ? 'border-b-0' : ''
                   }`}
                 >
                   <div className="font-medium">
@@ -378,7 +442,7 @@ const Toolkit: NextPage = () => {
         if (isMobile) {
           return (
             <ScrollableCards>
-              {toolkitData.media.books.map((book) => (
+              {randomizedData.media.books.map((book) => (
                 <MobileCard key={book.id}>
                   <div className="flex justify-between items-start mb-2">
                     <h3 className="font-medium text-base">
@@ -410,11 +474,11 @@ const Toolkit: NextPage = () => {
             }
           >
             <div>
-              {toolkitData.media.books.map((book, index) => (
+              {randomizedData.media.books.map((book, index) => (
                 <div 
                   key={book.id} 
                   className={`grid grid-cols-[200px_150px_1fr_120px] w-full px-4 py-3 items-center border-b border-border/50 dark:border-border/15 ${
-                    index === toolkitData.media.books.length - 1 ? 'border-b-0' : ''
+                    index === randomizedData.media.books.length - 1 ? 'border-b-0' : ''
                   }`}
                 >
                   <div className="font-medium">
@@ -438,7 +502,7 @@ const Toolkit: NextPage = () => {
         if (isMobile) {
           return (
             <ScrollableCards>
-              {toolkitData.media.podcasts.map((podcast) => (
+              {randomizedData.media.podcasts.map((podcast) => (
                 <MobileCard key={podcast.id}>
                   <div className="flex justify-between items-start mb-2">
                     <h3 className="font-medium text-base">
@@ -470,11 +534,11 @@ const Toolkit: NextPage = () => {
             }
           >
             <div>
-              {toolkitData.media.podcasts.map((podcast, index) => (
+              {randomizedData.media.podcasts.map((podcast, index) => (
                 <div 
                   key={podcast.id} 
                   className={`grid grid-cols-[200px_150px_1fr_120px] w-full px-4 py-3 items-center border-b border-border/50 dark:border-border/15 ${
-                    index === toolkitData.media.podcasts.length - 1 ? 'border-b-0' : ''
+                    index === randomizedData.media.podcasts.length - 1 ? 'border-b-0' : ''
                   }`}
                 >
                   <div className="font-medium">
@@ -498,7 +562,7 @@ const Toolkit: NextPage = () => {
         if (isMobile) {
           return (
             <ScrollableCards>
-              {toolkitData.media.tvfilm.map((item) => (
+              {randomizedData.media.tvfilm.map((item) => (
                 <MobileCard key={item.id}>
                   <div className="flex justify-between items-start mb-2">
                     <h3 className="font-medium text-base">
@@ -528,11 +592,11 @@ const Toolkit: NextPage = () => {
             }
           >
             <div>
-              {toolkitData.media.tvfilm.map((item, index) => (
+              {randomizedData.media.tvfilm.map((item, index) => (
                 <div 
                   key={item.id} 
                   className={`grid grid-cols-[200px_1fr_120px] w-full px-4 py-3 items-center border-b border-border/50 dark:border-border/15 ${
-                    index === toolkitData.media.tvfilm.length - 1 ? 'border-b-0' : ''
+                    index === randomizedData.media.tvfilm.length - 1 ? 'border-b-0' : ''
                   }`}
                 >
                   <div className="font-medium">
@@ -555,7 +619,7 @@ const Toolkit: NextPage = () => {
         if (isMobile) {
           return (
             <ScrollableCards>
-              {toolkitData.media.music.map((item) => (
+              {randomizedData.media.music.map((item) => (
                 <MobileCard key={item.id}>
                   <div className="flex justify-between items-start mb-2">
                     <h3 className="font-medium text-base">
@@ -591,11 +655,11 @@ const Toolkit: NextPage = () => {
             }
           >
             <div>
-              {toolkitData.media.music.map((item, index) => (
+              {randomizedData.media.music.map((item, index) => (
                 <div 
                   key={item.id} 
                   className={`grid grid-cols-[200px_150px_150px_1fr_120px] w-full px-4 py-3 items-center border-b border-border/50 dark:border-border/15 ${
-                    index === toolkitData.media.music.length - 1 ? 'border-b-0' : ''
+                    index === randomizedData.media.music.length - 1 ? 'border-b-0' : ''
                   }`}
                 >
                   <div className="font-medium">
@@ -620,7 +684,7 @@ const Toolkit: NextPage = () => {
         if (isMobile) {
           return (
             <ScrollableCards>
-              {toolkitData.people.map((person) => (
+              {randomizedData.people.map((person) => (
                 <MobileCard key={person.id}>
                   <div className="flex justify-between items-start mb-2">
                     <h3 className="font-medium text-base">
@@ -650,11 +714,11 @@ const Toolkit: NextPage = () => {
             }
           >
             <div>
-              {toolkitData.people.map((person, index) => (
+              {randomizedData.people.map((person, index) => (
                 <div 
                   key={person.id} 
                   className={`grid grid-cols-[200px_1fr_120px] w-full px-4 py-3 items-center border-b border-border/50 dark:border-border/15 ${
-                    index === toolkitData.people.length - 1 ? 'border-b-0' : ''
+                    index === randomizedData.people.length - 1 ? 'border-b-0' : ''
                   }`}
                 >
                   <div className="font-medium">
@@ -709,8 +773,8 @@ const Toolkit: NextPage = () => {
             <div className="mb-2">
               <ExpandableTabs 
                 tabs={tabs} 
-                onChange={setActiveTab}
-                defaultValue={0}
+                defaultValue={activeTab}
+                onChange={handleTabChange}
                 className="w-full"
               />
             </div>
