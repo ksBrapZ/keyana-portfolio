@@ -5,7 +5,7 @@ import BlogContent from '@/components/blog/BlogContent';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { useRouter } from 'next/router';
-import BlogPostNavigation from '@/components/blog/BlogPostNavigation';
+import BlogPostNavigation from '../../components/blog/BlogPostNavigation';
 
 interface BlogPostPageProps {
   post: BlogPost | null;
