@@ -1,5 +1,5 @@
 ---
-title: "Bridging the AI Gap: The next revolution in user experience"
+title: "Bridging the AI Gap"
 date: "2023-08-13"
 description: "Simplicity is the ultimate sophistication. - Leonardo da Vinci"
 tags: ["UX", "AI"]
