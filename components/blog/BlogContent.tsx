@@ -19,7 +19,7 @@ export default function BlogContent({ frontmatter, content }: BlogContentProps) 
   const readingTime = calculateReadingTime(content);
 
   return (
-    <article className="max-w-3xl mx-auto">
+    <article className="w-full">
       <div className="mb-8">
         <div className="mb-6">
           <Link href="/blog" className="flex items-center text-sm text-muted-foreground hover:text-primary transition-colors mb-8">
