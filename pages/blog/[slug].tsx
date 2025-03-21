@@ -1,16 +1,19 @@
 import { GetStaticPaths, GetStaticProps } from 'next';
 import Head from 'next/head';
-import { getPostBySlug, getPostSlugs, BlogPost } from '@/lib/blog';
+import { getPostBySlug, getPostSlugs, BlogPost, getAllPosts } from '@/lib/blog';
 import BlogContent from '@/components/blog/BlogContent';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { useRouter } from 'next/router';
+import BlogPostNavigation from '@/components/blog/BlogPostNavigation';
 
 interface BlogPostPageProps {
   post: BlogPost | null;
+  nextPost: BlogPost | null;
+  prevPost: BlogPost | null;
 }
 
-export default function BlogPostPage({ post }: BlogPostPageProps) {
+export default function BlogPostPage({ post, nextPost, prevPost }: BlogPostPageProps) {
   const router = useRouter();
   
   // Handle the case where the post is not found
@@ -39,6 +42,10 @@ export default function BlogPostPage({ post }: BlogPostPageProps) {
         
         <main className="flex-grow container mx-auto px-6 md:px-12 lg:px-16 max-w-screen-lg py-8">
           <BlogContent frontmatter={frontmatter} content={content} />
+          
+          <div className="mt-16">
+            <BlogPostNavigation nextPost={nextPost} prevPost={prevPost} />
+          </div>
         </main>
         
         <Footer />
@@ -57,9 +64,19 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     };
   }
   
+  // Get all posts and find the current post index
+  const allPosts = getAllPosts();
+  const currentIndex = allPosts.findIndex(p => p.slug === slug);
+  
+  // Get next and previous posts
+  const nextPost = currentIndex > 0 ? allPosts[currentIndex - 1] : null;
+  const prevPost = currentIndex < allPosts.length - 1 ? allPosts[currentIndex + 1] : null;
+  
   return {
     props: {
       post,
+      nextPost,
+      prevPost,
     },
   };
 };

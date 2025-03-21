@@ -2,7 +2,7 @@
 title: "Why Everyone Should Study Psychology"
 date: "2021-10-26"
 description: "Humans are irrational. Motivation is not intuitive. Psychology explains why."
-tags: ["Psychology", "Motivation"]
+tags: ["Psychology", "Motivation", "Management"]
 published: true
 ---
 
