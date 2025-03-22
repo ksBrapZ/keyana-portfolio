@@ -73,7 +73,6 @@ interface ToolkitData {
   tools: ToolkitItem[];
   products: ToolkitItem[];
   media: MediaData;
-  people: ToolkitItem[];
 }
 
 // Import the JSON data
@@ -115,8 +114,7 @@ const Toolkit: NextPage = () => {
       podcasts: [],
       tvfilm: [],
       music: []
-    },
-    people: []
+    }
   });
   
   // Randomize data on initial load
@@ -129,8 +127,7 @@ const Toolkit: NextPage = () => {
         podcasts: shuffleArray(toolkitData.media.podcasts),
         tvfilm: shuffleArray(toolkitData.media.tvfilm),
         music: shuffleArray(toolkitData.media.music)
-      },
-      people: shuffleArray(toolkitData.people)
+      }
     });
   }, []);
   
@@ -160,9 +157,6 @@ const Toolkit: NextPage = () => {
         break;
       case 6: // Music
         newRandomizedData.media.music = shuffleArray(toolkitData.media.music);
-        break;
-      case 8: // People
-        newRandomizedData.people = shuffleArray(toolkitData.people);
         break;
     }
     
@@ -252,9 +246,7 @@ const Toolkit: NextPage = () => {
     { title: "Books", icon: Book },
     { title: "Podcasts", icon: Mic },
     { title: "TV & Film", icon: Film },
-    { title: "Music", icon: Music },
-    { type: "separator" as const },
-    { title: "People", icon: Users },
+    { title: "Music", icon: Music }
   ];
 
   // Reusable link component
@@ -672,63 +664,6 @@ const Toolkit: NextPage = () => {
                   <div>
                     <Badge variant={getTypeVariant(item.type)}>
                       {item.type}
-                    </Badge>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </ScrollableTable>
-        );
-      case 8: // People
-        if (isMobile) {
-          return (
-            <ScrollableCards>
-              {randomizedData.people.map((person) => (
-                <MobileCard key={person.id}>
-                  <div className="flex justify-between items-start mb-2">
-                    <h3 className="font-medium text-base">
-                      <ExternalItemLink href={person.url}>
-                        {person.name}
-                      </ExternalItemLink>
-                    </h3>
-                    <Badge variant={getTypeVariant(person.type)} className="ml-2 whitespace-nowrap">
-                      {person.type}
-                    </Badge>
-                  </div>
-                  <p className="text-muted-foreground text-sm">{person.description}</p>
-                </MobileCard>
-              ))}
-            </ScrollableCards>
-          );
-        }
-        
-        return (
-          <ScrollableTable
-            headers={
-              <div className="grid grid-cols-[200px_1fr_120px] w-full px-4 py-3 text-sm font-medium text-muted-foreground">
-                <div className="text-left">Name</div>
-                <div className="text-left">Description</div>
-                <div className="text-left">Type</div>
-              </div>
-            }
-          >
-            <div>
-              {randomizedData.people.map((person, index) => (
-                <div 
-                  key={person.id} 
-                  className={`grid grid-cols-[200px_1fr_120px] w-full px-4 py-3 items-center border-b border-border/50 dark:border-border/15 ${
-                    index === randomizedData.people.length - 1 ? 'border-b-0' : ''
-                  }`}
-                >
-                  <div className="font-medium">
-                    <ExternalItemLink href={person.url}>
-                      {person.name}
-                    </ExternalItemLink>
-                  </div>
-                  <div className="text-muted-foreground">{person.description}</div>
-                  <div>
-                    <Badge variant={getTypeVariant(person.type)}>
-                      {person.type}
                     </Badge>
                   </div>
                 </div>

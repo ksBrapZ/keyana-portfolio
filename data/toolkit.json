@@ -19,7 +19,7 @@
   ],
   "products": [
     { "id": 1, "name": "Toyota 4Runner", "description": "2021 model - reliable off-road SUV", "url": "https://www.toyota.com/4runner/", "type": "Vehicles" },
-    { "id": 2, "name": "Suzuki DR650", "description": "2019 model - dual sport motorcycle", "url": "https://suzukicycles.com/", "type": "Vehicles" },
+    { "id": 2, "name": "Suzuki DR650", "description": "My baby. The best motorcycle ever made.", "url": "https://suzukicycles.com/", "type": "Vehicles" },
     { "id": 3, "name": "M4 Macbook Pro", "description": "Recently upgraded. Nutty performance", "url": "https://www.apple.com/macbook-pro/", "type": "Tech" },
     { "id": 4, "name": "iPhone 16 Pro", "description": "Upgraded from a 2nd gen SE. Still in my honeymoon phase", "url": "https://www.apple.com/iphone/", "type": "Tech" },
     { "id": 5, "name": "Mack's Slim-Fit Earplugs", "description": "Only plugs that fit my tiny ear canals", "url": "https://www.amazon.com/dp/B0065IILSO?ref=ppx_yo2ov_dt_b_fed_asin_title", "type": "Audio" },
@@ -103,22 +103,5 @@
       { "id": 17, "song": "Little Wing", "artist": "Jimi Hendrix", "album": "Axis: Bold as Love", "description": "Delicate guitar poetry", "url": "https://open.spotify.com/track/PLACEHOLDER", "type": "Rock" },
       { "id": 18, "song": "Three Little Birds", "artist": "Bob Marley", "album": "Exodus", "description": "Universal message of hope", "url": "https://open.spotify.com/track/PLACEHOLDER", "type": "Reggae" }
     ]
-  },
-  "people": [
-    { "id": 1, "name": "Paul Graham", "description": "Y Combinator founder and essayist", "url": "https://paulgraham.com", "type": "Entrepreneur" },
-    { "id": 2, "name": "Naval Ravikant", "description": "AngelList founder and philosopher", "url": "https://nav.al", "type": "Entrepreneur" },
-    { "id": 3, "name": "Tobi Lütke", "description": "Shopify founder and CEO", "url": "https://twitter.com/tobi", "type": "Entrepreneur" },
-    { "id": 4, "name": "Sam Altman", "description": "OpenAI CEO and former Y Combinator president", "url": "https://twitter.com/sama", "type": "Tech Leader" },
-    { "id": 5, "name": "Elon Musk", "description": "Tesla/SpaceX/X CEO and innovator", "url": "https://twitter.com/elonmusk", "type": "Entrepreneur" },
-    { "id": 6, "name": "Tim Ferriss", "description": "Author, investor, and podcaster", "url": "https://tim.blog", "type": "Author" },
-    { "id": 7, "name": "Lex Fridman", "description": "AI researcher and podcaster", "url": "https://lexfridman.com", "type": "Academic" },
-    { "id": 8, "name": "Patrick Collison", "description": "Stripe co-founder and CEO", "url": "https://patrickcollison.com", "type": "Entrepreneur" },
-    { "id": 9, "name": "Andrew Huberman", "description": "Neuroscientist and podcaster", "url": "https://hubermanlab.com", "type": "Academic" },
-    { "id": 10, "name": "Maria Popova", "description": "Writer and founder of The Marginalian", "url": "https://themarginalian.org", "type": "Writer" },
-    { "id": 11, "name": "Marc Andreessen", "description": "Netscape founder and venture capitalist", "url": "https://a16z.com/author/marc-andreessen/", "type": "Entrepreneur" },
-    { "id": 12, "name": "Susan Wojcicki", "description": "Former YouTube CEO", "url": "https://twitter.com/susanwojcicki", "type": "Tech Leader" },
-    { "id": 13, "name": "Malala Yousafzai", "description": "Nobel Peace Prize winner and education activist", "url": "https://malala.org", "type": "Activist" },
-    { "id": 14, "name": "Yuval Noah Harari", "description": "Historian and author of Sapiens", "url": "https://www.ynharari.com", "type": "Author" },
-    { "id": 15, "name": "Jensen Huang", "description": "NVIDIA founder and CEO", "url": "https://nvidianews.nvidia.com/executives/jensen-huang", "type": "Tech Leader" }
-  ]
+  }
 }
