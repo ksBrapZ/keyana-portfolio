@@ -266,7 +266,6 @@ const Toolkit: NextPage = () => {
       rel="noopener noreferrer"
     >
       {children}
-      <ExternalLink size={14} className="ml-1 inline-flex opacity-70 flex-shrink-0" />
     </a>
   );
 
