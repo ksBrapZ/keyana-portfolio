@@ -10,6 +10,7 @@ import { Github } from "lucide-react";
 
 const Header = () => {
   const [currentTime, setCurrentTime] = useState<string>('');
+  const [mobileMenuOpen, setMobileMenuOpen] = useState<boolean>(false);
   const pathname = usePathname();
   const showBackButton = pathname !== '/';
 
@@ -34,8 +35,6 @@ const Header = () => {
     <header className="w-full pt-6 pb-4">
       <div className="container mx-auto px-6 md:px-12 lg:px-16 max-w-screen-lg relative">
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center">
-          {/* Removed the large screen back button implementation */}
-          
           <div className="flex flex-row justify-between items-center w-full">
             {/* Keyana's Info */}
             <div>
@@ -56,8 +55,46 @@ const Header = () => {
                 </div>
               )}
               
-              {/* Navigation Links and Theme Toggle - fixed position at all breakpoints */}
-              <div className="flex items-center">
+              {/* Mobile Menu Button - only visible on small screens */}
+              <div className="md:hidden relative z-50">
+                <Button
+                  className="group"
+                  variant="outline"
+                  size="icon"
+                  onClick={() => setMobileMenuOpen((prevState) => !prevState)}
+                  aria-expanded={mobileMenuOpen}
+                  aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
+                >
+                  <svg
+                    className="pointer-events-none"
+                    width={16}
+                    height={16}
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M4 12L20 12"
+                      className="origin-center -translate-y-[7px] transition-all duration-300 [transition-timing-function:cubic-bezier(.5,.85,.25,1.1)] group-aria-expanded:translate-x-0 group-aria-expanded:translate-y-0 group-aria-expanded:rotate-[315deg]"
+                    />
+                    <path
+                      d="M4 12H20"
+                      className="origin-center transition-all duration-300 [transition-timing-function:cubic-bezier(.5,.85,.25,1.8)] group-aria-expanded:rotate-45"
+                    />
+                    <path
+                      d="M4 12H20"
+                      className="origin-center translate-y-[7px] transition-all duration-300 [transition-timing-function:cubic-bezier(.5,.85,.25,1.1)] group-aria-expanded:translate-y-0 group-aria-expanded:rotate-[135deg]"
+                    />
+                  </svg>
+                </Button>
+              </div>
+              
+              {/* Desktop Navigation - hidden on small screens */}
+              <div className="hidden md:flex items-center">
                 <NavigationMenu>
                   <NavigationMenuList>
                     <NavigationMenuItem>
@@ -103,6 +140,44 @@ const Header = () => {
           </div>
         </div>
       </div>
+      
+      {/* Mobile menu dropdown - only visible when open and on small screens */}
+      {mobileMenuOpen && (
+        <>
+          {/* Backdrop with blur effect */}
+          <div 
+            className="md:hidden fixed inset-0 bg-background/80 backdrop-blur-sm z-40"
+            onClick={() => setMobileMenuOpen(false)}
+          />
+          
+          {/* Floating menu */}
+          <div className="md:hidden fixed top-24 right-6 w-1/2 py-4 px-5 bg-background border border-border/30 rounded-md shadow-sm z-50">
+            <nav className="flex flex-col space-y-3">
+              <Link 
+                href="/toolkit" 
+                className={cn(
+                  "text-sm uppercase tracking-wider py-2 hover:text-primary transition-colors",
+                  pathname === "/toolkit" || pathname?.startsWith("/toolkit/") ? "text-primary" : "text-muted-foreground"
+                )}
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                Toolkit
+              </Link>
+              <Link 
+                href="/blog" 
+                className={cn(
+                  "text-sm uppercase tracking-wider py-2 hover:text-primary transition-colors",
+                  pathname === "/blog" || pathname?.startsWith("/blog/") ? "text-primary" : "text-muted-foreground"
+                )}
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                Blog
+              </Link>
+            </nav>
+          </div>
+        </>
+      )}
+      
       <div className="container mx-auto px-6 md:px-12 lg:px-16 max-w-screen-lg mt-4">
         <Separator className="bg-border/40" />
       </div>

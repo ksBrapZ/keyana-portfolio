@@ -23,7 +23,7 @@
     { "id": 22, "name": "Notion Calendar", "description": "FKA Cron. Cleanest calendar app", "url": "https://www.notion.com/product/calendar", "type": "Productivity" },
     { "id": 23, "name": "Granola", "description": "Meeting recordings using system audio", "url": "https://www.granola.ai/", "type": "Productivity" },
     { "id": 24, "name": "Gaia GPS", "description": "Best outdoor adventure maps", "url": "https://www.gaiagps.com/", "type": "Maps" },
-    { "id": 25, "name": "Duolingo", "description": "Love languages. 1year + streak!", "url": "https://www.duolingo.com/", "type": "Education" }
+    { "id": 25, "name": "Duolingo", "description": "I love learning languages. 1year + streak!", "url": "https://www.duolingo.com/", "type": "Education" }
 
   ],
   "products": [
