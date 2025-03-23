@@ -341,7 +341,7 @@ const Toolkit: NextPage = () => {
         return (
           <ScrollableTable
             headers={
-              <div className="grid grid-cols-[200px_1fr_120px] w-full px-4 py-3 text-sm font-medium text-muted-foreground">
+              <div className="grid grid-cols-[200px_1fr_120px] gap-4 w-full px-4 py-3 text-sm font-medium text-muted-foreground">
                 <div className="text-left">Name</div>
                 <div className="text-left">Description</div>
                 <div className="text-left">Type</div>
@@ -352,7 +352,7 @@ const Toolkit: NextPage = () => {
               {randomizedData.tools.map((tool, index) => (
                 <div 
                   key={tool.id} 
-                  className={`grid grid-cols-[200px_1fr_120px] w-full px-4 py-3 items-center border-b border-border/50 dark:border-border/15 ${
+                  className={`grid grid-cols-[200px_1fr_120px] gap-4 w-full px-4 py-3 items-center border-b border-border/50 dark:border-border/15 ${
                     index === randomizedData.tools.length - 1 ? 'border-b-0' : ''
                   }`}
                 >
@@ -398,7 +398,7 @@ const Toolkit: NextPage = () => {
         return (
           <ScrollableTable
             headers={
-              <div className="grid grid-cols-[200px_1fr_120px] w-full px-4 py-3 text-sm font-medium text-muted-foreground">
+              <div className="grid grid-cols-[200px_1fr_120px] gap-4 w-full px-4 py-3 text-sm font-medium text-muted-foreground">
                 <div className="text-left">Name</div>
                 <div className="text-left">Description</div>
                 <div className="text-left">Type</div>
@@ -409,7 +409,7 @@ const Toolkit: NextPage = () => {
               {randomizedData.products.map((product, index) => (
                 <div 
                   key={product.id} 
-                  className={`grid grid-cols-[200px_1fr_120px] w-full px-4 py-3 items-center border-b border-border/50 dark:border-border/15 ${
+                  className={`grid grid-cols-[200px_1fr_120px] gap-4 w-full px-4 py-3 items-center border-b border-border/50 dark:border-border/15 ${
                     index === randomizedData.products.length - 1 ? 'border-b-0' : ''
                   }`}
                 >
@@ -456,7 +456,7 @@ const Toolkit: NextPage = () => {
         return (
           <ScrollableTable
             headers={
-              <div className="grid grid-cols-[200px_150px_1fr_120px] w-full px-4 py-3 text-sm font-medium text-muted-foreground">
+              <div className="grid grid-cols-[200px_150px_1fr_120px] gap-4 w-full px-4 py-3 text-sm font-medium text-muted-foreground">
                 <div className="text-left">Title</div>
                 <div className="text-left">Author</div>
                 <div className="text-left">Description</div>
@@ -468,7 +468,7 @@ const Toolkit: NextPage = () => {
               {randomizedData.media.books.map((book, index) => (
                 <div 
                   key={book.id} 
-                  className={`grid grid-cols-[200px_150px_1fr_120px] w-full px-4 py-3 items-center border-b border-border/50 dark:border-border/15 ${
+                  className={`grid grid-cols-[200px_150px_1fr_120px] gap-4 w-full px-4 py-3 items-center border-b border-border/50 dark:border-border/15 ${
                     index === randomizedData.media.books.length - 1 ? 'border-b-0' : ''
                   }`}
                 >
@@ -516,7 +516,7 @@ const Toolkit: NextPage = () => {
         return (
           <ScrollableTable
             headers={
-              <div className="grid grid-cols-[200px_150px_1fr_120px] w-full px-4 py-3 text-sm font-medium text-muted-foreground">
+              <div className="grid grid-cols-[200px_150px_1fr_120px] gap-4 w-full px-4 py-3 text-sm font-medium text-muted-foreground">
                 <div className="text-left">Name</div>
                 <div className="text-left">Hosts</div>
                 <div className="text-left">Description</div>
@@ -528,7 +528,7 @@ const Toolkit: NextPage = () => {
               {randomizedData.media.podcasts.map((podcast, index) => (
                 <div 
                   key={podcast.id} 
-                  className={`grid grid-cols-[200px_150px_1fr_120px] w-full px-4 py-3 items-center border-b border-border/50 dark:border-border/15 ${
+                  className={`grid grid-cols-[200px_150px_1fr_120px] gap-4 w-full px-4 py-3 items-center border-b border-border/50 dark:border-border/15 ${
                     index === randomizedData.media.podcasts.length - 1 ? 'border-b-0' : ''
                   }`}
                 >
@@ -575,7 +575,7 @@ const Toolkit: NextPage = () => {
         return (
           <ScrollableTable
             headers={
-              <div className="grid grid-cols-[200px_1fr_120px] w-full px-4 py-3 text-sm font-medium text-muted-foreground">
+              <div className="grid grid-cols-[200px_1fr_120px] gap-4 w-full px-4 py-3 text-sm font-medium text-muted-foreground">
                 <div className="text-left">Name</div>
                 <div className="text-left">Description</div>
                 <div className="text-left">Type</div>
@@ -586,7 +586,7 @@ const Toolkit: NextPage = () => {
               {randomizedData.media.tvfilm.map((item, index) => (
                 <div 
                   key={item.id} 
-                  className={`grid grid-cols-[200px_1fr_120px] w-full px-4 py-3 items-center border-b border-border/50 dark:border-border/15 ${
+                  className={`grid grid-cols-[200px_1fr_120px] gap-4 w-full px-4 py-3 items-center border-b border-border/50 dark:border-border/15 ${
                     index === randomizedData.media.tvfilm.length - 1 ? 'border-b-0' : ''
                   }`}
                 >
@@ -636,7 +636,7 @@ const Toolkit: NextPage = () => {
         return (
           <ScrollableTable
             headers={
-              <div className="grid grid-cols-[200px_150px_150px_1fr_120px] w-full px-4 py-3 text-sm font-medium text-muted-foreground">
+              <div className="grid grid-cols-[200px_150px_150px_1fr_120px] gap-4 w-full px-4 py-3 text-sm font-medium text-muted-foreground">
                 <div className="text-left">Song</div>
                 <div className="text-left">Artist</div>
                 <div className="text-left">Album</div>
@@ -649,7 +649,7 @@ const Toolkit: NextPage = () => {
               {randomizedData.media.music.map((item, index) => (
                 <div 
                   key={item.id} 
-                  className={`grid grid-cols-[200px_150px_150px_1fr_120px] w-full px-4 py-3 items-center border-b border-border/50 dark:border-border/15 ${
+                  className={`grid grid-cols-[200px_150px_150px_1fr_120px] gap-4 w-full px-4 py-3 items-center border-b border-border/50 dark:border-border/15 ${
                     index === randomizedData.media.music.length - 1 ? 'border-b-0' : ''
                   }`}
                 >
