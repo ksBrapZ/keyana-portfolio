@@ -16,8 +16,8 @@ export default function BlogCard({ slug, frontmatter, content }: BlogCardProps) 
   const readingTime = calculateReadingTime(content);
 
   return (
-    <Link href={`/blog/${slug}`} className="block transition-transform hover:-translate-y-1">
-      <Card className="h-full rounded-xl border border-border/50 dark:border-border/20 bg-card/5">
+    <Link href={`/blog/${slug}`} className="block">
+      <Card className="h-full rounded-xl border border-border/50 dark:border-border/20 bg-card/5 transition-all duration-200 hover:bg-accent/15 dark:hover:bg-primary/5 hover:border-primary/20 dark:hover:border-primary/20">
         <CardHeader className="pb-2">
           <div className="text-xs text-muted-foreground mb-1">
             {formattedDate} · {readingTime} min read
