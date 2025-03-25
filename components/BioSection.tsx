@@ -7,15 +7,13 @@ const BioSection = () => {
       <Card className="bg-card/5 border-border/10">
         <CardContent className="pt-4">
           <div className="text-card-foreground/90 text-sm leading-relaxed space-y-3">
-            <p>
-              My life has always been guided by curiosity - a drive to explore how things work, why they matter, and how they can be improved.</p>
-            <p>
-              I was raised between cultures, with an Iranian mother and an American father in London, England. This multicultural upbringing deeply enriched my perspective, instilling a profound appreciation for diverse ideas, traditions, and worldviews.            </p>
-            <p>
-              Im fascinated by systems - testing their limits and understanding their intricacies. Whether it's building startups, tuning motorcycles, or planning mountain adventures, <em>I'm fascinated by the interplay between technology, craftsmanship, and nature.</em>  </p>
-            <p>  I believe there's a quiet path to happiness in creating things with intention, taking thoughtful risks, and focussing solely on what is in our power to affect.            </p>
-            <p>
-              <span className="font-semibold">Above all, my deepest joy comes from my (currently small) family - my ultimate guiding light.</span>            </p>
+            <p><strong>My life has always been guided by curiosity - a relentless drive to explore how things work, <em>why they matter</em>, and <em>how they can be improved</em>.</strong></p>
+
+            <p>I was raised between cultures, with an Iranian mother and an American father in London, England. Spending my teens and early twenties traveling widely taught me to appreciate the <em>richness and diversity</em> of people everywhere. In 2021, I moved to America to build the next chapter of my life.</p>
+
+            <p>My multicultural upbringing sparked my fascination with systems—both physical and digital. From software applications to motorcycles, I've always been drawn to understanding the underlying mechanics of things: how they operate, why they fail, and <strong>what makes them last</strong>. As systems grow more complex and skills more specialized, I believe there's profound value in <em>returning to basic principles</em>, connecting deeply with the fundamentals.</p>
+
+            <p>For me, happiness lies in creating intentionally, taking thoughtful risks, and building things that endure. Above all, though, my deepest joy is found in family—my <strong><em>small but growing guiding light</em></strong>.</p>
           </div>
         </CardContent>
       </Card>
