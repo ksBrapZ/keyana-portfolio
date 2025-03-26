@@ -1,0 +1,319 @@
+import { useState, useEffect } from 'react';
+import Link from 'next/link';
+import Image from 'next/image';
+import { GetStaticProps, GetStaticPaths } from 'next';
+import { useRouter } from 'next/router';
+import photos from '@/data/photos.json';
+
+// Define the Photo interface based on our JSON structure
+interface Photo {
+  year: number;
+  locationSlug: string;
+  title: string;
+  description: string;
+  camera: string;
+  lens: string;
+  images: string[];
+}
+
+interface LocationDetailProps {
+  location: Photo;
+  prevLocation: { year: number; slug: string; title: string } | null;
+  nextLocation: { year: number; slug: string; title: string } | null;
+}
+
+export default function LocationDetail({ 
+  location, 
+  prevLocation, 
+  nextLocation 
+}: LocationDetailProps) {
+  const router = useRouter();
+  const [isColorMode, setIsColorMode] = useState(true);
+  const [isDarkMode, setIsDarkMode] = useState(true); // Default to dark
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [viewMode, setViewMode] = useState<'photo' | 'map'>('photo');
+
+  // Handle keyboard navigation when modal is open
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (!isModalOpen) return;
+      
+      if (e.key === 'ArrowLeft' || e.key === '<') {
+        setCurrentImageIndex((prev) => 
+          prev === 0 ? location.images.length - 1 : prev - 1
+        );
+      } else if (e.key === 'ArrowRight' || e.key === '>') {
+        setCurrentImageIndex((prev) => 
+          prev === location.images.length - 1 ? 0 : prev + 1
+        );
+      } else if (e.key === 'Escape') {
+        setIsModalOpen(false);
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [isModalOpen, location.images.length]);
+
+  // Function to open the modal with a specific image
+  const openModal = (index: number) => {
+    setCurrentImageIndex(index);
+    setIsModalOpen(true);
+  };
+
+  return (
+    <div className={`min-h-screen ${isDarkMode ? 'bg-black text-white' : 'bg-white text-black'}`}>
+      <header className="py-4 px-6 flex justify-between items-center">
+        <div className="flex items-center space-x-2">
+          <Link href="/gallery" className="text-sm hover:underline">
+            back <span className="text-gray-500">(esc)</span>
+          </Link>
+        </div>
+        
+        <div className="text-sm font-light">
+          {location.title}
+        </div>
+        
+        <div className="flex text-xs space-x-6">
+          <div className="flex space-x-1">
+            <button 
+              className={`${viewMode === 'photo' ? 'font-medium' : 'text-gray-500'}`}
+              onClick={() => setViewMode('photo')}
+            >
+              photo
+            </button>
+            <span className="text-gray-500">/</span>
+            <button 
+              className={`${viewMode === 'map' ? 'font-medium' : 'text-gray-500'}`}
+              onClick={() => setViewMode('map')}
+            >
+              map
+            </button>
+          </div>
+          
+          <div className="flex space-x-1">
+            <button 
+              className={`${!isDarkMode ? 'font-medium' : 'text-gray-500'}`}
+              onClick={() => setIsDarkMode(false)}
+            >
+              light
+            </button>
+            <span className="text-gray-500">/</span>
+            <button 
+              className={`${isDarkMode ? 'font-medium' : 'text-gray-500'}`}
+              onClick={() => setIsDarkMode(true)}
+            >
+              dark
+            </button>
+          </div>
+          
+          <div className="flex space-x-1">
+            <button 
+              className={`${isColorMode ? 'font-medium' : 'text-gray-500'}`}
+              onClick={() => setIsColorMode(true)}
+            >
+              color
+            </button>
+            <span className="text-gray-500">/</span>
+            <button 
+              className={`${!isColorMode ? 'font-medium' : 'text-gray-500'}`}
+              onClick={() => setIsColorMode(false)}
+            >
+              b & w
+            </button>
+          </div>
+        </div>
+      </header>
+
+      <div className="px-6 py-2">
+        <div className="mb-8">
+          <h1 className="text-xl font-light">{location.title}</h1>
+          <p className="text-sm text-gray-500 mt-2">
+            {location.description}
+          </p>
+          <p className="text-xs text-gray-600 mt-2">
+            {location.camera && `${location.camera}`}{location.lens && ` • ${location.lens}`}
+          </p>
+          {location.locationSlug.includes('badwater') && (
+            <p className="text-xs text-gray-600 mt-1">
+              36° 14' 36.7" N 117° 21.2" W
+            </p>
+          )}
+        </div>
+
+        {/* Image Grid with numbers */}
+        <div className="grid grid-cols-6 gap-2">
+          {location.images.map((image, index) => (
+            <div 
+              key={image} 
+              className={`relative cursor-pointer group ${index < 6 ? 'col-span-3 sm:col-span-2' : 'col-span-2'}`}
+              onClick={() => openModal(index)}
+            >
+              <div className="aspect-[4/3] relative overflow-hidden">
+                <Image
+                  src={image}
+                  alt={`${location.title} - Image ${index + 1}`}
+                  fill
+                  sizes="(max-width: 640px) 50vw, 33vw"
+                  className={`object-cover ${!isColorMode ? 'grayscale' : ''}`}
+                />
+              </div>
+              <div className="absolute top-0 left-0 text-xs text-white opacity-70 p-1">
+                {index + 1}
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Navigation between locations */}
+        <div className="mt-12 flex justify-between text-xs">
+          <div>
+            {prevLocation && (
+              <Link 
+                href={`/gallery/${prevLocation.year}/${prevLocation.slug}`}
+                className="hover:underline flex items-center space-x-1 text-gray-400"
+              >
+                <span>prev</span> <span className="text-gray-600">&lt;</span>
+              </Link>
+            )}
+          </div>
+          <div>
+            {nextLocation && (
+              <Link 
+                href={`/gallery/${nextLocation.year}/${nextLocation.slug}`}
+                className="hover:underline flex items-center space-x-1 text-gray-400"
+              >
+                <span>next</span> <span className="text-gray-600">&gt;</span>
+              </Link>
+            )}
+          </div>
+        </div>
+      </div>
+
+      {/* Image Modal/Lightbox */}
+      {isModalOpen && (
+        <div 
+          className="fixed inset-0 bg-black z-50 flex flex-col"
+          onClick={() => setIsModalOpen(false)}
+        >
+          <div className="py-4 px-6 flex justify-between items-center text-white">
+            <div className="flex items-center space-x-2">
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setIsModalOpen(false);
+                }}
+                className="text-sm hover:underline"
+              >
+                back <span className="text-gray-500">(esc)</span>
+              </button>
+            </div>
+            
+            <div className="text-xs flex space-x-2">
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setCurrentImageIndex((prev) => prev === 0 ? location.images.length - 1 : prev - 1);
+                }}
+                className="text-gray-400 hover:text-white"
+              >
+                prev <span className="text-gray-600">&lt;</span>
+              </button>
+              <span className="text-gray-500">|</span>
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setCurrentImageIndex((prev) => prev === location.images.length - 1 ? 0 : prev + 1);
+                }}
+                className="text-gray-400 hover:text-white"
+              >
+                next <span className="text-gray-600">&gt;</span>
+              </button>
+            </div>
+            
+            <div className="text-xs text-gray-500">
+              {currentImageIndex + 1} / {location.images.length}
+            </div>
+          </div>
+          
+          <div className="flex-1 flex items-center justify-center" onClick={(e) => e.stopPropagation()}>
+            <div className="relative w-full h-full">
+              <Image
+                src={location.images[currentImageIndex]}
+                alt={`${location.title} - Image ${currentImageIndex + 1}`}
+                fill
+                sizes="100vw"
+                className={`object-contain ${!isColorMode ? 'grayscale' : ''}`}
+                priority
+              />
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+export const getStaticPaths: GetStaticPaths = async () => {
+  const paths = photos.map((photo: Photo) => ({
+    params: { year: photo.year.toString(), slug: photo.locationSlug },
+  }));
+
+  return {
+    paths,
+    fallback: false,
+  };
+};
+
+export const getStaticProps: GetStaticProps = async ({ params }) => {
+  const year = params?.year as string;
+  const slug = params?.slug as string;
+
+  // Find the current location
+  const location = photos.find(
+    (photo: Photo) => photo.year.toString() === year && photo.locationSlug === slug
+  );
+
+  if (!location) {
+    return {
+      notFound: true,
+    };
+  }
+
+  // Get all locations sorted by year (newest first) then by title
+  const allLocations = [...photos].sort((a, b) => {
+    if (a.year !== b.year) return b.year - a.year;
+    return a.title.localeCompare(b.title);
+  });
+
+  // Find the index of the current location
+  const currentIndex = allLocations.findIndex(
+    (photo) => photo.year === parseInt(year) && photo.locationSlug === slug
+  );
+
+  // Find prev and next locations
+  const prevLocation = currentIndex > 0 
+    ? {
+        year: allLocations[currentIndex - 1].year,
+        slug: allLocations[currentIndex - 1].locationSlug,
+        title: allLocations[currentIndex - 1].title,
+      }
+    : null;
+
+  const nextLocation = currentIndex < allLocations.length - 1
+    ? {
+        year: allLocations[currentIndex + 1].year,
+        slug: allLocations[currentIndex + 1].locationSlug,
+        title: allLocations[currentIndex + 1].title,
+      }
+    : null;
+
+  return {
+    props: {
+      location,
+      prevLocation,
+      nextLocation,
+    },
+  };
+}; 

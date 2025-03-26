@@ -124,15 +124,19 @@ const Header = () => {
                       </Link>
                     </NavigationMenuItem>
                     
-                    {/* Temporarily hidden until photo gallery is set up
+                    {/* Gallery link */}
                     <NavigationMenuItem>
-                      <Link href="/photos" legacyBehavior passHref>
-                        <NavigationMenuLink className="text-sm uppercase tracking-wider px-4 py-2 hover:text-primary transition-colors">
-                          Photos
+                      <Link href="/gallery" legacyBehavior passHref>
+                        <NavigationMenuLink 
+                          className={cn(
+                            "text-sm uppercase tracking-wider px-4 py-2 hover:text-primary transition-colors",
+                            pathname === "/gallery" || pathname?.startsWith("/gallery/") ? "text-primary" : "text-muted-foreground"
+                          )}
+                        >
+                          Gallery
                         </NavigationMenuLink>
                       </Link>
                     </NavigationMenuItem>
-                    */}
                   </NavigationMenuList>
                 </NavigationMenu>
               </div>
@@ -172,6 +176,16 @@ const Header = () => {
                 onClick={() => setMobileMenuOpen(false)}
               >
                 Blog
+              </Link>
+              <Link 
+                href="/gallery" 
+                className={cn(
+                  "text-sm uppercase tracking-wider py-2 hover:text-primary transition-colors",
+                  pathname === "/gallery" || pathname?.startsWith("/gallery/") ? "text-primary" : "text-muted-foreground"
+                )}
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                Gallery
               </Link>
             </nav>
           </div>
