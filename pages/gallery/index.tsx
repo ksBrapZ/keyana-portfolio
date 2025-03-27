@@ -173,7 +173,7 @@ export default function GalleryTimeline({ photosByYear, photosByLocation, years,
                       </span>
                     </div>
                     
-                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-x-2 gap-y-8">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
                       {locationsInYear.map((location) => {
                         // Use coverImage if set, otherwise use the first image as the cover image
                         const coverImage = location.coverImage || location.images[0];
@@ -184,7 +184,7 @@ export default function GalleryTimeline({ photosByYear, photosByLocation, years,
                             key={location.locationSlug}
                             className="block group"
                           >
-                            <div className="aspect-[4/3] relative overflow-hidden mb-1">
+                            <div className="aspect-[4/3] relative overflow-hidden">
                               <Image
                                 src={coverImage}
                                 alt={location.title}
@@ -194,7 +194,7 @@ export default function GalleryTimeline({ photosByYear, photosByLocation, years,
                                 priority
                               />
                             </div>
-                            <div className="flex justify-between text-xs mt-1">
+                            <div className="flex justify-between text-xs pt-2">
                               <span>{location.title}</span>
                               <span className="text-muted-foreground">{location.images.length}</span>
                             </div>
@@ -221,7 +221,7 @@ export default function GalleryTimeline({ photosByYear, photosByLocation, years,
                       </span>
                     </div>
                     
-                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-x-2 gap-y-8">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
                       {location.images.map((image, index) => (
                         <a 
                           href="#"
@@ -229,7 +229,7 @@ export default function GalleryTimeline({ photosByYear, photosByLocation, years,
                           key={`${location.locationSlug}-${index}`}
                           className="block group cursor-pointer"
                         >
-                          <div className="aspect-[4/3] relative overflow-hidden mb-1">
+                          <div className="aspect-[4/3] relative overflow-hidden">
                             <Image
                               src={image}
                               alt={`${location.title} ${index + 1}`}
@@ -239,7 +239,7 @@ export default function GalleryTimeline({ photosByYear, photosByLocation, years,
                               priority={index < 3}
                             />
                           </div>
-                          <div className="flex justify-between text-xs mt-1">
+                          <div className="flex justify-between text-xs pt-2">
                           </div>
                         </a>
                       ))}
