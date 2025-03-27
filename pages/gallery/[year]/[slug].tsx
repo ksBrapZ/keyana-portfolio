@@ -4,6 +4,9 @@ import Image from 'next/image';
 import { GetStaticProps, GetStaticPaths } from 'next';
 import { useRouter } from 'next/router';
 import photos from '@/data/photos.json';
+import Header from '@/components/Header';
+import Footer from '@/components/Footer';
+import Head from 'next/head';
 
 // Define the Photo interface based on our JSON structure
 interface Photo {
@@ -63,133 +66,128 @@ export default function LocationDetail({
   };
 
   return (
-    <div className={`min-h-screen ${isDarkMode ? 'bg-black text-white' : 'bg-white text-black'}`}>
-      <header className="py-4 px-6 flex justify-between items-center">
-        <div className="flex items-center space-x-2">
-          <Link href="/gallery" className="text-sm hover:underline">
-            back <span className="text-gray-500">(esc)</span>
-          </Link>
-        </div>
-        
-        <div className="text-sm font-light">
-          {location.title}
-        </div>
-        
-        <div className="flex text-xs space-x-6">
-          <div className="flex space-x-1">
-            <button 
-              className={`${viewMode === 'photo' ? 'font-medium' : 'text-gray-500'}`}
-              onClick={() => setViewMode('photo')}
-            >
-              photo
-            </button>
-            <span className="text-gray-500">/</span>
-            <button 
-              className={`${viewMode === 'map' ? 'font-medium' : 'text-gray-500'}`}
-              onClick={() => setViewMode('map')}
-            >
-              map
-            </button>
-          </div>
-          
-          <div className="flex space-x-1">
-            <button 
-              className={`${!isDarkMode ? 'font-medium' : 'text-gray-500'}`}
-              onClick={() => setIsDarkMode(false)}
-            >
-              light
-            </button>
-            <span className="text-gray-500">/</span>
-            <button 
-              className={`${isDarkMode ? 'font-medium' : 'text-gray-500'}`}
-              onClick={() => setIsDarkMode(true)}
-            >
-              dark
-            </button>
-          </div>
-          
-          <div className="flex space-x-1">
-            <button 
-              className={`${isColorMode ? 'font-medium' : 'text-gray-500'}`}
-              onClick={() => setIsColorMode(true)}
-            >
-              color
-            </button>
-            <span className="text-gray-500">/</span>
-            <button 
-              className={`${!isColorMode ? 'font-medium' : 'text-gray-500'}`}
-              onClick={() => setIsColorMode(false)}
-            >
-              b & w
-            </button>
-          </div>
-        </div>
-      </header>
+    <div className="min-h-screen flex flex-col bg-background text-foreground font-light">
+      <Head>
+        <title>{location.title} | Gallery | Keyana Sapp</title>
+        <meta name="description" content={`Photos of ${location.title} by Keyana Sapp`} />
+      </Head>
+      
+      {!isModalOpen && <Header />}
 
-      <div className="px-6 py-2">
-        <div className="mb-8">
-          <h1 className="text-xl font-light">{location.title}</h1>
-          <p className="text-sm text-gray-500 mt-2">
-            {location.description}
-          </p>
-          <p className="text-xs text-gray-600 mt-2">
-            {location.camera && `${location.camera}`}{location.lens && ` • ${location.lens}`}
-          </p>
-          {location.locationSlug.includes('badwater') && (
-            <p className="text-xs text-gray-600 mt-1">
-              36° 14' 36.7" N 117° 21.2" W
-            </p>
-          )}
-        </div>
-
-        {/* Image Grid with numbers */}
-        <div className="grid grid-cols-6 gap-2">
-          {location.images.map((image, index) => (
-            <div 
-              key={image} 
-              className={`relative cursor-pointer group ${index < 6 ? 'col-span-3 sm:col-span-2' : 'col-span-2'}`}
-              onClick={() => openModal(index)}
-            >
-              <div className="aspect-[4/3] relative overflow-hidden">
-                <Image
-                  src={image}
-                  alt={`${location.title} - Image ${index + 1}`}
-                  fill
-                  sizes="(max-width: 640px) 50vw, 33vw"
-                  className={`object-cover ${!isColorMode ? 'grayscale' : ''}`}
-                />
+      <main className={`py-3 flex-1 ${isModalOpen ? 'hidden' : ''}`}>
+        <div className="container mx-auto px-6 md:px-12 lg:px-16 max-w-screen-lg">
+          <div className="flex justify-between items-center mb-4">
+            <div className="flex items-center space-x-2">
+              <Link href="/gallery" className="text-sm hover:underline">
+                back <span className="text-muted-foreground">(esc)</span>
+              </Link>
+            </div>
+            
+            <div className="text-sm">
+              {location.title}
+            </div>
+            
+            <div className="flex text-xs space-x-6">
+              <div className="flex space-x-1">
+                <button 
+                  className={`${viewMode === 'photo' ? 'font-medium' : 'text-muted-foreground'}`}
+                  onClick={() => setViewMode('photo')}
+                >
+                  photo
+                </button>
+                <span className="text-muted-foreground">/</span>
+                <button 
+                  className={`${viewMode === 'map' ? 'font-medium' : 'text-muted-foreground'}`}
+                  onClick={() => setViewMode('map')}
+                >
+                  map
+                </button>
               </div>
-              <div className="absolute top-0 left-0 text-xs text-white opacity-70 p-1">
-                {index + 1}
+              
+              <div className="flex space-x-1">
+                <button 
+                  className={`${isColorMode ? 'font-medium' : 'text-muted-foreground'}`}
+                  onClick={() => setIsColorMode(true)}
+                >
+                  color
+                </button>
+                <span className="text-muted-foreground">/</span>
+                <button 
+                  className={`${!isColorMode ? 'font-medium' : 'text-muted-foreground'}`}
+                  onClick={() => setIsColorMode(false)}
+                >
+                  b & w
+                </button>
               </div>
             </div>
-          ))}
-        </div>
+          </div>
 
-        {/* Navigation between locations */}
-        <div className="mt-12 flex justify-between text-xs">
-          <div>
-            {prevLocation && (
-              <Link 
-                href={`/gallery/${prevLocation.year}/${prevLocation.slug}`}
-                className="hover:underline flex items-center space-x-1 text-gray-400"
-              >
-                <span>prev</span> <span className="text-gray-600">&lt;</span>
-              </Link>
+          <div className="mb-8">
+            <h1 className="text-xl font-medium">{location.title}</h1>
+            <p className="text-sm text-muted-foreground mt-2">
+              {location.description}
+            </p>
+            <p className="text-xs text-muted-foreground/70 mt-2">
+              {location.camera && `${location.camera}`}{location.lens && ` • ${location.lens}`}
+            </p>
+            {location.locationSlug.includes('badwater') && (
+              <p className="text-xs text-muted-foreground/70 mt-1">
+                36° 14' 36.7" N 117° 21.2" W
+              </p>
             )}
           </div>
-          <div>
-            {nextLocation && (
-              <Link 
-                href={`/gallery/${nextLocation.year}/${nextLocation.slug}`}
-                className="hover:underline flex items-center space-x-1 text-gray-400"
+
+          {/* Image Grid with numbers */}
+          <div className="grid grid-cols-6 gap-2">
+            {location.images.map((image, index) => (
+              <div 
+                key={image} 
+                className={`relative cursor-pointer group ${index < 6 ? 'col-span-3 sm:col-span-2' : 'col-span-2'}`}
+                onClick={() => openModal(index)}
               >
-                <span>next</span> <span className="text-gray-600">&gt;</span>
-              </Link>
-            )}
+                <div className="aspect-[4/3] relative overflow-hidden">
+                  <Image
+                    src={image}
+                    alt={`${location.title} - Image ${index + 1}`}
+                    fill
+                    sizes="(max-width: 640px) 50vw, 33vw"
+                    className={`object-cover ${!isColorMode ? 'grayscale' : ''}`}
+                  />
+                </div>
+                <div className="absolute top-0 left-0 text-xs text-white bg-black/50 px-1.5 py-0.5 rounded-br">
+                  {index + 1}
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Navigation between locations */}
+          <div className="mt-12 flex justify-between text-xs">
+            <div>
+              {prevLocation && (
+                <Link 
+                  href={`/gallery/${prevLocation.year}/${prevLocation.slug}`}
+                  className="hover:underline flex items-center space-x-1 text-muted-foreground"
+                >
+                  <span>prev</span> <span className="text-muted-foreground/50">&lt;</span>
+                </Link>
+              )}
+            </div>
+            <div>
+              {nextLocation && (
+                <Link 
+                  href={`/gallery/${nextLocation.year}/${nextLocation.slug}`}
+                  className="hover:underline flex items-center space-x-1 text-muted-foreground"
+                >
+                  <span>next</span> <span className="text-muted-foreground/50">&gt;</span>
+                </Link>
+              )}
+            </div>
           </div>
         </div>
-      </div>
+      </main>
+
+      {!isModalOpen && <Footer />}
 
       {/* Image Modal/Lightbox */}
       {isModalOpen && (
