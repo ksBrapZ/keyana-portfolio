@@ -18,6 +18,7 @@ interface Photo {
   camera: string;
   lens: string;
   images: string[];
+  coverImage?: string; // Optional cover image path
 }
 
 // Group photos by year for the timeline view
@@ -41,7 +42,6 @@ interface TimelineProps {
 export default function GalleryTimeline({ photosByYear, photosByLocation, years, totalLocations, locations }: TimelineProps) {
   const router = useRouter();
   const [isColorMode, setIsColorMode] = useState(true);
-  const [viewMode, setViewMode] = useState<'photo' | 'map'>('photo');
   const [displayMode, setDisplayMode] = useState<'years' | 'locations'>('years');
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedLocation, setSelectedLocation] = useState<string | null>(null);
@@ -139,23 +139,7 @@ export default function GalleryTimeline({ photosByYear, photosByLocation, years,
               </div>
             </div>
             
-            <div className="flex text-xs space-x-6">
-              <div className="flex space-x-1">
-                <button 
-                  className={`${viewMode === 'photo' ? 'font-medium' : 'text-muted-foreground'}`}
-                  onClick={() => setViewMode('photo')}
-                >
-                  photo
-                </button>
-                <span className="text-muted-foreground">/</span>
-                <button 
-                  className={`${viewMode === 'map' ? 'font-medium' : 'text-muted-foreground'}`}
-                  onClick={() => setViewMode('map')}
-                >
-                  map
-                </button>
-              </div>
-              
+            <div className="flex text-xs">
               <div className="flex space-x-1">
                 <button 
                   className={`${isColorMode ? 'font-medium' : 'text-muted-foreground'}`}
@@ -191,8 +175,8 @@ export default function GalleryTimeline({ photosByYear, photosByLocation, years,
                     
                     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-x-2 gap-y-8">
                       {locationsInYear.map((location) => {
-                        // Use the first image as the cover image
-                        const coverImage = location.images[0];
+                        // Use coverImage if set, otherwise use the first image as the cover image
+                        const coverImage = location.coverImage || location.images[0];
                         
                         return (
                           <Link 

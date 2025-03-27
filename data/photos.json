@@ -6,6 +6,7 @@
     "description": "A collection of photos from Pecos Wilderness.",
     "camera": "Camera information will be added later",
     "lens": "Lens information will be added later",
+    "coverImage": "/images/2023/pecos-wilderness/IMG_1902.jpeg",
     "images": [
       "/images/2023/pecos-wilderness/IMG_1881.jpeg",
       "/images/2023/pecos-wilderness/IMG_1890.jpeg",
@@ -73,6 +74,7 @@
     "description": "A collection of photos from Austin.",
     "camera": "Camera information will be added later",
     "lens": "Lens information will be added later",
+    "coverImage": "/images/2024/austin/KCS09248.jpg",
     "images": [
       "/images/2024/austin/IMG_2518.jpeg",
       "/images/2024/austin/KCS09248.jpg",
@@ -86,6 +88,7 @@
     "description": "A collection of photos from Big Bend.",
     "camera": "Camera information will be added later",
     "lens": "Lens information will be added later",
+    "coverImage": "/images/2024/big-bend/IMG_2389.jpeg",
     "images": [
       "/images/2024/big-bend/IMG_2326.jpeg",
       "/images/2024/big-bend/IMG_2335.jpeg",
@@ -103,6 +106,7 @@
     "description": "A collection of photos from Boulder.",
     "camera": "Camera information will be added later",
     "lens": "Lens information will be added later",
+    "coverImage": "/images/2024/boulder/KCS09588.jpg",
     "images": [
       "/images/2024/boulder/KCS00158.jpg",
       "/images/2024/boulder/KCS09584.jpg",
@@ -118,6 +122,7 @@
     "description": "A collection of photos from Capitol Peak.",
     "camera": "Camera information will be added later",
     "lens": "Lens information will be added later",
+    "coverImage": "/images/2024/capitol-peak/KCS00530.jpg",
     "images": [
       "/images/2024/capitol-peak/KCS00472.jpg",
       "/images/2024/capitol-peak/KCS00477.jpg",
@@ -148,6 +153,7 @@
     "description": "A collection of photos from Hill Country.",
     "camera": "Camera information will be added later",
     "lens": "Lens information will be added later",
+    "coverImage": "/images/2024/hill-country/IMG_3321.jpeg",
     "images": [
       "/images/2024/hill-country/IMG_2567.jpeg",
       "/images/2024/hill-country/IMG_2572.jpeg",
@@ -176,6 +182,7 @@
     "description": "A collection of photos from Mt Bierstadt.",
     "camera": "Camera information will be added later",
     "lens": "Lens information will be added later",
+    "coverImage": "/images/2024/mt-bierstadt/KCS00632.jpg",
     "images": [
       "/images/2024/mt-bierstadt/KCS00620.jpg",
       "/images/2024/mt-bierstadt/KCS00632.jpg",
@@ -192,6 +199,7 @@
     "description": "A collection of photos from Nederland.",
     "camera": "Camera information will be added later",
     "lens": "Lens information will be added later",
+    "coverImage": "/images/2024/nederland/KCS00056.jpg",
     "images": [
       "/images/2024/nederland/KCS00014.jpg",
       "/images/2024/nederland/KCS00048.jpg",
@@ -205,6 +213,7 @@
     "description": "A collection of photos from Red Feather Lakes.",
     "camera": "Camera information will be added later",
     "lens": "Lens information will be added later",
+    "coverImage": "/images/2024/red-feather-lakes/KCS09949.jpg",
     "images": [
       "/images/2024/red-feather-lakes/KCS09802.jpg",
       "/images/2024/red-feather-lakes/KCS09831.jpg",
@@ -223,6 +232,7 @@
     "description": "A collection of photos from Vistoria Island.",
     "camera": "Camera information will be added later",
     "lens": "Lens information will be added later",
+    "coverImage": "/images/2024/vistoria-island/KCS00301.jpg",
     "images": [
       "/images/2024/vistoria-island/KCS00240.jpg",
       "/images/2024/vistoria-island/KCS00246.jpg",
@@ -240,6 +250,7 @@
     "description": "A collection of photos from San Francisco.",
     "camera": "Camera information will be added later",
     "lens": "Lens information will be added later",
+    "coverImage": "/images/2025/san-francisco/IMG_3408.jpeg",
     "images": [
       "/images/2025/san-francisco/IMG_3400.jpeg",
       "/images/2025/san-francisco/IMG_3408.jpeg",
