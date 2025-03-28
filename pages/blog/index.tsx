@@ -12,6 +12,21 @@ interface BlogIndexProps {
 
 export default function BlogIndex({ posts }: BlogIndexProps) {
   const [contentHeight, setContentHeight] = useState<string>("calc(100vh - 280px)");
+  const [isMobile, setIsMobile] = useState(false);
+
+  // Detect mobile viewport and adjust scrolling behavior
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    
+    // Initial check
+    checkMobile();
+    
+    // Update on resize
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   // Adjust content height based on window size
   useEffect(() => {
@@ -92,15 +107,15 @@ export default function BlogIndex({ posts }: BlogIndexProps) {
       <div className="h-screen flex flex-col bg-background text-foreground font-light">
         <Header />
         
-        <main className="flex-grow container mx-auto px-6 md:px-12 lg:px-16 max-w-screen-lg py-3 overflow-hidden">
+        <main className={`flex-grow container mx-auto px-6 md:px-12 lg:px-16 max-w-screen-lg py-3 ${isMobile ? '' : 'overflow-hidden'}`}>
           <div className="mb-4">
             <h1 className="text-3xl font-bold mb-2">Blog</h1>
             <p className="text-muted-foreground">Thoughts and writings on design, development, and more.</p>
           </div>
           
           <div 
-            className="blog-scrollbar overflow-y-auto"
-            style={{ height: contentHeight }}
+            className={`${!isMobile ? 'blog-scrollbar overflow-y-auto' : ''}`}
+            style={{ height: isMobile ? 'auto' : contentHeight }}
           >
             {posts.length > 0 ? (
               <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-2 pt-2 pb-12">
