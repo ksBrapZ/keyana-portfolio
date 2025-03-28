@@ -104,6 +104,7 @@ const Toolkit: NextPage = () => {
   const [activeTab, setActiveTab] = useState<number>(0);
   const [tableHeight, setTableHeight] = useState<string>("500px");
   const [isMobile, setIsMobile] = useState<boolean>(false);
+  const [isScrolled, setIsScrolled] = useState<boolean>(false);
   
   // Create state for randomized data
   const [randomizedData, setRandomizedData] = useState<ToolkitData>({
@@ -116,6 +117,19 @@ const Toolkit: NextPage = () => {
       music: []
     }
   });
+  
+  // Handle scroll effect for sticky header
+  useEffect(() => {
+    if (!isMobile) return;
+    
+    const handleScroll = () => {
+      const scrollPosition = window.scrollY;
+      setIsScrolled(scrollPosition > 10);
+    };
+    
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [isMobile]);
   
   // Randomize data on initial load
   useEffect(() => {
@@ -166,7 +180,17 @@ const Toolkit: NextPage = () => {
   // Check if device is mobile
   useEffect(() => {
     const checkMobile = () => {
-      setIsMobile(window.innerWidth < 768);
+      const isMobileView = window.innerWidth < 768;
+      setIsMobile(isMobileView);
+      
+      // If we're switching between desktop and mobile views,
+      // we may need to recalculate layout dimensions
+      if (isMobileView !== isMobile) {
+        // Force layout recalculation in the next animation frame
+        requestAnimationFrame(() => {
+          window.dispatchEvent(new Event('resize'));
+        });
+      }
     };
     
     // Initial check
@@ -177,22 +201,25 @@ const Toolkit: NextPage = () => {
     
     // Clean up
     return () => window.removeEventListener('resize', checkMobile);
-  }, []);
+  }, [isMobile]);
   
   // Adjust table height based on window size
   useEffect(() => {
     const updateTableHeight = () => {
-      // Calculate available height (viewport height minus header, tabs, and footer)
-      const headerHeight = 200; // Approximate header height
-      const tabsHeight = 60;    // Approximate tabs height
-      const footerHeight = 100; // Approximate footer height
-      const padding = 80;       // Additional padding
-      
-      const availableHeight = window.innerHeight - (headerHeight + tabsHeight + footerHeight + padding);
-      // Set a minimum height to prevent tiny tables
-      const finalHeight = Math.max(300, availableHeight);
-      
-      setTableHeight(`${finalHeight}px`);
+      // Only adjust the table height for desktop view
+      if (!isMobile) {
+        // Calculate available height (viewport height minus header, tabs, and footer)
+        const headerHeight = 200; // Approximate header height
+        const tabsHeight = 60;    // Approximate tabs height
+        const footerHeight = 100; // Approximate footer height
+        const padding = 80;       // Additional padding
+        
+        const availableHeight = window.innerHeight - (headerHeight + tabsHeight + footerHeight + padding);
+        // Set a minimum height to prevent tiny tables
+        const finalHeight = Math.max(300, availableHeight);
+        
+        setTableHeight(`${finalHeight}px`);
+      }
     };
     
     // Initial calculation
@@ -201,7 +228,7 @@ const Toolkit: NextPage = () => {
     // Update on resize
     window.addEventListener('resize', updateTableHeight);
     return () => window.removeEventListener('resize', updateTableHeight);
-  }, []);
+  }, [isMobile]);
 
   // Add custom scrollbar styles
   useEffect(() => {
@@ -269,22 +296,14 @@ const Toolkit: NextPage = () => {
     children: React.ReactNode, 
     className?: string 
   }) => (
-    <div className={`rounded-xl border border-border/50 dark:border-border/20 bg-card/5 p-4 mb-4 ${className}`}>
+    <div className={`rounded-xl border border-border/50 dark:border-border/20 bg-card/5 p-3 ${className}`}>
       {children}
     </div>
   );
 
   // Scrollable container for mobile cards
   const ScrollableCards = ({ children }: { children: React.ReactNode }) => (
-    <div 
-      style={{ 
-        height: tableHeight, 
-        overflowY: 'auto',
-        scrollbarWidth: 'thin',
-        scrollbarColor: 'rgba(155, 155, 155, 0.5) transparent'
-      }} 
-      className="custom-scrollbar"
-    >
+    <div className="space-y-2">
       {children}
     </div>
   );
@@ -320,18 +339,18 @@ const Toolkit: NextPage = () => {
           return (
             <ScrollableCards>
               {randomizedData.tools.map((tool) => (
-                <MobileCard key={tool.id}>
-                  <div className="flex justify-between items-start mb-2">
-                    <h3 className="font-medium text-base">
+                <MobileCard key={tool.id} className="h-auto">
+                  <div className="flex items-start justify-between">
+                    <h3 className="font-medium text-sm truncate max-w-[70%]">
                       <ExternalItemLink href={tool.url}>
                         {tool.name}
                       </ExternalItemLink>
                     </h3>
-                    <Badge variant={getTypeVariant(tool.type)} className="ml-2 whitespace-nowrap">
+                    <Badge variant={getTypeVariant(tool.type)} className="text-xs px-1.5 py-0 h-[18px] shrink-0 ml-1">
                       {tool.type}
                     </Badge>
                   </div>
-                  <p className="text-muted-foreground text-sm">{tool.description}</p>
+                  <p className="text-muted-foreground text-xs mt-0.5">{tool.description}</p>
                 </MobileCard>
               ))}
             </ScrollableCards>
@@ -377,18 +396,18 @@ const Toolkit: NextPage = () => {
           return (
             <ScrollableCards>
               {randomizedData.products.map((product) => (
-                <MobileCard key={product.id}>
-                  <div className="flex justify-between items-start mb-2">
-                    <h3 className="font-medium text-base">
+                <MobileCard key={product.id} className="h-auto">
+                  <div className="flex items-start justify-between">
+                    <h3 className="font-medium text-sm truncate max-w-[70%]">
                       <ExternalItemLink href={product.url}>
                         {product.name}
                       </ExternalItemLink>
                     </h3>
-                    <Badge variant={getTypeVariant(product.type)} className="ml-2 whitespace-nowrap">
+                    <Badge variant={getTypeVariant(product.type)} className="text-xs px-1.5 py-0 h-[18px] shrink-0 ml-1">
                       {product.type}
                     </Badge>
                   </div>
-                  <p className="text-muted-foreground text-sm">{product.description}</p>
+                  <p className="text-muted-foreground text-xs mt-0.5">{product.description}</p>
                 </MobileCard>
               ))}
             </ScrollableCards>
@@ -434,19 +453,19 @@ const Toolkit: NextPage = () => {
           return (
             <ScrollableCards>
               {randomizedData.media.books.map((book) => (
-                <MobileCard key={book.id}>
-                  <div className="flex justify-between items-start mb-2">
-                    <h3 className="font-medium text-base">
+                <MobileCard key={book.id} className="h-auto">
+                  <div className="flex items-start justify-between">
+                    <h3 className="font-medium text-sm truncate max-w-[70%]">
                       <ExternalItemLink href={book.url}>
                         {book.title}
                       </ExternalItemLink>
                     </h3>
-                    <Badge variant={getTypeVariant(book.tag)} className="ml-2 whitespace-nowrap">
+                    <Badge variant={getTypeVariant(book.tag)} className="text-xs px-1.5 py-0 h-[18px] shrink-0 ml-1">
                       {book.tag}
                     </Badge>
                   </div>
-                  <div className="text-sm mb-2 text-primary/80">by {book.author}</div>
-                  <p className="text-muted-foreground text-sm">{book.description}</p>
+                  <div className="text-xs mt-0.5 text-primary/80">by {book.author}</div>
+                  <p className="text-muted-foreground text-xs mt-0.5">{book.description}</p>
                 </MobileCard>
               ))}
             </ScrollableCards>
@@ -494,19 +513,19 @@ const Toolkit: NextPage = () => {
           return (
             <ScrollableCards>
               {randomizedData.media.podcasts.map((podcast) => (
-                <MobileCard key={podcast.id}>
-                  <div className="flex justify-between items-start mb-2">
-                    <h3 className="font-medium text-base">
+                <MobileCard key={podcast.id} className="h-auto">
+                  <div className="flex items-start justify-between">
+                    <h3 className="font-medium text-sm truncate max-w-[70%]">
                       <ExternalItemLink href={podcast.url}>
                         {podcast.name}
                       </ExternalItemLink>
                     </h3>
-                    <Badge variant={getTypeVariant(podcast.type)} className="ml-2 whitespace-nowrap">
+                    <Badge variant={getTypeVariant(podcast.type)} className="text-xs px-1.5 py-0 h-[18px] shrink-0 ml-1">
                       {podcast.type}
                     </Badge>
                   </div>
-                  <div className="text-sm mb-2 text-primary/80">Hosted by {podcast.hosts}</div>
-                  <p className="text-muted-foreground text-sm">{podcast.description}</p>
+                  <div className="text-xs mt-0.5 text-primary/80">Hosted by {podcast.hosts}</div>
+                  <p className="text-muted-foreground text-xs mt-0.5">{podcast.description}</p>
                 </MobileCard>
               ))}
             </ScrollableCards>
@@ -554,18 +573,18 @@ const Toolkit: NextPage = () => {
           return (
             <ScrollableCards>
               {randomizedData.media.tvfilm.map((item) => (
-                <MobileCard key={item.id}>
-                  <div className="flex justify-between items-start mb-2">
-                    <h3 className="font-medium text-base">
+                <MobileCard key={item.id} className="h-auto">
+                  <div className="flex items-start justify-between">
+                    <h3 className="font-medium text-sm truncate max-w-[70%]">
                       <ExternalItemLink href={item.url}>
                         {item.name}
                       </ExternalItemLink>
                     </h3>
-                    <Badge variant={getTypeVariant(item.type)} className="ml-2 whitespace-nowrap">
+                    <Badge variant={getTypeVariant(item.type)} className="text-xs px-1.5 py-0 h-[18px] shrink-0 ml-1">
                       {item.type}
                     </Badge>
                   </div>
-                  <p className="text-muted-foreground text-sm">{item.description}</p>
+                  <p className="text-muted-foreground text-xs mt-0.5">{item.description}</p>
                 </MobileCard>
               ))}
             </ScrollableCards>
@@ -611,22 +630,22 @@ const Toolkit: NextPage = () => {
           return (
             <ScrollableCards>
               {randomizedData.media.music.map((item) => (
-                <MobileCard key={item.id}>
-                  <div className="flex justify-between items-start mb-2">
-                    <h3 className="font-medium text-base">
+                <MobileCard key={item.id} className="h-auto">
+                  <div className="flex items-start justify-between">
+                    <h3 className="font-medium text-sm truncate max-w-[70%]">
                       <ExternalItemLink href={item.url}>
                         {item.song}
                       </ExternalItemLink>
                     </h3>
-                    <Badge variant={getTypeVariant(item.type)} className="ml-2 whitespace-nowrap">
+                    <Badge variant={getTypeVariant(item.type)} className="text-xs px-1.5 py-0 h-[18px] shrink-0 ml-1">
                       {item.type}
                     </Badge>
                   </div>
-                  <div className="flex flex-col mb-2">
-                    <span className="text-sm text-primary/80">{item.artist}</span>
-                    <span className="text-xs text-muted-foreground">Album: {item.album}</span>
+                  <div className="inline-flex gap-2 items-center mt-0.5">
+                    <span className="text-xs text-primary/80">{item.artist}</span>
+                    <span className="text-xs text-muted-foreground">• {item.album}</span>
                   </div>
-                  <p className="text-muted-foreground text-sm">{item.description}</p>
+                  <p className="text-muted-foreground text-xs mt-0.5">{item.description}</p>
                 </MobileCard>
               ))}
             </ScrollableCards>
@@ -703,16 +722,38 @@ const Toolkit: NextPage = () => {
             </p>
           </div>
 
-          <div className="w-full max-w-4xl mx-auto">
-            <div className="mb-2">
-              <ExpandableTabs 
-                tabs={tabs} 
-                defaultValue={activeTab}
-                onChange={handleTabChange}
-                className="w-full"
-              />
+          <div className="w-full max-w-4xl mx-auto pb-6">
+            <div 
+              className={`${
+                isMobile 
+                  ? `sticky top-3 z-20 flex justify-center px-4 transition-all duration-300`
+                  : 'mb-2'
+              }`}
+            >
+              <div 
+                className={`${
+                  isMobile 
+                    ? `inline-flex rounded-full px-3 py-1.5 bg-background/50 backdrop-blur-md border ${
+                        isScrolled 
+                          ? 'border-border/20 shadow-md' 
+                          : 'border-transparent'
+                      } transition-all duration-300 ${
+                        isScrolled ? 'scale-[0.95] transform-gpu' : ''
+                      }`
+                    : ''
+                }`}
+              >
+                <ExpandableTabs 
+                  tabs={tabs} 
+                  defaultValue={activeTab}
+                  onChange={handleTabChange}
+                  className="w-full"
+                />
+              </div>
             </div>
-            {renderContent()}
+            <div className={isMobile ? 'mt-4' : ''}>
+              {renderContent()}
+            </div>
           </div>
         </div>
       </main>
