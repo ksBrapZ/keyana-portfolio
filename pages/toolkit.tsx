@@ -78,28 +78,6 @@ interface ToolkitData {
 // Import the JSON data
 import toolkitData from '../data/toolkit.json';
 
-// Color mapping for types as Badge variant
-const getTypeVariant = (type: string): "default" | "secondary" | "destructive" | "outline" => {
-  const typeMap: Record<string, "default" | "secondary" | "destructive" | "outline"> = {
-    // Development tools
-    'Development': 'default',
-    'Design': 'secondary',
-    'Productivity': 'outline',
-    
-    // Products
-    'Vehicles': 'destructive',
-    'Tech': 'default',
-    'Audio': 'secondary',
-    'Gear': 'outline',
-    'Home Goods': 'outline',
-    
-    // Default for any other type
-    'default': 'default'
-  };
-  
-  return typeMap[type] || typeMap.default;
-};
-
 const Toolkit: NextPage = () => {
   const [activeTab, setActiveTab] = useState<number>(0);
   const [tableHeight, setTableHeight] = useState<string>("500px");
@@ -346,7 +324,7 @@ const Toolkit: NextPage = () => {
                         {tool.name}
                       </ExternalItemLink>
                     </h3>
-                    <Badge variant={getTypeVariant(tool.type)} className="text-xs px-1.5 py-0 h-[18px] shrink-0 ml-1">
+                    <Badge className="text-xs px-1.5 py-0 h-[18px] shrink-0 ml-1 border border-neutral-300 dark:border-neutral-700 bg-white dark:bg-transparent text-black dark:text-white">
                       {tool.type}
                     </Badge>
                   </div>
@@ -382,7 +360,7 @@ const Toolkit: NextPage = () => {
                   </div>
                   <div className="text-muted-foreground">{tool.description}</div>
                   <div>
-                    <Badge variant={getTypeVariant(tool.type)}>
+                    <Badge className="border border-neutral-300 dark:border-neutral-700 bg-white dark:bg-transparent text-black dark:text-white">
                       {tool.type}
                     </Badge>
                   </div>
@@ -403,7 +381,7 @@ const Toolkit: NextPage = () => {
                         {product.name}
                       </ExternalItemLink>
                     </h3>
-                    <Badge variant={getTypeVariant(product.type)} className="text-xs px-1.5 py-0 h-[18px] shrink-0 ml-1">
+                    <Badge className="text-xs px-1.5 py-0 h-[18px] shrink-0 ml-1 border border-neutral-300 dark:border-neutral-700 bg-white dark:bg-transparent text-black dark:text-white">
                       {product.type}
                     </Badge>
                   </div>
@@ -439,7 +417,7 @@ const Toolkit: NextPage = () => {
                   </div>
                   <div className="text-muted-foreground">{product.description}</div>
                   <div>
-                    <Badge variant={getTypeVariant(product.type)}>
+                    <Badge className="border border-neutral-300 dark:border-neutral-700 bg-white dark:bg-transparent text-black dark:text-white">
                       {product.type}
                     </Badge>
                   </div>
@@ -460,7 +438,7 @@ const Toolkit: NextPage = () => {
                         {book.title}
                       </ExternalItemLink>
                     </h3>
-                    <Badge variant={getTypeVariant(book.tag)} className="text-xs px-1.5 py-0 h-[18px] shrink-0 ml-1">
+                    <Badge className="text-xs px-1.5 py-0 h-[18px] shrink-0 ml-1 border border-neutral-300 dark:border-neutral-700 bg-white dark:bg-transparent text-black dark:text-white">
                       {book.tag}
                     </Badge>
                   </div>
@@ -499,7 +477,7 @@ const Toolkit: NextPage = () => {
                   <div>{book.author}</div>
                   <div className="text-muted-foreground">{book.description}</div>
                   <div>
-                    <Badge variant={getTypeVariant(book.tag)}>
+                    <Badge className="border border-neutral-300 dark:border-neutral-700 bg-white dark:bg-transparent text-black dark:text-white">
                       {book.tag}
                     </Badge>
                   </div>
@@ -520,7 +498,7 @@ const Toolkit: NextPage = () => {
                         {podcast.name}
                       </ExternalItemLink>
                     </h3>
-                    <Badge variant={getTypeVariant(podcast.type)} className="text-xs px-1.5 py-0 h-[18px] shrink-0 ml-1">
+                    <Badge className="text-xs px-1.5 py-0 h-[18px] shrink-0 ml-1 border border-neutral-300 dark:border-neutral-700 bg-white dark:bg-transparent text-black dark:text-white">
                       {podcast.type}
                     </Badge>
                   </div>
@@ -559,7 +537,7 @@ const Toolkit: NextPage = () => {
                   <div>{podcast.hosts}</div>
                   <div className="text-muted-foreground">{podcast.description}</div>
                   <div>
-                    <Badge variant={getTypeVariant(podcast.type)}>
+                    <Badge className="border border-neutral-300 dark:border-neutral-700 bg-white dark:bg-transparent text-black dark:text-white">
                       {podcast.type}
                     </Badge>
                   </div>
@@ -580,7 +558,7 @@ const Toolkit: NextPage = () => {
                         {item.name}
                       </ExternalItemLink>
                     </h3>
-                    <Badge variant={getTypeVariant(item.type)} className="text-xs px-1.5 py-0 h-[18px] shrink-0 ml-1">
+                    <Badge className="text-xs px-1.5 py-0 h-[18px] shrink-0 ml-1 border border-neutral-300 dark:border-neutral-700 bg-white dark:bg-transparent text-black dark:text-white">
                       {item.type}
                     </Badge>
                   </div>
@@ -616,7 +594,7 @@ const Toolkit: NextPage = () => {
                   </div>
                   <div className="text-muted-foreground">{item.description}</div>
                   <div>
-                    <Badge variant={getTypeVariant(item.type)}>
+                    <Badge className="border border-neutral-300 dark:border-neutral-700 bg-white dark:bg-transparent text-black dark:text-white">
                       {item.type}
                     </Badge>
                   </div>
@@ -637,7 +615,7 @@ const Toolkit: NextPage = () => {
                         {item.song}
                       </ExternalItemLink>
                     </h3>
-                    <Badge variant={getTypeVariant(item.type)} className="text-xs px-1.5 py-0 h-[18px] shrink-0 ml-1">
+                    <Badge className="text-xs px-1.5 py-0 h-[18px] shrink-0 ml-1 border border-neutral-300 dark:border-neutral-700 bg-white dark:bg-transparent text-black dark:text-white">
                       {item.type}
                     </Badge>
                   </div>
@@ -681,7 +659,7 @@ const Toolkit: NextPage = () => {
                   <div>{item.album}</div>
                   <div className="text-muted-foreground">{item.description}</div>
                   <div>
-                    <Badge variant={getTypeVariant(item.type)}>
+                    <Badge className="border border-neutral-300 dark:border-neutral-700 bg-white dark:bg-transparent text-black dark:text-white">
                       {item.type}
                     </Badge>
                   </div>
