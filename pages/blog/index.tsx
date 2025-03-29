@@ -108,9 +108,9 @@ export default function BlogIndex({ posts }: BlogIndexProps) {
         <Header />
         
         <main className={`flex-grow container mx-auto px-6 md:px-12 lg:px-16 max-w-screen-lg py-3 ${isMobile ? '' : 'overflow-hidden'}`}>
-          <div className="mb-4">
-            <h1 className="text-3xl font-bold mb-2">Blog</h1>
-            <p className="text-muted-foreground">Thoughts and writings on design, development, and more.</p>
+          <div className="w-full max-w-4xl mx-auto mb-6">
+            <h1 className="text-2xl font-medium mb-3">Blog</h1>
+            <p className="text-muted-foreground">Reflections on technology, philosophy, design and whatever else I'm thinking about.</p>
           </div>
           
           <div 

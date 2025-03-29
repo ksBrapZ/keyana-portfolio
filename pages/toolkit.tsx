@@ -696,7 +696,7 @@ const Toolkit: NextPage = () => {
           <div className="w-full max-w-4xl mx-auto mb-6">
             <h1 className="text-2xl font-medium mb-3">Toolkit</h1>
             <p className="text-muted-foreground">
-              A curated collection of tools, products, media, and people that I find valuable, use regularly, or admire.
+              Whenever I find a product, book, podcast, movie, or song that I love, I add it to my toolkit.
             </p>
           </div>
 
