@@ -80,7 +80,7 @@ import toolkitData from '../data/toolkit.json';
 
 const Toolkit: NextPage = () => {
   const [activeTab, setActiveTab] = useState<number>(0);
-  const [tableHeight, setTableHeight] = useState<string>("500px");
+  const [tableHeight, setTableHeight] = useState<string>("400px");
   const [isMobile, setIsMobile] = useState<boolean>(false);
   const [isScrolled, setIsScrolled] = useState<boolean>(false);
   
@@ -180,33 +180,6 @@ const Toolkit: NextPage = () => {
     // Clean up
     return () => window.removeEventListener('resize', checkMobile);
   }, [isMobile]);
-  
-  // Adjust table height based on window size
-  useEffect(() => {
-    const updateTableHeight = () => {
-      // Only adjust the table height for desktop view
-      if (!isMobile) {
-        // Calculate available height (viewport height minus header, tabs, and footer)
-        const headerHeight = 200; // Approximate header height
-        const tabsHeight = 60;    // Approximate tabs height
-        const footerHeight = 100; // Approximate footer height
-        const padding = 80;       // Additional padding
-        
-        const availableHeight = window.innerHeight - (headerHeight + tabsHeight + footerHeight + padding);
-        // Set a minimum height to prevent tiny tables
-        const finalHeight = Math.max(300, availableHeight);
-        
-        setTableHeight(`${finalHeight}px`);
-      }
-    };
-    
-    // Initial calculation
-    updateTableHeight();
-    
-    // Update on resize
-    window.addEventListener('resize', updateTableHeight);
-    return () => window.removeEventListener('resize', updateTableHeight);
-  }, [isMobile]);
 
   // Add custom scrollbar styles
   useEffect(() => {
@@ -286,7 +259,7 @@ const Toolkit: NextPage = () => {
     </div>
   );
 
-  // Table wrapper component with scrolling - completely redesigned approach
+  // Table wrapper component with scrolling
   const ScrollableTable = ({ headers, children }: { headers: React.ReactNode, children: React.ReactNode }) => (
     <div className="rounded-xl border border-border/50 dark:border-border/20 bg-card/5 overflow-hidden">
       {/* Fixed header */}
@@ -297,11 +270,8 @@ const Toolkit: NextPage = () => {
       {/* Scrollable content */}
       <div 
         style={{ 
-          height: tableHeight, 
-          overflowY: 'auto',
-          // Custom scrollbar styling
-          scrollbarWidth: 'thin',
-          scrollbarColor: 'rgba(155, 155, 155, 0.5) transparent'
+          height: tableHeight,
+          overflowY: 'auto'
         }} 
         className="custom-scrollbar"
       >
@@ -674,7 +644,7 @@ const Toolkit: NextPage = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-background text-foreground font-light">
+    <div className={`${isMobile ? 'min-h-screen' : 'h-screen overflow-hidden'} flex flex-col bg-background text-foreground font-light`}>
       <Head>
         <title>Toolkit | Keyana Sapp</title>
         <meta name="description" content="Keyana Sapp's toolkit of favorite tools, products, media, and people" />
@@ -691,16 +661,16 @@ const Toolkit: NextPage = () => {
 
       <Header />
 
-      <main className="py-3 flex-1">
-        <div className="container mx-auto px-4 md:px-12 lg:px-16 max-w-screen-lg">
-          <div className="w-full max-w-4xl mx-auto mb-6">
+      <main className={`${isMobile ? '' : 'overflow-hidden'} flex-1 flex flex-col`}>
+        <div className="container mx-auto px-4 md:px-12 lg:px-16 max-w-screen-lg h-full flex flex-col">
+          <div className="w-full max-w-4xl mx-auto mb-6 pt-3">
             <h1 className="text-2xl font-medium mb-3">Toolkit</h1>
             <p className="text-muted-foreground">
               Whenever I find a product, book, podcast, movie, or song that I love, I add it to my toolkit.
             </p>
           </div>
 
-          <div className="w-full max-w-4xl mx-auto pb-6">
+          <div className="w-full max-w-4xl mx-auto flex flex-col mb-10">
             <div 
               className={`${
                 isMobile 
