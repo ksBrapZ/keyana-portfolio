@@ -664,7 +664,7 @@ const Toolkit: NextPage = () => {
       <main className={`${isMobile ? '' : 'overflow-hidden'} flex-1 flex flex-col`}>
         <div className="container mx-auto px-4 md:px-12 lg:px-16 max-w-screen-lg h-full flex flex-col">
           <div className="w-full max-w-4xl mx-auto mb-6 pt-3">
-            <h1 className="text-2xl font-medium mb-3">Toolkit</h1>
+            <h1 className="text-2xl font-medium mb-2">Toolkit</h1>
             <p className="text-muted-foreground">
               Whenever I find a product, book, podcast, movie, or song that I love, I add it to my toolkit.
             </p>
