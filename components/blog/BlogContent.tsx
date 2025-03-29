@@ -14,20 +14,21 @@ interface BlogContentProps {
 }
 
 export default function BlogContent({ frontmatter, content }: BlogContentProps) {
-  const { title, date, tags } = frontmatter;
+  const { title, date, tags, description } = frontmatter;
   const formattedDate = formatDate(date);
   const readingTime = calculateReadingTime(content);
 
   return (
     <article className="w-full">
       <div className="mb-8">
-        <div className="mb-6">
-          <Link href="/blog" className="flex items-center text-sm text-muted-foreground hover:text-primary transition-colors mb-8">
+        <div className="mb-4">
+          <Link href="/blog" className="flex items-center text-sm text-muted-foreground hover:text-primary transition-colors mb-6">
             <ChevronLeft className="mr-1 h-4 w-4" />
             Back to all posts
           </Link>
           
-          <h1 className="text-3xl font-bold mb-4">{title}</h1>
+          <h1 className="text-3xl font-bold mb-2">{title}</h1>
+          <p className="text-lg text-muted-foreground mb-3">{description}</p>
           <div className="flex items-center text-sm text-muted-foreground">
             <time dateTime={date}>{formattedDate}</time>
             <span className="mx-2">·</span>
@@ -43,7 +44,7 @@ export default function BlogContent({ frontmatter, content }: BlogContentProps) 
           ))}
         </div>
         
-        <Separator className="mb-8 bg-border/50 dark:bg-border/15" />
+        <Separator className="mb-6 bg-border/50 dark:bg-border/15" />
       </div>
 
       <div className="prose prose-invert prose-zinc max-w-none">

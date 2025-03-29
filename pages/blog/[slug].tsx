@@ -40,7 +40,7 @@ export default function BlogPostPage({ post, nextPost, prevPost }: BlogPostPageP
       <div className="min-h-screen flex flex-col bg-background text-foreground">
         <Header />
         
-        <main className="flex-grow container mx-auto px-6 md:px-12 lg:px-16 max-w-screen-lg py-8">
+        <main className="flex-grow container mx-auto px-6 md:px-12 lg:px-16 max-w-screen-lg py-6">
           <BlogContent frontmatter={frontmatter} content={content} />
           
           <div className="mt-16">
