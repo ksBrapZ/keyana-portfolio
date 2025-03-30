@@ -16,6 +16,7 @@ interface Photo {
   description: string;
   camera: string;
   lens: string;
+  coordinates?: string;
   images: string[];
 }
 
@@ -35,7 +36,6 @@ export default function LocationDetail({
   const [isDarkMode, setIsDarkMode] = useState(true); // Default to dark
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  const [viewMode, setViewMode] = useState<'photo' | 'map'>('photo');
 
   // Handle keyboard navigation when modal is open
   useEffect(() => {
@@ -83,27 +83,7 @@ export default function LocationDetail({
               </Link>
             </div>
             
-            <div className="text-sm">
-              {location.title}
-            </div>
-            
             <div className="flex text-xs space-x-6">
-              <div className="flex space-x-1">
-                <button 
-                  className={`${viewMode === 'photo' ? 'font-medium' : 'text-muted-foreground'}`}
-                  onClick={() => setViewMode('photo')}
-                >
-                  photo
-                </button>
-                <span className="text-muted-foreground">/</span>
-                <button 
-                  className={`${viewMode === 'map' ? 'font-medium' : 'text-muted-foreground'}`}
-                  onClick={() => setViewMode('map')}
-                >
-                  map
-                </button>
-              </div>
-              
               <div className="flex space-x-1">
                 <button 
                   className={`${isColorMode ? 'font-medium' : 'text-muted-foreground'}`}
@@ -123,18 +103,20 @@ export default function LocationDetail({
           </div>
 
           <div className="mb-8">
-            <h1 className="text-xl font-medium">{location.title}</h1>
+            <div className="flex items-center justify-between">
+              <h1 className="text-xl font-medium">{location.title}</h1>
+              {location.coordinates && (
+                <p className="text-xs text-muted-foreground/50 font-light tracking-wide">
+                  {location.coordinates}
+                </p>
+              )}
+            </div>
             <p className="text-sm text-muted-foreground mt-2">
               {location.description}
             </p>
             <p className="text-xs text-muted-foreground/70 mt-2">
               {location.camera && `${location.camera}`}{location.lens && ` • ${location.lens}`}
             </p>
-            {location.locationSlug.includes('badwater') && (
-              <p className="text-xs text-muted-foreground/70 mt-1">
-                36° 14' 36.7" N 117° 21.2" W
-              </p>
-            )}
           </div>
 
           {/* Image Grid with numbers */}
@@ -230,8 +212,11 @@ export default function LocationDetail({
               </button>
             </div>
             
-            <div className="text-xs text-gray-500">
-              {currentImageIndex + 1} / {location.images.length}
+            <div className="flex items-center text-xs text-gray-500">
+              <span className="mr-4">{currentImageIndex + 1} / {location.images.length}</span>
+              {location.coordinates && (
+                <span className="font-light tracking-wide">{location.coordinates}</span>
+              )}
             </div>
           </div>
           

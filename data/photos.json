@@ -6,6 +6,7 @@
     "description": "A collection of photos from Pecos Wilderness.",
     "camera": "Camera information will be added later",
     "lens": "Lens information will be added later",
+    "coordinates": "35°57'N 105°33'W",
     "coverImage": "/images/2023/pecos-wilderness/IMG_1902.jpeg",
     "images": [
       "/images/2023/pecos-wilderness/IMG_1881.jpeg",
@@ -30,6 +31,7 @@
     "description": "A collection of photos from Reimers Ranch.",
     "camera": "Camera information will be added later",
     "lens": "Lens information will be added later",
+    "coordinates": "30°20'N 98°08'W",
     "images": [
       "/images/2023/reimers-ranch/IMG_1548.jpeg",
       "/images/2023/reimers-ranch/IMG_1816.jpeg",
@@ -45,6 +47,7 @@
     "description": "A collection of photos from Silverton.",
     "camera": "Camera information will be added later",
     "lens": "Lens information will be added later",
+    "coordinates": "37°48'N 107°40'W",
     "images": [
       "/images/2023/silverton/IMG_1700.jpeg",
       "/images/2023/silverton/IMG_1703.jpeg",
@@ -59,6 +62,7 @@
     "description": "A collection of photos from Sonoma.",
     "camera": "Camera information will be added later",
     "lens": "Lens information will be added later",
+    "coordinates": "38°17'N 122°27'W",
     "images": [
       "/images/2023/sonoma/IMG_2178.jpeg",
       "/images/2023/sonoma/IMG_2190.jpeg",
@@ -74,6 +78,7 @@
     "description": "A collection of photos from Austin.",
     "camera": "Camera information will be added later",
     "lens": "Lens information will be added later",
+    "coordinates": "30°16'N 97°44'W",
     "coverImage": "/images/2024/austin/KCS09248.jpg",
     "images": [
       "/images/2024/austin/IMG_2518.jpeg",
@@ -88,6 +93,7 @@
     "description": "A collection of photos from Big Bend.",
     "camera": "Camera information will be added later",
     "lens": "Lens information will be added later",
+    "coordinates": "29°15'N 103°15'W",
     "coverImage": "/images/2024/big-bend/IMG_2389.jpeg",
     "images": [
       "/images/2024/big-bend/IMG_2326.jpeg",
@@ -106,6 +112,7 @@
     "description": "A collection of photos from Boulder.",
     "camera": "Camera information will be added later",
     "lens": "Lens information will be added later",
+    "coordinates": "40°01'N 105°17'W",
     "coverImage": "/images/2024/boulder/KCS09588.jpg",
     "images": [
       "/images/2024/boulder/KCS00158.jpg",
@@ -122,6 +129,7 @@
     "description": "A collection of photos from Capitol Peak.",
     "camera": "Camera information will be added later",
     "lens": "Lens information will be added later",
+    "coordinates": "39°09'N 107°05'W",
     "coverImage": "/images/2024/capitol-peak/KCS00530.jpg",
     "images": [
       "/images/2024/capitol-peak/KCS00472.jpg",
@@ -141,6 +149,7 @@
     "description": "A collection of photos from Estes Park.",
     "camera": "Camera information will be added later",
     "lens": "Lens information will be added later",
+    "coordinates": "40°22'N 105°31'W",
     "images": [
       "/images/2024/estes-park/KCS09618.jpg",
       "/images/2024/estes-park/KCS09623.jpg"
@@ -153,6 +162,7 @@
     "description": "A collection of photos from Hill Country.",
     "camera": "Camera information will be added later",
     "lens": "Lens information will be added later",
+    "coordinates": "30°04'N 98°49'W",
     "coverImage": "/images/2024/hill-country/IMG_3321.jpeg",
     "images": [
       "/images/2024/hill-country/IMG_2567.jpeg",
@@ -168,6 +178,7 @@
     "description": "A collection of photos from Mount Rainier National Park.",
     "camera": "Camera information will be added later",
     "lens": "Lens information will be added later",
+    "coordinates": "46°51'N 121°45'W",
     "images": [
       "/images/2024/mount-rainier-national-park/KCS00196.jpg",
       "/images/2024/mount-rainier-national-park/KCS00203.jpg",
@@ -182,6 +193,7 @@
     "description": "A collection of photos from Mt Bierstadt.",
     "camera": "Camera information will be added later",
     "lens": "Lens information will be added later",
+    "coordinates": "39°34'N 105°40'W",
     "coverImage": "/images/2024/mt-bierstadt/KCS00632.jpg",
     "images": [
       "/images/2024/mt-bierstadt/KCS00620.jpg",
@@ -199,6 +211,7 @@
     "description": "A collection of photos from Nederland.",
     "camera": "Camera information will be added later",
     "lens": "Lens information will be added later",
+    "coordinates": "39°57'N 105°30'W",
     "coverImage": "/images/2024/nederland/KCS00056.jpg",
     "images": [
       "/images/2024/nederland/KCS00014.jpg",
@@ -213,6 +226,7 @@
     "description": "A collection of photos from Red Feather Lakes.",
     "camera": "Camera information will be added later",
     "lens": "Lens information will be added later",
+    "coordinates": "40°48'N 105°35'W",
     "coverImage": "/images/2024/red-feather-lakes/KCS09949.jpg",
     "images": [
       "/images/2024/red-feather-lakes/KCS09802.jpg",
@@ -232,6 +246,7 @@
     "description": "A collection of photos from Vistoria Island.",
     "camera": "Camera information will be added later",
     "lens": "Lens information will be added later",
+    "coordinates": "48°25'N 123°22'W",
     "coverImage": "/images/2024/vistoria-island/KCS00301.jpg",
     "images": [
       "/images/2024/vistoria-island/KCS00240.jpg",
@@ -250,6 +265,7 @@
     "description": "A collection of photos from San Francisco.",
     "camera": "Camera information will be added later",
     "lens": "Lens information will be added later",
+    "coordinates": "37°46'N 122°25'W",
     "coverImage": "/images/2025/san-francisco/IMG_3408.jpeg",
     "images": [
       "/images/2025/san-francisco/IMG_3400.jpeg",
