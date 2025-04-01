@@ -43,7 +43,7 @@ export default function BlogPostPage({ post, nextPost, prevPost }: BlogPostPageP
         <main className="flex-grow container mx-auto px-6 md:px-12 lg:px-16 max-w-screen-lg py-6">
           <BlogContent frontmatter={frontmatter} content={content} />
           
-          <div className="mt-16">
+          <div className="mt-16 max-w-[600px] md:ml-[calc(32px+3rem)] lg:ml-[calc(32px+4rem)]">
             <BlogPostNavigation nextPost={nextPost} prevPost={prevPost} />
           </div>
         </main>

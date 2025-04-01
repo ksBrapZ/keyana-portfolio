@@ -8,7 +8,7 @@ published: true
 
 **I often wonder how different my life could have been.** What if I’d been born in a village without electricity, or under a regime where speaking freely was dangerous? 
 
-Our birthplace is completely out of our control and yet determines so much about our lives: our health, safety, and opportunities. Recognizing this poses a powerful question: 
+Our birthplace is completely out of our control and yet determines so much about our lives. Recognizing this poses a powerful question: 
 
 **Can we create a world where birth matters less and potential matters more?**
 
