@@ -23,7 +23,8 @@
     { "id": 22, "name": "Notion Calendar", "description": "FKA Cron. Cleanest calendar app", "url": "https://www.notion.com/product/calendar", "type": "Productivity" },
     { "id": 23, "name": "Granola", "description": "Meeting recordings using system audio", "url": "https://www.granola.ai/", "type": "Productivity" },
     { "id": 24, "name": "Gaia GPS", "description": "Best outdoor adventure maps", "url": "https://www.gaiagps.com/", "type": "Maps" },
-    { "id": 25, "name": "Duolingo", "description": "I love learning languages. 1year + streak!", "url": "https://www.duolingo.com/", "type": "Education" }
+    { "id": 25, "name": "Duolingo", "description": "I love learning languages. 1year + streak!", "url": "https://www.duolingo.com/", "type": "Education" },
+    { "id": 26, "name": "Proton Mail", "description": "Super-secure private email host + client", "url": "https://proton.me/mail", "type": "Proton Mail" }
 
   ],
   "products": [
@@ -91,7 +92,7 @@
       { "id": 11, "name": "The Joe Rogan Experience", "hosts": "Joe Rogan", "description": "The OG interviewer", "url": "https://open.spotify.com/show/4rOoJ6Egrf8K2IrywzwOMk", "type": "Interview" },
       { "id": 12, "name": "BG2", "hosts": "Bill Gurley & Brad Gerstner", "description": "The best biz news podcast. These two are legends", "url": "https://www.youtube.com/@BG2Pod", "type": "Business" },
       { "id": 13, "name": "FT News Briefing", "hosts": "Financial Times", "description": "My favourite macro daily brief", "url": "https://www.ft.com/newsbriefing", "type": "Economics" },
-      { "id": 14, "name": "Invest Like the Best", "hosts": "Patrick O'Shaughnessy", "description": "Conversations with the best investors in the world", "url": "https://tim.blog/podcast/", "type": "Business" }
+      { "id": 14, "name": "Invest Like the Best", "hosts": "Patrick O'Shaughnessy", "description": "Conversations with the best investors in the world", "url": "https://open.spotify.com/show/22fi0RqfoBACCuQDv97wFO", "type": "Business" }
     ],
     "tvfilm": [
       { "id": 1, "name": "Succession", "description": "Drama about a dysfunctional media family", "url": "https://www.hbo.com/succession", "type": "Business" },

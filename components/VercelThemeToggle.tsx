@@ -26,12 +26,18 @@ export function VercelThemeToggle() {
     };
   }, []);
 
+  // This effectively gives us the actual applied theme, regardless of whether
+  // it's explicitly set or derived from system preferences
+  const effectiveTheme = theme === "system" 
+    ? (systemPrefersDark ? "dark" : "light") 
+    : theme;
+
   return (
     <div className="flex items-center bg-secondary/50 rounded-full p-0.5 text-muted-foreground">
       <button
         className={cn(
           "flex items-center justify-center rounded-full p-1.5 transition-colors",
-          theme === "light" || (theme === "system" && !systemPrefersDark)
+          effectiveTheme === "light"
             ? "bg-background text-foreground" 
             : "hover:text-foreground"
         )}
@@ -44,7 +50,7 @@ export function VercelThemeToggle() {
       <button
         className={cn(
           "flex items-center justify-center rounded-full p-1.5 transition-colors",
-          theme === "dark" || (theme === "system" && systemPrefersDark)
+          effectiveTheme === "dark"
             ? "bg-background text-foreground" 
             : "hover:text-foreground"
         )}
