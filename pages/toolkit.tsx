@@ -96,6 +96,24 @@ const Toolkit: NextPage = () => {
     }
   });
   
+  // Function to calculate table height based on screen size
+  const calculateTableHeight = () => {
+    if (isMobile) {
+      return "400px"; // Default height for mobile
+    }
+    
+    // Calculate available space
+    const headerHeight = 80; 
+    const topContentHeight = 180; // Increased to account for title + description + tabs
+    const footerHeight = 80; // Increased to ensure we don't cut off the bottom
+    const padding = 100; // Additional padding to ensure visible separation
+    
+    const availableHeight = window.innerHeight - (headerHeight + topContentHeight + footerHeight + padding);
+    const minHeight = 400; // Minimum height for the table
+    
+    return `${Math.max(availableHeight, minHeight)}px`;
+  };
+  
   // Handle scroll effect for sticky header
   useEffect(() => {
     if (!isMobile) return;
@@ -108,6 +126,19 @@ const Toolkit: NextPage = () => {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, [isMobile]);
+  
+  // Update table height based on screen size
+  useEffect(() => {
+    const updateTableHeight = () => {
+      setTableHeight(calculateTableHeight());
+    };
+    
+    // Update on mount and resize
+    updateTableHeight();
+    window.addEventListener('resize', updateTableHeight);
+    
+    return () => window.removeEventListener('resize', updateTableHeight);
+  }, [isMobile, activeTab]);
   
   // Randomize data on initial load
   useEffect(() => {
@@ -153,6 +184,8 @@ const Toolkit: NextPage = () => {
     }
     
     setRandomizedData(newRandomizedData);
+    
+    // Table height will be updated via the useEffect that depends on activeTab
   };
   
   // Check if device is mobile
@@ -261,7 +294,7 @@ const Toolkit: NextPage = () => {
 
   // Table wrapper component with scrolling
   const ScrollableTable = ({ headers, children }: { headers: React.ReactNode, children: React.ReactNode }) => (
-    <div className="rounded-xl border border-border/50 dark:border-border/20 bg-card/5 overflow-hidden">
+    <div className="rounded-xl border border-border/50 dark:border-border/20 bg-card/5 overflow-hidden mb-2">
       {/* Fixed header */}
       <div className="bg-background border-b border-border/50 dark:border-border/15 sticky top-0 left-0 right-0 z-10">
         {headers}
@@ -699,7 +732,7 @@ const Toolkit: NextPage = () => {
                 />
               </div>
             </div>
-            <div className={isMobile ? 'mt-4' : ''}>
+            <div className={`${isMobile ? 'mt-4' : ''} pb-4`}>
               {renderContent()}
             </div>
           </div>
