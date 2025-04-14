@@ -38,11 +38,13 @@
     { "id": 9, "name": "Rodyvon A8 EDC", "description": "Tiny but mighty flashlight", "url": "https://www.amazon.com/dp/B0B4CJ7X8F?ref_=ppx_hzsearch_conn_dt_b_fed_asin_title_1", "type": "Gear" },
     { "id": 10, "name": "Milwuakee M12 Ratchet", "description": "Makes working on the bike a pleasure", "url": "https://www.milwaukeetool.com/products/2567-20", "type": "Shop" },
     { "id": 11, "name": "Anker 2in1 Power Bank", "description": "Amazing laptop charger/powerbank combo", "url": "https://www.amazon.com/dp/B09W2H224F?ref=ppx_yo2ov_dt_b_fed_asin_title&th=1", "type": "Tech" },
-    { "id": 12, "name": "Sony A6700", "description": "Light but epic mirrorless camera", "url": "https://electronics.sony.com/imaging/interchangeable-lens-cameras/aps-c/p/ilce6700-b", "type": "Tech" },
+    { "id": 12, "name": "Sony A6700", "description": "Light but epic mirrorless camera", "url": "https://electronics.sony.com/imaging/interchangeable-lens-cameras/aps-c/p/ilce6700-b", "type": "Photography" },
     { "id": 13, "name": "Garmin Instinct 2", "description": "Casio G-Shock meets smartwatch", "url": "https://www.garmin.com/en-US/p/775421", "type": "Tech" },
     { "id": 14, "name": "BioLite Firepit+", "description": "Awesome portable smokeless firepit", "url": "https://www.bioliteenergy.com/products/firepit-plus", "type": "Outdoors" },
     { "id": 15, "name": "Leatherman Skeletool", "description": "Multi-tool with everything you need and nothing you don't", "url": "https://www.leatherman.com/skeletool-830845.html", "type": "Gear" },
-    { "id": 16, "name": "Durston X-Mid 1P Tent", "description": "Super sweet ultralight tent", "url": "https://durstongear.com/products/x-mid-1-tent-ultralight-backpacking", "type": "Outdoors" }
+    { "id": 16, "name": "Durston X-Mid 1P Tent", "description": "Super sweet ultralight tent", "url": "https://durstongear.com/products/x-mid-1-tent-ultralight-backpacking", "type": "Outdoors" },
+    { "id": 17, "name": "Sigma 18-50mm f/2.8", "description": "My favourite travel lens. Super versatile & lightweight", "url": "https://www.sigmaphoto.com/18-50mm-f2-8-dc-dn-c?srsltid=AfmBOor9FGYJ6vI6EY-vibJGOdQ9tAixkbMv3_KCcg3rxlH7ZVE4Ldhb", "type": "Photography" },
+    { "id": 18, "name": "Adidas Busenitz Pro", "description": "On probably my 20th pair. Been rocking since 2010", "url": "https://www.adidas.com/us/busenitz-pro-shoes/G48060.html", "type": "Tech" }
   ],
   "media": {
     "books": [
@@ -85,9 +87,11 @@
       { "id": 7, "name": "This Past Weekend", "hosts": "Theo Von", "description": "Funniest dude on the internet imo", "url": "https://www.youtube.com/@TheoVon", "type": "Comedy" },
       { "id": 8, "name": "The Gooner Talk", "hosts": "Tom Canton", "description": "I'm a huge Arsenal fan. Best gooner pod around", "url": "https://www.youtube.com/@TheGoonerTalkTV", "type": "Sports" },
       { "id": 9, "name": "Lenny's Podcast", "hosts": "Lenny Rachitsky", "description": "The best product podcast. Great guests. Better strategies", "url": "https://www.lennyspodcast.com/", "type": "Product" },
-      { "id": 10, "name": "This Week In Startups", "hosts": "Jason Calacanis", "description": "Snappy startup news from ya boy J-Cal", "url": "https://www.npr.org/sections/money/", "type": "Economics" },
+      { "id": 10, "name": "This Week In Startups", "hosts": "Jason Calacanis", "description": "Snappy startup news from ya boy J-Cal", "url": "https://www.npr.org/sections/money/", "type": "Business" },
       { "id": 11, "name": "The Joe Rogan Experience", "hosts": "Joe Rogan", "description": "The OG interviewer", "url": "https://open.spotify.com/show/4rOoJ6Egrf8K2IrywzwOMk", "type": "Interview" },
-      { "id": 12, "name": "BG2", "hosts": "Bill Gurley & Brad Gerstner", "description": "The best biz news podcast. These two are legends", "url": "https://www.youtube.com/@BG2Pod", "type": "Business" }
+      { "id": 12, "name": "BG2", "hosts": "Bill Gurley & Brad Gerstner", "description": "The best biz news podcast. These two are legends", "url": "https://www.youtube.com/@BG2Pod", "type": "Business" },
+      { "id": 13, "name": "FT News Briefing", "hosts": "Financial Times", "description": "My favourite macro daily brief", "url": "https://www.ft.com/newsbriefing", "type": "Economics" },
+      { "id": 14, "name": "Invest Like the Best", "hosts": "Patrick O'Shaughnessy", "description": "Conversations with the best investors in the world", "url": "https://tim.blog/podcast/", "type": "Business" }
     ],
     "tvfilm": [
       { "id": 1, "name": "Succession", "description": "Drama about a dysfunctional media family", "url": "https://www.hbo.com/succession", "type": "Business" },
@@ -104,7 +108,10 @@
       { "id": 12, "name": "Moneyball", "description": "Baseball analytics drama about Billy Beane's Oakland A's revolution", "url": "https://www.netflix.com/title/80203144", "type": "Sports" },
       { "id": 13, "name": "True Detective", "description": "Anthology crime drama series", "url": "https://www.hbo.com/true-detective", "type": "Crime" },
       { "id": 14, "name": "South Park", "description": "I'm a Trey Parker & Matt Stone maximalist", "url": "https://www.southparkstudios.com/", "type": "Comedy" },
-      { "id": 15, "name": "The Matrix", "description": "I was named after Keanu Reeves (not really)", "url": "https://www.warnerbros.com/movies/matrix", "type": "Sci-Fi" }
+      { "id": 15, "name": "The Matrix", "description": "I was named after Keanu Reeves (not really)", "url": "https://www.warnerbros.com/movies/matrix", "type": "Sci-Fi" },
+      { "id": 16, "name": "Love on the Spectrum", "description": "I hate all reality TV. Except this", "url": "https://www.netflix.com/title/81338328", "type": "Reality" },
+      { "id": 17, "name": "Goodfellas", "description": "Unequivocally - the best gangster movie", "url": "https://www.imdb.com/title/tt0099685/", "type": "Action" },
+      { "id": 18, "name": "School of Rock", "description": "Jack Black's finest moment - catalyzed my heavy metal phase", "url": "https://www.imdb.com/title/tt0332379/", "type": "Action" }
     ],
     "music": [
       { "id": 1, "song": "My Iron Lung", "artist": "Radiohead", "album": "The Bends", "description": "Raw alt-rock response to Creep's success", "url": "https://www.youtube.com/watch?v=Dy41wKWvL74", "type": "Alternative" },
