@@ -260,6 +260,36 @@
   },
   {
     "year": 2025,
+    "locationSlug": "boulder",
+    "title": "Boulder",
+    "description": "A collection of photos from Boulder.",
+    "camera": "Camera information will be added later",
+    "lens": "Lens information will be added later",
+    "coordinates": "40°01'N 105°17'W",
+    "coverImage": "/images/2025/boulder/IMG_3711.jpeg",
+    "images": [
+      "/images/2025/boulder/IMG_3711.jpeg",
+      "/images/2025/boulder/IMG_3716.jpeg",
+      "/images/2025/boulder/IMG_3717.jpeg"
+    ]
+  },
+  {
+    "year": 2025,
+    "locationSlug": "eldora",
+    "title": "Eldora",
+    "description": "A collection of photos from Eldora.",
+    "camera": "Camera information will be added later",
+    "lens": "Lens information will be added later",
+    "coordinates": "39°57'N 105°34'W",
+    "coverImage": "/images/2025/eldora/IMG_3505.jpeg",
+    "images": [
+      "/images/2025/eldora/IMG_3503.jpeg",
+      "/images/2025/eldora/IMG_3504.jpeg",
+      "/images/2025/eldora/IMG_3505.jpeg"
+    ]
+  },
+  {
+    "year": 2025,
     "locationSlug": "san-francisco",
     "title": "San Francisco",
     "description": "A collection of photos from San Francisco.",
