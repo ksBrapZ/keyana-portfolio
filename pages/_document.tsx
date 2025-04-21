@@ -12,6 +12,7 @@ export default function Document() {
         <meta name="msapplication-TileColor" content="#000000" />
         <meta name="theme-color" content="#000000" />
         <meta name="msapplication-config" content="/favicons/browserconfig.xml" />
+        <script data-host="https://app.microanalytics.io" data-dnt="false" src="https://app.microanalytics.io/js/script.js" id="ZwSg9rf6GA" async defer></script>
       </Head>
       <body className="antialiased">
         <Main />

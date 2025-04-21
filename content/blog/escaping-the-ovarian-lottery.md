@@ -1,6 +1,6 @@
 ---
 title: Escaping the Ovarian Lottery
-date: "2025-04-01"
+date: "2025-04-02"
 description: Reflections on luck, technology and the paths to fairness
 tags: [Ethics, Technology, Philosophy]
 published: true
