@@ -1,5 +1,5 @@
 ---
-title: "How AI levels the playing field"
+title: "How AI Levels the Playing Field"
 date: "2024-12-29"
 description: "Learn how startups can harness AI to disrupt industries and outmaneuver established giants."
 tags: ["Disruption", "Innovation", "AI"]
