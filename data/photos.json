@@ -302,5 +302,21 @@
       "/images/2025/san-francisco/IMG_3408.jpeg",
       "/images/2025/san-francisco/IMG_3414.jpeg"
     ]
+  },
+  {
+    "year": 2025,
+    "locationSlug": "mexico-city",
+    "title": "Mexico City",
+    "description": "A collection of photos from Mexico City.",
+    "camera": "Sony a6400",
+    "lens": "Sigma 18-50mm f/2.8",
+    "coordinates": "19°26'N 99°08'W",
+    "coverImage": "/images/2025/mexico-city/KCS00829.jpg",
+    "images": [
+      "/images/2025/mexico-city/KCS00832.jpg",
+      "/images/2025/mexico-city/KCS00812.jpg",
+      "/images/2025/mexico-city/KCS00815.jpg",
+      "/images/2025/mexico-city/KCS00829.jpg"
+    ]
   }
 ]

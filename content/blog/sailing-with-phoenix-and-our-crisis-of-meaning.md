@@ -1,7 +1,7 @@
 ---
 title: "Sailing with Phoenix and our Crisis of Meaning"
-date: "2022-08-25"
-description: "Why is pessimism about our future so common when we live in the most abundant time humanity has ever known?"
+date: "2025-05-15"
+description: "What one man's epic voyage across the pacific tells us about our malaise."
 tags: ["Philosophy", "Purpose", "Ethics"]
 published: true
 ---
