@@ -1,6 +1,7 @@
 // pages/index.tsx
 import Head from 'next/head';
 import { NextPage } from 'next';
+import { useState, useEffect } from 'react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import FocusSection from '@/components/FocusSection';
@@ -8,8 +9,23 @@ import PastSection from '@/components/PastSection';
 import BioSection from '@/components/BioSection';
 
 const Home: NextPage = () => {
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    
+    // Initial check
+    checkMobile();
+    
+    // Update on resize
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
   return (
-    <div className="h-screen flex flex-col bg-background text-foreground font-light overflow-hidden">
+    <div className={`${isMobile ? 'min-h-screen' : 'h-screen'} flex flex-col bg-background text-foreground font-light ${isMobile ? '' : 'overflow-hidden'}`}>
       <Head>
         <title>Keyana Sapp | Digital and Analogue Builder</title>
         <meta name="description" content="Personal website of Keyana Sapp" />
@@ -32,18 +48,27 @@ const Home: NextPage = () => {
         <Header />
       </div>
 
-      <main className="flex-1 overflow-hidden">
-        <div className="container mx-auto px-6 md:px-12 lg:px-16 max-w-screen-lg h-full py-2">
-          {/* Two-column layout for larger screens */}
-          <div className="w-full max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4 h-full">
-            <div className="space-y-2 flex flex-col justify-start">
+      <main className={`flex-1 ${isMobile ? '' : 'overflow-hidden'}`}>
+        <div className={`container mx-auto px-6 md:px-12 lg:px-16 max-w-screen-lg ${isMobile ? 'py-4' : 'h-full py-2'}`}>
+          {/* Mobile: Single column, Bio -> Focus -> Past */}
+          {isMobile ? (
+            <div className="w-full max-w-4xl mx-auto space-y-4">
+              <BioSection />
               <FocusSection />
               <PastSection />
             </div>
-            <div className="flex flex-col justify-start">
-              <BioSection />
+          ) : (
+            /* Desktop: Two-column layout */
+            <div className="w-full max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4 h-full">
+              <div className="space-y-2 flex flex-col justify-start">
+                <FocusSection />
+                <PastSection />
+              </div>
+              <div className="flex flex-col justify-start">
+                <BioSection />
+              </div>
             </div>
-          </div>
+          )}
         </div>
       </main>
 
