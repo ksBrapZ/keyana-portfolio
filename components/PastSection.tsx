@@ -34,10 +34,19 @@ const PastItem = ({ title, company, companyUrl, description }: PastItemProps) =>
 const PastSection = () => {
   return (
     <section>
-      <h2 className="text-muted-foreground text-sm uppercase tracking-wider mb-2">Past</h2>
+      <h2 className="text-muted-foreground text-sm uppercase tracking-wider mb-1.5">Past</h2>
       <Card className="bg-card/5 border-border/10">
-        <CardContent className="pt-4">
-          <div className="space-y-2">
+        <CardContent className="pt-3">
+          <div className="space-y-1.5">
+            <PastItem 
+              title="Co-Founder & CEO"
+              company="Indigo"
+              companyUrl="https://getindigo.ai"
+              description="The ultimate AI productivity suite for cracked teams. All-in-one platform for startups to build commands, assistants and agents."
+            />
+            
+            <Separator className="bg-border/10 dark:bg-border/5" />
+            
             <PastItem 
               title="Co-Founder"
               company="ShopSwap"

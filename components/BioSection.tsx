@@ -3,10 +3,10 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 const BioSection = () => {
   return (
     <section>
-      <h2 className="text-muted-foreground text-sm uppercase tracking-wider mb-2">Bio</h2>
+      <h2 className="text-muted-foreground text-sm uppercase tracking-wider mb-1.5">Bio</h2>
       <Card className="bg-card/5 border-border/10">
-        <CardContent className="pt-4">
-          <div className="text-card-foreground/90 text-sm leading-relaxed space-y-3">
+        <CardContent className="pt-3">
+          <div className="text-card-foreground/90 text-sm leading-relaxed space-y-2">
             <p><strong>My life has always been guided by curiosity - a relentless drive to explore how things work, <em>why they matter</em>, and <em>how they can be improved</em>.</strong></p>
 
             <p>I was raised between cultures, with an Iranian mother and an American father in London, England. Spending my teens and early twenties traveling widely taught me to appreciate the <em>richness and diversity</em> of people everywhere. In 2021, I moved to America to build the next chapter of my life.</p>

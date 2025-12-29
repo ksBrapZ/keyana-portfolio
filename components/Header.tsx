@@ -32,7 +32,7 @@ const Header = () => {
   }, []);
 
   return (
-    <header className="w-full pt-6 pb-4">
+    <header className="w-full pt-4 pb-3 bg-background">
       <div className="container mx-auto px-6 md:px-12 lg:px-16 max-w-screen-lg relative">
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center">
           <div className="flex flex-row justify-between items-center w-full">
@@ -192,7 +192,7 @@ const Header = () => {
         </>
       )}
       
-      <div className="container mx-auto px-6 md:px-12 lg:px-16 max-w-screen-lg mt-4">
+      <div className="container mx-auto px-6 md:px-12 lg:px-16 max-w-screen-lg mt-3">
         <Separator className="bg-border/40" />
       </div>
     </header>

@@ -24,9 +24,9 @@ const Footer = () => {
   }, []);
 
   return (
-    <footer className="w-full py-4">
+    <footer className="w-full py-3 bg-background">
       <div className="container mx-auto px-6 md:px-12 lg:px-16 max-w-screen-lg">
-        <Separator className="bg-border/40 mb-4" />
+        <Separator className="bg-border/40 mb-3" />
         
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center space-y-3 md:space-y-0">
           <div>

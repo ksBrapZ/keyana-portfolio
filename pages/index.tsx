@@ -9,7 +9,7 @@ import BioSection from '@/components/BioSection';
 
 const Home: NextPage = () => {
   return (
-    <div className="min-h-screen flex flex-col bg-background text-foreground font-light">
+    <div className="h-screen flex flex-col bg-background text-foreground font-light overflow-hidden">
       <Head>
         <title>Keyana Sapp | Digital and Analogue Builder</title>
         <meta name="description" content="Personal website of Keyana Sapp" />
@@ -28,24 +28,28 @@ const Home: NextPage = () => {
         <link href="https://fonts.googleapis.com/css2?family=Geist+Sans:wght@300;400;500;600&family=Geist+Mono:wght@300;400&display=swap" rel="stylesheet" />
       </Head>
 
-      <Header />
+      <div className="flex-shrink-0">
+        <Header />
+      </div>
 
-      <main className="py-3 flex-1">
-        <div className="container mx-auto px-6 md:px-12 lg:px-16 max-w-screen-lg">
+      <main className="flex-1 overflow-hidden">
+        <div className="container mx-auto px-6 md:px-12 lg:px-16 max-w-screen-lg h-full py-2">
           {/* Two-column layout for larger screens */}
-          <div className="w-full max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-6">
-            <div className="space-y-3">
+          <div className="w-full max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4 h-full">
+            <div className="space-y-2 flex flex-col justify-start">
               <FocusSection />
               <PastSection />
             </div>
-            <div>
+            <div className="flex flex-col justify-start">
               <BioSection />
             </div>
           </div>
         </div>
       </main>
 
-      <Footer />
+      <div className="flex-shrink-0">
+        <Footer />
+      </div>
     </div>
   );
 };
