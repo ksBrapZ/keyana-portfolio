@@ -42,7 +42,7 @@ const PastSection = () => {
               title="Co-Founder & CEO"
               company="Indigo"
               companyUrl="https://getindigo.ai"
-              description="The ultimate AI productivity suite for cracked teams. All-in-one platform for startups to build commands, assistants and agents."
+              description="AI productivity suite for cracked teams. All-in-one platform for startups to build commands, assistants and agents."
             />
             
             <Separator className="bg-border/10 dark:bg-border/5" />
