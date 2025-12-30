@@ -84,6 +84,10 @@ const Toolkit: NextPage = () => {
   const [isMobile, setIsMobile] = useState<boolean>(false);
   const [isScrolled, setIsScrolled] = useState<boolean>(false);
   
+  // Swipe detection state
+  const [touchStart, setTouchStart] = useState<{ x: number; y: number } | null>(null);
+  const [touchEnd, setTouchEnd] = useState<{ x: number; y: number } | null>(null);
+  
   // Create state for randomized data
   const [randomizedData, setRandomizedData] = useState<ToolkitData>({
     tools: [],
@@ -259,6 +263,65 @@ const Toolkit: NextPage = () => {
     { title: "TV & Film", icon: Film },
     { title: "Music", icon: Music }
   ];
+
+  // Get array of valid tab indices (excluding separators)
+  const validTabIndices = tabs
+    .map((tab, index) => (tab.type !== "separator" ? index : null))
+    .filter((index): index is number => index !== null);
+
+  // Find the current position in valid tabs array
+  const getCurrentValidTabIndex = () => {
+    return validTabIndices.indexOf(activeTab);
+  };
+
+  // Swipe handlers
+  const minSwipeDistance = 50; // Minimum distance for a swipe
+
+  const onTouchStart = (e: React.TouchEvent) => {
+    if (!isMobile) return;
+    setTouchEnd(null);
+    setTouchStart({
+      x: e.targetTouches[0].clientX,
+      y: e.targetTouches[0].clientY
+    });
+  };
+
+  const onTouchMove = (e: React.TouchEvent) => {
+    if (!isMobile) return;
+    setTouchEnd({
+      x: e.targetTouches[0].clientX,
+      y: e.targetTouches[0].clientY
+    });
+  };
+
+  const onTouchEnd = () => {
+    if (!isMobile || !touchStart || !touchEnd) return;
+    
+    const deltaX = touchStart.x - touchEnd.x;
+    const deltaY = Math.abs(touchStart.y - touchEnd.y);
+    
+    // Only trigger swipe if horizontal movement is greater than vertical (primarily horizontal swipe)
+    // and exceeds minimum distance
+    if (Math.abs(deltaX) > minSwipeDistance && Math.abs(deltaX) > deltaY) {
+      const isLeftSwipe = deltaX > 0;
+      const isRightSwipe = deltaX < 0;
+      const currentValidIndex = getCurrentValidTabIndex();
+      
+      if (isLeftSwipe && currentValidIndex < validTabIndices.length - 1) {
+        // Swipe left - go to next tab
+        const nextTabIndex = validTabIndices[currentValidIndex + 1];
+        handleTabChange(nextTabIndex);
+      } else if (isRightSwipe && currentValidIndex > 0) {
+        // Swipe right - go to previous tab
+        const prevTabIndex = validTabIndices[currentValidIndex - 1];
+        handleTabChange(prevTabIndex);
+      }
+    }
+    
+    // Reset touch states
+    setTouchStart(null);
+    setTouchEnd(null);
+  };
 
   // Reusable link component
   const ExternalItemLink = ({ href, children }: { href: string; children: React.ReactNode }) => (
@@ -732,7 +795,12 @@ const Toolkit: NextPage = () => {
                 />
               </div>
             </div>
-            <div className={`${isMobile ? 'mt-4' : ''} pb-4`}>
+            <div 
+              className={`${isMobile ? 'mt-4' : ''} pb-4`}
+              onTouchStart={onTouchStart}
+              onTouchMove={onTouchMove}
+              onTouchEnd={onTouchEnd}
+            >
               {renderContent()}
             </div>
           </div>
