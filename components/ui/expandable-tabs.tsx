@@ -26,6 +26,7 @@ interface ExpandableTabsProps {
   activeColor?: string;
   onChange?: (index: number) => void;
   defaultValue?: number;
+  value?: number;
 }
 
 const buttonVariants = {
@@ -55,14 +56,27 @@ export function ExpandableTabs({
   activeColor = "text-primary",
   onChange,
   defaultValue = 0,
+  value,
 }: ExpandableTabsProps) {
-  const [selected, setSelected] = React.useState<number>(defaultValue);
+  // Use controlled value if provided, otherwise use internal state
+  const [internalSelected, setInternalSelected] = React.useState<number>(defaultValue);
+  const selected = value !== undefined ? value : internalSelected;
   const outsideClickRef = React.useRef(null);
 
   const handleSelect = (index: number) => {
-    setSelected(index);
+    // Only update internal state if not controlled
+    if (value === undefined) {
+      setInternalSelected(index);
+    }
     onChange?.(index);
   };
+
+  // Update internal state when defaultValue changes (for uncontrolled mode)
+  React.useEffect(() => {
+    if (value === undefined) {
+      setInternalSelected(defaultValue);
+    }
+  }, [defaultValue, value]);
 
   const Separator = () => (
     <div className="mx-0.5 sm:mx-1 h-[24px] w-[1.2px] bg-border" aria-hidden="true" />

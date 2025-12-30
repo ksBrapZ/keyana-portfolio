@@ -1,6 +1,6 @@
 // pages/toolkit.tsx
 import Head from 'next/head';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { NextPage } from 'next';
 import { ExternalLink, Wrench, Package, BookOpen, Users, Music, Film, Mic, Book } from 'lucide-react';
 import Header from '@/components/Header';
@@ -158,6 +158,9 @@ const Toolkit: NextPage = () => {
     });
   }, []);
   
+  // Store handleTabChange in a ref to avoid dependency issues
+  const handleTabChangeRef = useRef<(tabIndex: number) => void>();
+
   // Re-randomize the specific category when tab changes
   const handleTabChange = (tabIndex: number) => {
     setActiveTab(tabIndex);
@@ -191,6 +194,11 @@ const Toolkit: NextPage = () => {
     
     // Table height will be updated via the useEffect that depends on activeTab
   };
+
+  // Update ref whenever handleTabChange changes
+  useEffect(() => {
+    handleTabChangeRef.current = handleTabChange;
+  }, [handleTabChange]);
   
   // Check if device is mobile
   useEffect(() => {
@@ -279,6 +287,13 @@ const Toolkit: NextPage = () => {
 
   const onTouchStart = (e: React.TouchEvent) => {
     if (!isMobile) return;
+    
+    // Don't handle swipe if touch starts on interactive elements (links, buttons, etc.)
+    const target = e.target as HTMLElement;
+    if (target.tagName === 'A' || target.tagName === 'BUTTON' || target.closest('a') || target.closest('button')) {
+      return;
+    }
+    
     setTouchEnd(null);
     setTouchStart({
       x: e.targetTouches[0].clientX,
@@ -287,7 +302,7 @@ const Toolkit: NextPage = () => {
   };
 
   const onTouchMove = (e: React.TouchEvent) => {
-    if (!isMobile) return;
+    if (!isMobile || !touchStart) return;
     setTouchEnd({
       x: e.targetTouches[0].clientX,
       y: e.targetTouches[0].clientY
@@ -295,7 +310,12 @@ const Toolkit: NextPage = () => {
   };
 
   const onTouchEnd = () => {
-    if (!isMobile || !touchStart || !touchEnd) return;
+    if (!isMobile || !touchStart || !touchEnd) {
+      // Reset if incomplete
+      setTouchStart(null);
+      setTouchEnd(null);
+      return;
+    }
     
     const deltaX = touchStart.x - touchEnd.x;
     const deltaY = Math.abs(touchStart.y - touchEnd.y);
@@ -322,6 +342,89 @@ const Toolkit: NextPage = () => {
     setTouchStart(null);
     setTouchEnd(null);
   };
+
+  // Add native touch event listeners for swipe detection (more reliable on mobile)
+  useEffect(() => {
+    if (!isMobile) return;
+
+    const minSwipeDist = 50;
+    let touchStartPos: { x: number; y: number } | null = null;
+    let touchEndPos: { x: number; y: number } | null = null;
+
+    const handleTouchStart = (e: TouchEvent) => {
+      // Don't handle swipe if touch starts on interactive elements
+      const target = e.target as HTMLElement;
+      if (target.tagName === 'A' || target.tagName === 'BUTTON' || target.closest('a') || target.closest('button')) {
+        return;
+      }
+
+      // Don't handle if touch starts in header or footer
+      if (target.closest('header') || target.closest('footer')) {
+        return;
+      }
+
+      touchEndPos = null;
+      touchStartPos = {
+        x: e.touches[0].clientX,
+        y: e.touches[0].clientY
+      };
+    };
+
+    const handleTouchMove = (e: TouchEvent) => {
+      if (!touchStartPos) return;
+      touchEndPos = {
+        x: e.touches[0].clientX,
+        y: e.touches[0].clientY
+      };
+    };
+
+    const handleTouchEnd = () => {
+      if (!touchStartPos || !touchEndPos) {
+        touchStartPos = null;
+        touchEndPos = null;
+        return;
+      }
+
+      const deltaX = touchStartPos.x - touchEndPos.x;
+      const deltaY = Math.abs(touchStartPos.y - touchEndPos.y);
+
+      // Only trigger swipe if horizontal movement is greater than vertical
+      // and exceeds minimum distance
+      if (Math.abs(deltaX) > minSwipeDist && Math.abs(deltaX) > deltaY) {
+        const isLeftSwipe = deltaX > 0;
+        const isRightSwipe = deltaX < 0;
+        
+        // Calculate current valid index inline
+        const currentValidIndex = validTabIndices.indexOf(activeTab);
+
+        if (isLeftSwipe && currentValidIndex < validTabIndices.length - 1) {
+          // Swipe left - go to next tab
+          const nextTabIndex = validTabIndices[currentValidIndex + 1];
+          handleTabChangeRef.current?.(nextTabIndex);
+        } else if (isRightSwipe && currentValidIndex > 0) {
+          // Swipe right - go to previous tab
+          const prevTabIndex = validTabIndices[currentValidIndex - 1];
+          handleTabChangeRef.current?.(prevTabIndex);
+        }
+      }
+
+      touchStartPos = null;
+      touchEndPos = null;
+    };
+
+    // Use passive listeners for better performance
+    document.addEventListener('touchstart', handleTouchStart, { passive: true });
+    document.addEventListener('touchmove', handleTouchMove, { passive: true });
+    document.addEventListener('touchend', handleTouchEnd, { passive: true });
+    document.addEventListener('touchcancel', handleTouchEnd, { passive: true });
+
+    return () => {
+      document.removeEventListener('touchstart', handleTouchStart);
+      document.removeEventListener('touchmove', handleTouchMove);
+      document.removeEventListener('touchend', handleTouchEnd);
+      document.removeEventListener('touchcancel', handleTouchEnd);
+    };
+  }, [isMobile, activeTab, validTabIndices]);
 
   // Reusable link component
   const ExternalItemLink = ({ href, children }: { href: string; children: React.ReactNode }) => (
@@ -789,18 +892,13 @@ const Toolkit: NextPage = () => {
               >
                 <ExpandableTabs 
                   tabs={tabs} 
-                  defaultValue={activeTab}
+                  value={activeTab}
                   onChange={handleTabChange}
                   className="w-full"
                 />
               </div>
             </div>
-            <div 
-              className={`${isMobile ? 'mt-4' : ''} pb-4`}
-              onTouchStart={onTouchStart}
-              onTouchMove={onTouchMove}
-              onTouchEnd={onTouchEnd}
-            >
+            <div className={`${isMobile ? 'mt-4' : ''} pb-4`}>
               {renderContent()}
             </div>
           </div>
