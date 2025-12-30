@@ -2,7 +2,6 @@
 import Head from 'next/head';
 import { useState, useEffect, useRef } from 'react';
 import { NextPage } from 'next';
-import { motion, AnimatePresence, useMotionValue, useSpring, useTransform } from 'framer-motion';
 import { ExternalLink, Wrench, Package, BookOpen, Users, Music, Film, Mic, Book } from 'lucide-react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
@@ -89,28 +88,6 @@ const Toolkit: NextPage = () => {
   const [touchStart, setTouchStart] = useState<{ x: number; y: number } | null>(null);
   const [touchEnd, setTouchEnd] = useState<{ x: number; y: number } | null>(null);
   
-  // Swipe animation state
-  const [isSwiping, setIsSwiping] = useState<boolean>(false);
-  const [swipeProgress, setSwipeProgress] = useState<number>(0);
-  const [swipeDirection, setSwipeDirection] = useState<'left' | 'right' | null>(null);
-  
-  // Motion values for smooth animations
-  const x = useMotionValue(0);
-  const springX = useSpring(x, { stiffness: 300, damping: 30 });
-  
-  // Ref for content container to attach touch handlers
-  const contentContainerRef = useRef<HTMLDivElement>(null);
-  
-  // Transform for opacity and blur based on swipe progress
-  const opacity = useTransform(springX, (val) => {
-    const abs = Math.abs(val);
-    return Math.max(0.4, 1 - abs / 300);
-  });
-  const blurValue = useTransform(springX, (val) => {
-    const abs = Math.abs(val);
-    return `blur(${Math.min(8, abs / 25)}px)`;
-  });
-  
   // Create state for randomized data
   const [randomizedData, setRandomizedData] = useState<ToolkitData>({
     tools: [],
@@ -183,13 +160,10 @@ const Toolkit: NextPage = () => {
   
   // Store handleTabChange in a ref to avoid dependency issues
   const handleTabChangeRef = useRef<(tabIndex: number) => void>();
-  // Store activeTab in a ref to avoid closure issues
-  const activeTabRef = useRef<number>(activeTab);
 
   // Re-randomize the specific category when tab changes
   const handleTabChange = (tabIndex: number) => {
     setActiveTab(tabIndex);
-    activeTabRef.current = tabIndex;
     
     // Only re-randomize the data for the selected tab to avoid unnecessary computations
     const newRandomizedData = { ...randomizedData };
@@ -221,21 +195,10 @@ const Toolkit: NextPage = () => {
     // Table height will be updated via the useEffect that depends on activeTab
   };
 
-  // Update refs whenever they change
+  // Update ref whenever handleTabChange changes
   useEffect(() => {
     handleTabChangeRef.current = handleTabChange;
-    activeTabRef.current = activeTab;
-  }, [handleTabChange, activeTab]);
-
-  // Reset animation when tab changes (for programmatic changes)
-  useEffect(() => {
-    // Only reset if we're not currently swiping (to avoid interfering with swipe)
-    if (!isSwiping) {
-      x.set(0);
-      setSwipeProgress(0);
-      setSwipeDirection(null);
-    }
-  }, [activeTab, x, isSwiping]);
+  }, [handleTabChange]);
   
   // Check if device is mobile
   useEffect(() => {
@@ -382,15 +345,11 @@ const Toolkit: NextPage = () => {
 
   // Add native touch event listeners for swipe detection (more reliable on mobile)
   useEffect(() => {
-    if (!isMobile || !contentContainerRef.current) return;
+    if (!isMobile) return;
 
-    const container = contentContainerRef.current;
     const minSwipeDist = 50;
-    const maxSwipeDist = 200;
     let touchStartPos: { x: number; y: number } | null = null;
     let touchEndPos: { x: number; y: number } | null = null;
-    let isHorizontalSwipe = false;
-    let hasMoved = false;
 
     const handleTouchStart = (e: TouchEvent) => {
       // Don't handle swipe if touch starts on interactive elements
@@ -409,146 +368,104 @@ const Toolkit: NextPage = () => {
         x: e.touches[0].clientX,
         y: e.touches[0].clientY
       };
-      isHorizontalSwipe = false;
-      hasMoved = false;
-      setIsSwiping(false);
-      setSwipeProgress(0);
-      setSwipeDirection(null);
-      x.set(0);
     };
 
     const handleTouchMove = (e: TouchEvent) => {
       if (!touchStartPos) return;
-      
-      hasMoved = true;
-      const currentX = e.touches[0].clientX;
-      const currentY = e.touches[0].clientY;
-      const deltaX = touchStartPos.x - currentX;
-      const deltaY = Math.abs(touchStartPos.y - currentY);
-      const absDeltaX = Math.abs(deltaX);
-      
-      // Determine if this is a horizontal swipe (check very early)
-      if (!isHorizontalSwipe && absDeltaX > 5) {
-        isHorizontalSwipe = absDeltaX > deltaY * 1.1;
-      }
-      
-      // If it's a horizontal swipe, prevent default and track it
-      if (isHorizontalSwipe || (absDeltaX > deltaY && absDeltaX > 5)) {
-        // Always prevent default for horizontal movement to stop scrolling
-        e.preventDefault();
-        e.stopPropagation();
-        
-        setIsSwiping(true);
-        setSwipeDirection(deltaX > 0 ? 'left' : 'right');
-        
-        // Calculate progress
-        const progress = Math.min(absDeltaX / maxSwipeDist, 1);
-        setSwipeProgress(progress);
-        
-        // Update motion value - no limits, follow finger exactly
-        x.set(-deltaX);
-      }
-      
       touchEndPos = {
-        x: currentX,
-        y: currentY
+        x: e.touches[0].clientX,
+        y: e.touches[0].clientY
       };
     };
 
-    const handleTouchEnd = (e: TouchEvent) => {
-      if (!touchStartPos) {
+    const handleTouchEnd = () => {
+      if (!touchStartPos || !touchEndPos) {
         touchStartPos = null;
         touchEndPos = null;
-        isHorizontalSwipe = false;
-        hasMoved = false;
-        return;
-      }
-
-      // If we didn't move, just reset
-      if (!hasMoved || !touchEndPos) {
-        x.set(0);
-        setIsSwiping(false);
-        setSwipeProgress(0);
-        setSwipeDirection(null);
-        touchStartPos = null;
-        touchEndPos = null;
-        isHorizontalSwipe = false;
-        hasMoved = false;
         return;
       }
 
       const deltaX = touchStartPos.x - touchEndPos.x;
       const deltaY = Math.abs(touchStartPos.y - touchEndPos.y);
-      const absDeltaX = Math.abs(deltaX);
 
       // Only trigger swipe if horizontal movement is greater than vertical
       // and exceeds minimum distance
-      if (absDeltaX > minSwipeDist && absDeltaX > deltaY) {
+      if (Math.abs(deltaX) > minSwipeDist && Math.abs(deltaX) > deltaY) {
         const isLeftSwipe = deltaX > 0;
         const isRightSwipe = deltaX < 0;
         
-        // Use ref to get current activeTab (avoids closure issues)
-        const currentActiveTab = activeTabRef.current;
-        const currentValidIndex = validTabIndices.indexOf(currentActiveTab);
+        // Calculate current valid index inline
+        const currentValidIndex = validTabIndices.indexOf(activeTab);
 
         if (isLeftSwipe && currentValidIndex < validTabIndices.length - 1) {
           // Swipe left - go to next tab
           const nextTabIndex = validTabIndices[currentValidIndex + 1];
-          // CHANGE TAB IMMEDIATELY - use handleTabChange which does everything
-          if (handleTabChangeRef.current) {
-            handleTabChangeRef.current(nextTabIndex);
-          }
-          // Reset animation immediately
-          x.set(0);
-          setIsSwiping(false);
-          setSwipeProgress(0);
-          setSwipeDirection(null);
+          handleTabChangeRef.current?.(nextTabIndex);
         } else if (isRightSwipe && currentValidIndex > 0) {
           // Swipe right - go to previous tab
           const prevTabIndex = validTabIndices[currentValidIndex - 1];
-          // CHANGE TAB IMMEDIATELY - use handleTabChange which does everything
-          if (handleTabChangeRef.current) {
-            handleTabChangeRef.current(prevTabIndex);
-          }
-          // Reset animation immediately
-          x.set(0);
-          setIsSwiping(false);
-          setSwipeProgress(0);
-          setSwipeDirection(null);
-        } else {
-          // Snap back
-          x.set(0);
-          setIsSwiping(false);
-          setSwipeProgress(0);
-          setSwipeDirection(null);
+          handleTabChangeRef.current?.(prevTabIndex);
         }
-      } else {
-        // Snap back if swipe wasn't sufficient
-        x.set(0);
-        setIsSwiping(false);
-        setSwipeProgress(0);
-        setSwipeDirection(null);
       }
 
       touchStartPos = null;
       touchEndPos = null;
-      isHorizontalSwipe = false;
-      hasMoved = false;
     };
 
-    // Attach directly to content container - non-passive for touchmove so we can preventDefault
-    container.addEventListener('touchstart', handleTouchStart, { passive: true });
-    container.addEventListener('touchmove', handleTouchMove, { passive: false });
-    container.addEventListener('touchend', handleTouchEnd, { passive: true });
-    container.addEventListener('touchcancel', handleTouchEnd, { passive: true });
+    // Use passive listeners for better performance
+    document.addEventListener('touchstart', handleTouchStart, { passive: true });
+    document.addEventListener('touchmove', handleTouchMove, { passive: true });
+    document.addEventListener('touchend', handleTouchEnd, { passive: true });
+    document.addEventListener('touchcancel', handleTouchEnd, { passive: true });
 
     return () => {
-      container.removeEventListener('touchstart', handleTouchStart);
-      container.removeEventListener('touchmove', handleTouchMove);
-      container.removeEventListener('touchend', handleTouchEnd);
-      container.removeEventListener('touchcancel', handleTouchEnd);
+      document.removeEventListener('touchstart', handleTouchStart);
+      document.removeEventListener('touchmove', handleTouchMove);
+      document.removeEventListener('touchend', handleTouchEnd);
+      document.removeEventListener('touchcancel', handleTouchEnd);
     };
-  }, [isMobile, activeTab, validTabIndices, x]);
+  }, [isMobile, activeTab, validTabIndices]);
+
+  // Helper functions to generate proper links for each service
+  const getBookLink = (book: BookItem): string => {
+    // If already an Amazon link, use it
+    if (book.url.includes('amazon.com')) {
+      return book.url;
+    }
+    // Otherwise, generate Amazon search URL
+    const searchQuery = encodeURIComponent(`${book.title} ${book.author}`);
+    return `https://www.amazon.com/s?k=${searchQuery}`;
+  };
+
+  const getPodcastLink = (podcast: PodcastItem): string => {
+    // If already a Spotify link, use it
+    if (podcast.url.includes('spotify.com') || podcast.url.includes('open.spotify.com')) {
+      return podcast.url;
+    }
+    // Otherwise, generate Spotify search URL
+    const searchQuery = encodeURIComponent(podcast.name);
+    return `https://open.spotify.com/search/${searchQuery}`;
+  };
+
+  const getMusicLink = (music: MusicItem): string => {
+    // If already a Spotify link, use it
+    if (music.url.includes('spotify.com') || music.url.includes('open.spotify.com')) {
+      return music.url;
+    }
+    // Otherwise, generate Spotify search URL
+    const searchQuery = encodeURIComponent(`${music.song} ${music.artist}`);
+    return `https://open.spotify.com/search/${searchQuery}`;
+  };
+
+  const getTVFilmLink = (item: TVFilmItem): string => {
+    // If already an IMDb link, use it
+    if (item.url.includes('imdb.com')) {
+      return item.url;
+    }
+    // Otherwise, generate IMDb search URL
+    const searchQuery = encodeURIComponent(item.name);
+    return `https://www.imdb.com/find/?q=${searchQuery}`;
+  };
 
   // Reusable link component
   const ExternalItemLink = ({ href, children }: { href: string; children: React.ReactNode }) => (
@@ -727,7 +644,7 @@ const Toolkit: NextPage = () => {
                 <MobileCard key={book.id} className="h-auto">
                   <div className="flex items-start justify-between">
                     <h3 className="font-medium text-sm truncate max-w-[70%]">
-                      <ExternalItemLink href={book.url}>
+                      <ExternalItemLink href={getBookLink(book)}>
                         {book.title}
                       </ExternalItemLink>
                     </h3>
@@ -763,7 +680,7 @@ const Toolkit: NextPage = () => {
                   }`}
                 >
                   <div className="font-medium">
-                    <ExternalItemLink href={book.url}>
+                    <ExternalItemLink href={getBookLink(book)}>
                       {book.title}
                     </ExternalItemLink>
                   </div>
@@ -787,7 +704,7 @@ const Toolkit: NextPage = () => {
                 <MobileCard key={podcast.id} className="h-auto">
                   <div className="flex items-start justify-between">
                     <h3 className="font-medium text-sm truncate max-w-[70%]">
-                      <ExternalItemLink href={podcast.url}>
+                      <ExternalItemLink href={getPodcastLink(podcast)}>
                         {podcast.name}
                       </ExternalItemLink>
                     </h3>
@@ -823,7 +740,7 @@ const Toolkit: NextPage = () => {
                   }`}
                 >
                   <div className="font-medium">
-                    <ExternalItemLink href={podcast.url}>
+                    <ExternalItemLink href={getPodcastLink(podcast)}>
                       {podcast.name}
                     </ExternalItemLink>
                   </div>
@@ -847,7 +764,7 @@ const Toolkit: NextPage = () => {
                 <MobileCard key={item.id} className="h-auto">
                   <div className="flex items-start justify-between">
                     <h3 className="font-medium text-sm truncate max-w-[70%]">
-                      <ExternalItemLink href={item.url}>
+                      <ExternalItemLink href={getTVFilmLink(item)}>
                         {item.name}
                       </ExternalItemLink>
                     </h3>
@@ -881,7 +798,7 @@ const Toolkit: NextPage = () => {
                   }`}
                 >
                   <div className="font-medium">
-                    <ExternalItemLink href={item.url}>
+                    <ExternalItemLink href={getTVFilmLink(item)}>
                       {item.name}
                     </ExternalItemLink>
                   </div>
@@ -904,7 +821,7 @@ const Toolkit: NextPage = () => {
                 <MobileCard key={item.id} className="h-auto">
                   <div className="flex items-start justify-between">
                     <h3 className="font-medium text-sm truncate max-w-[70%]">
-                      <ExternalItemLink href={item.url}>
+                      <ExternalItemLink href={getMusicLink(item)}>
                         {item.song}
                       </ExternalItemLink>
                     </h3>
@@ -944,7 +861,7 @@ const Toolkit: NextPage = () => {
                   }`}
                 >
                   <div className="font-medium">
-                    <ExternalItemLink href={item.url}>
+                    <ExternalItemLink href={getMusicLink(item)}>
                       {item.song}
                     </ExternalItemLink>
                   </div>
@@ -1022,87 +939,8 @@ const Toolkit: NextPage = () => {
                 />
               </div>
             </div>
-            <div 
-              ref={contentContainerRef}
-              className={`${isMobile ? 'mt-4' : ''} pb-4 relative`}
-            >
-              {/* Edge indicators for swipe hint */}
-              {isMobile && (
-                <>
-                  {/* Left edge indicator - shows when can swipe right */}
-                  <AnimatePresence>
-                    {(() => {
-                      const currentValidIndex = validTabIndices.indexOf(activeTab);
-                      return currentValidIndex > 0 && !isSwiping;
-                    })() && (
-                      <motion.div
-                        initial={{ opacity: 0, x: -4 }}
-                        animate={{ opacity: 0.4, x: 0 }}
-                        exit={{ opacity: 0, x: -4 }}
-                        transition={{ duration: 0.3 }}
-                        className="absolute left-2 top-1/2 -translate-y-1/2 z-10 pointer-events-none"
-                      >
-                        <div className="w-0.5 h-20 bg-primary/30 rounded-r-full" />
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
-                  
-                  {/* Right edge indicator - shows when can swipe left */}
-                  <AnimatePresence>
-                    {(() => {
-                      const currentValidIndex = validTabIndices.indexOf(activeTab);
-                      return currentValidIndex < validTabIndices.length - 1 && !isSwiping;
-                    })() && (
-                      <motion.div
-                        initial={{ opacity: 0, x: 4 }}
-                        animate={{ opacity: 0.4, x: 0 }}
-                        exit={{ opacity: 0, x: 4 }}
-                        transition={{ duration: 0.3 }}
-                        className="absolute right-2 top-1/2 -translate-y-1/2 z-10 pointer-events-none"
-                      >
-                        <div className="w-0.5 h-20 bg-primary/30 rounded-l-full" />
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
-                </>
-              )}
-              
-              {/* Content with swipe animation and glass effect */}
-              <motion.div
-                style={{
-                  x: springX,
-                  willChange: 'transform', // Optimize for animation
-                }}
-                className="relative"
-              >
-                {/* Glass overlay during swipe */}
-                <motion.div
-                  className="absolute inset-0 z-20 pointer-events-none"
-                  style={{
-                    background: useTransform(springX, (val) => {
-                      if (val === 0) return 'transparent';
-                      return val < 0
-                        ? 'linear-gradient(to right, rgba(255,255,255,0.08) 0%, transparent 60%)'
-                        : 'linear-gradient(to left, rgba(255,255,255,0.08) 0%, transparent 60%)';
-                    }),
-                    backdropFilter: 'blur(2px)',
-                    opacity: useTransform(springX, (val) => {
-                      const abs = Math.abs(val);
-                      return Math.min(0.6, abs / 150);
-                    }),
-                  }}
-                />
-                
-                {/* Content with blur effect */}
-                <motion.div
-                  style={{
-                    filter: blurValue,
-                    opacity: opacity,
-                  }}
-                >
-                  {renderContent()}
-                </motion.div>
-              </motion.div>
+            <div className={`${isMobile ? 'mt-4' : ''} pb-4`}>
+              {renderContent()}
             </div>
           </div>
         </div>
