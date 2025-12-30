@@ -379,6 +379,7 @@ const Toolkit: NextPage = () => {
     const maxSwipeDist = 200; // Maximum distance for progress calculation
     let touchStartPos: { x: number; y: number } | null = null;
     let touchEndPos: { x: number; y: number } | null = null;
+    let isHorizontalSwipe = false;
 
     const handleTouchStart = (e: TouchEvent) => {
       // Don't handle swipe if touch starts on interactive elements
@@ -397,6 +398,7 @@ const Toolkit: NextPage = () => {
         x: e.touches[0].clientX,
         y: e.touches[0].clientY
       };
+      isHorizontalSwipe = false;
       setIsSwiping(false);
       setSwipeProgress(0);
       setSwipeDirection(null);
@@ -411,16 +413,28 @@ const Toolkit: NextPage = () => {
       const deltaX = touchStartPos.x - currentX;
       const deltaY = Math.abs(touchStartPos.y - currentY);
       
-      // Only track if primarily horizontal movement
-      if (Math.abs(deltaX) > deltaY && Math.abs(deltaX) > 10) {
+      // Determine if this is a horizontal swipe (check early in the gesture)
+      if (!isHorizontalSwipe && Math.abs(deltaX) > 10) {
+        isHorizontalSwipe = Math.abs(deltaX) > deltaY * 1.2; // More horizontal than vertical
+      }
+      
+      // Track horizontal movement - be more permissive
+      const absDeltaX = Math.abs(deltaX);
+      if (isHorizontalSwipe || (absDeltaX > deltaY && absDeltaX > 10)) {
+        // Prevent default scrolling only for horizontal swipes
+        if (absDeltaX > 20) {
+          e.preventDefault();
+        }
+        
         setIsSwiping(true);
         setSwipeDirection(deltaX > 0 ? 'left' : 'right');
         
         // Calculate progress (0 to 1)
-        const progress = Math.min(Math.abs(deltaX) / maxSwipeDist, 1);
+        const progress = Math.min(absDeltaX / maxSwipeDist, 1);
         setSwipeProgress(progress);
         
-        // Update motion value for smooth animation
+        // Update motion value for smooth animation - allow full movement
+        // No clamping - let it move as far as the user swipes
         x.set(-deltaX);
       }
       
@@ -439,15 +453,17 @@ const Toolkit: NextPage = () => {
         setSwipeDirection(null);
         touchStartPos = null;
         touchEndPos = null;
+        isHorizontalSwipe = false;
         return;
       }
 
       const deltaX = touchStartPos.x - touchEndPos.x;
       const deltaY = Math.abs(touchStartPos.y - touchEndPos.y);
+      const absDeltaX = Math.abs(deltaX);
 
       // Only trigger swipe if horizontal movement is greater than vertical
       // and exceeds minimum distance
-      if (Math.abs(deltaX) > minSwipeDist && Math.abs(deltaX) > deltaY) {
+      if (absDeltaX > minSwipeDist && absDeltaX > deltaY) {
         const isLeftSwipe = deltaX > 0;
         const isRightSwipe = deltaX < 0;
         
@@ -457,21 +473,39 @@ const Toolkit: NextPage = () => {
         if (isLeftSwipe && currentValidIndex < validTabIndices.length - 1) {
           // Swipe left - go to next tab
           const nextTabIndex = validTabIndices[currentValidIndex + 1];
-          // Animate out smoothly
-          x.set(-window.innerWidth * 0.3);
-          setTimeout(() => {
-            handleTabChangeRef.current?.(nextTabIndex);
-            // Reset will happen via useEffect when activeTab changes
-          }, 150);
+          // Change tab immediately
+          if (handleTabChangeRef.current) {
+            handleTabChangeRef.current(nextTabIndex);
+          }
+          // Animate transition
+          x.set(-window.innerWidth * 0.15);
+          // Reset after short delay
+          requestAnimationFrame(() => {
+            setTimeout(() => {
+              x.set(0);
+              setIsSwiping(false);
+              setSwipeProgress(0);
+              setSwipeDirection(null);
+            }, 150);
+          });
         } else if (isRightSwipe && currentValidIndex > 0) {
           // Swipe right - go to previous tab
           const prevTabIndex = validTabIndices[currentValidIndex - 1];
-          // Animate out smoothly
-          x.set(window.innerWidth * 0.3);
-          setTimeout(() => {
-            handleTabChangeRef.current?.(prevTabIndex);
-            // Reset will happen via useEffect when activeTab changes
-          }, 150);
+          // Change tab immediately
+          if (handleTabChangeRef.current) {
+            handleTabChangeRef.current(prevTabIndex);
+          }
+          // Animate transition
+          x.set(window.innerWidth * 0.15);
+          // Reset after short delay
+          requestAnimationFrame(() => {
+            setTimeout(() => {
+              x.set(0);
+              setIsSwiping(false);
+              setSwipeProgress(0);
+              setSwipeDirection(null);
+            }, 150);
+          });
         } else {
           // Snap back if swipe wasn't valid
           x.set(0);
@@ -489,11 +523,12 @@ const Toolkit: NextPage = () => {
 
       touchStartPos = null;
       touchEndPos = null;
+      isHorizontalSwipe = false;
     };
 
-    // Use passive listeners for better performance
+    // Use non-passive listener for touchmove so we can preventDefault
     document.addEventListener('touchstart', handleTouchStart, { passive: true });
-    document.addEventListener('touchmove', handleTouchMove, { passive: true });
+    document.addEventListener('touchmove', handleTouchMove, { passive: false });
     document.addEventListener('touchend', handleTouchEnd, { passive: true });
     document.addEventListener('touchcancel', handleTouchEnd, { passive: true });
 
@@ -503,7 +538,7 @@ const Toolkit: NextPage = () => {
       document.removeEventListener('touchend', handleTouchEnd);
       document.removeEventListener('touchcancel', handleTouchEnd);
     };
-  }, [isMobile, activeTab, validTabIndices]);
+  }, [isMobile, activeTab, validTabIndices, x]);
 
   // Reusable link component
   const ExternalItemLink = ({ href, children }: { href: string; children: React.ReactNode }) => (
@@ -977,7 +1012,9 @@ const Toolkit: NextPage = () => {
                 />
               </div>
             </div>
-            <div className={`${isMobile ? 'mt-4' : ''} pb-4 relative overflow-hidden`}>
+            <div 
+              className={`${isMobile ? 'mt-4' : ''} pb-4 relative`}
+            >
               {/* Edge indicators for swipe hint */}
               {isMobile && (
                 <>
