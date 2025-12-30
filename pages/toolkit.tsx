@@ -2,6 +2,7 @@
 import Head from 'next/head';
 import { useState, useEffect, useRef } from 'react';
 import { NextPage } from 'next';
+import { motion, AnimatePresence, useMotionValue, useSpring, useTransform } from 'framer-motion';
 import { ExternalLink, Wrench, Package, BookOpen, Users, Music, Film, Mic, Book } from 'lucide-react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
@@ -87,6 +88,25 @@ const Toolkit: NextPage = () => {
   // Swipe detection state
   const [touchStart, setTouchStart] = useState<{ x: number; y: number } | null>(null);
   const [touchEnd, setTouchEnd] = useState<{ x: number; y: number } | null>(null);
+  
+  // Swipe animation state
+  const [isSwiping, setIsSwiping] = useState<boolean>(false);
+  const [swipeProgress, setSwipeProgress] = useState<number>(0);
+  const [swipeDirection, setSwipeDirection] = useState<'left' | 'right' | null>(null);
+  
+  // Motion values for smooth animations
+  const x = useMotionValue(0);
+  const springX = useSpring(x, { stiffness: 300, damping: 30 });
+  
+  // Transform for opacity and blur based on swipe progress
+  const opacity = useTransform(springX, (val) => {
+    const abs = Math.abs(val);
+    return Math.max(0.4, 1 - abs / 300);
+  });
+  const blurValue = useTransform(springX, (val) => {
+    const abs = Math.abs(val);
+    return `blur(${Math.min(8, abs / 25)}px)`;
+  });
   
   // Create state for randomized data
   const [randomizedData, setRandomizedData] = useState<ToolkitData>({
@@ -199,6 +219,14 @@ const Toolkit: NextPage = () => {
   useEffect(() => {
     handleTabChangeRef.current = handleTabChange;
   }, [handleTabChange]);
+
+  // Reset animation when tab changes (for programmatic changes)
+  useEffect(() => {
+    x.set(0);
+    setIsSwiping(false);
+    setSwipeProgress(0);
+    setSwipeDirection(null);
+  }, [activeTab, x]);
   
   // Check if device is mobile
   useEffect(() => {
@@ -348,6 +376,7 @@ const Toolkit: NextPage = () => {
     if (!isMobile) return;
 
     const minSwipeDist = 50;
+    const maxSwipeDist = 200; // Maximum distance for progress calculation
     let touchStartPos: { x: number; y: number } | null = null;
     let touchEndPos: { x: number; y: number } | null = null;
 
@@ -368,18 +397,46 @@ const Toolkit: NextPage = () => {
         x: e.touches[0].clientX,
         y: e.touches[0].clientY
       };
+      setIsSwiping(false);
+      setSwipeProgress(0);
+      setSwipeDirection(null);
+      x.set(0);
     };
 
     const handleTouchMove = (e: TouchEvent) => {
       if (!touchStartPos) return;
+      
+      const currentX = e.touches[0].clientX;
+      const currentY = e.touches[0].clientY;
+      const deltaX = touchStartPos.x - currentX;
+      const deltaY = Math.abs(touchStartPos.y - currentY);
+      
+      // Only track if primarily horizontal movement
+      if (Math.abs(deltaX) > deltaY && Math.abs(deltaX) > 10) {
+        setIsSwiping(true);
+        setSwipeDirection(deltaX > 0 ? 'left' : 'right');
+        
+        // Calculate progress (0 to 1)
+        const progress = Math.min(Math.abs(deltaX) / maxSwipeDist, 1);
+        setSwipeProgress(progress);
+        
+        // Update motion value for smooth animation
+        x.set(-deltaX);
+      }
+      
       touchEndPos = {
-        x: e.touches[0].clientX,
-        y: e.touches[0].clientY
+        x: currentX,
+        y: currentY
       };
     };
 
     const handleTouchEnd = () => {
       if (!touchStartPos || !touchEndPos) {
+        // Reset animation
+        x.set(0);
+        setIsSwiping(false);
+        setSwipeProgress(0);
+        setSwipeDirection(null);
         touchStartPos = null;
         touchEndPos = null;
         return;
@@ -400,12 +457,34 @@ const Toolkit: NextPage = () => {
         if (isLeftSwipe && currentValidIndex < validTabIndices.length - 1) {
           // Swipe left - go to next tab
           const nextTabIndex = validTabIndices[currentValidIndex + 1];
-          handleTabChangeRef.current?.(nextTabIndex);
+          // Animate out smoothly
+          x.set(-window.innerWidth * 0.3);
+          setTimeout(() => {
+            handleTabChangeRef.current?.(nextTabIndex);
+            // Reset will happen via useEffect when activeTab changes
+          }, 150);
         } else if (isRightSwipe && currentValidIndex > 0) {
           // Swipe right - go to previous tab
           const prevTabIndex = validTabIndices[currentValidIndex - 1];
-          handleTabChangeRef.current?.(prevTabIndex);
+          // Animate out smoothly
+          x.set(window.innerWidth * 0.3);
+          setTimeout(() => {
+            handleTabChangeRef.current?.(prevTabIndex);
+            // Reset will happen via useEffect when activeTab changes
+          }, 150);
+        } else {
+          // Snap back if swipe wasn't valid
+          x.set(0);
+          setIsSwiping(false);
+          setSwipeProgress(0);
+          setSwipeDirection(null);
         }
+      } else {
+        // Snap back if swipe wasn't sufficient
+        x.set(0);
+        setIsSwiping(false);
+        setSwipeProgress(0);
+        setSwipeDirection(null);
       }
 
       touchStartPos = null;
@@ -898,8 +977,83 @@ const Toolkit: NextPage = () => {
                 />
               </div>
             </div>
-            <div className={`${isMobile ? 'mt-4' : ''} pb-4`}>
-              {renderContent()}
+            <div className={`${isMobile ? 'mt-4' : ''} pb-4 relative overflow-hidden`}>
+              {/* Edge indicators for swipe hint */}
+              {isMobile && (
+                <>
+                  {/* Left edge indicator - shows when can swipe right */}
+                  <AnimatePresence>
+                    {(() => {
+                      const currentValidIndex = validTabIndices.indexOf(activeTab);
+                      return currentValidIndex > 0 && !isSwiping;
+                    })() && (
+                      <motion.div
+                        initial={{ opacity: 0, x: -4 }}
+                        animate={{ opacity: 0.4, x: 0 }}
+                        exit={{ opacity: 0, x: -4 }}
+                        transition={{ duration: 0.3 }}
+                        className="absolute left-2 top-1/2 -translate-y-1/2 z-10 pointer-events-none"
+                      >
+                        <div className="w-0.5 h-20 bg-primary/30 rounded-r-full" />
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                  
+                  {/* Right edge indicator - shows when can swipe left */}
+                  <AnimatePresence>
+                    {(() => {
+                      const currentValidIndex = validTabIndices.indexOf(activeTab);
+                      return currentValidIndex < validTabIndices.length - 1 && !isSwiping;
+                    })() && (
+                      <motion.div
+                        initial={{ opacity: 0, x: 4 }}
+                        animate={{ opacity: 0.4, x: 0 }}
+                        exit={{ opacity: 0, x: 4 }}
+                        transition={{ duration: 0.3 }}
+                        className="absolute right-2 top-1/2 -translate-y-1/2 z-10 pointer-events-none"
+                      >
+                        <div className="w-0.5 h-20 bg-primary/30 rounded-l-full" />
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </>
+              )}
+              
+              {/* Content with swipe animation and glass effect */}
+              <motion.div
+                style={{
+                  x: springX,
+                }}
+                className="relative"
+              >
+                {/* Glass overlay during swipe */}
+                <motion.div
+                  className="absolute inset-0 z-20 pointer-events-none"
+                  style={{
+                    background: useTransform(springX, (val) => {
+                      if (val === 0) return 'transparent';
+                      return val < 0
+                        ? 'linear-gradient(to right, rgba(255,255,255,0.08) 0%, transparent 60%)'
+                        : 'linear-gradient(to left, rgba(255,255,255,0.08) 0%, transparent 60%)';
+                    }),
+                    backdropFilter: 'blur(2px)',
+                    opacity: useTransform(springX, (val) => {
+                      const abs = Math.abs(val);
+                      return Math.min(0.6, abs / 150);
+                    }),
+                  }}
+                />
+                
+                {/* Content with blur effect */}
+                <motion.div
+                  style={{
+                    filter: blurValue,
+                    opacity: opacity,
+                  }}
+                >
+                  {renderContent()}
+                </motion.div>
+              </motion.div>
             </div>
           </div>
         </div>
