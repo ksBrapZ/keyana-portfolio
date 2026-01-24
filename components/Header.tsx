@@ -39,7 +39,7 @@ const Header = () => {
             {/* Keyana's Info */}
             <div>
               <h1 className="text-2xl font-medium tracking-tight">Keyana Sapp</h1>
-              <p className="text-muted-foreground">Digital and analogue builder</p>
+              <p className="text-muted-foreground">Restoring tangible competence in a disposable world</p>
               <p className="text-sm text-muted-foreground/70">Boulder, CO · {currentTime}</p>
             </div>
 

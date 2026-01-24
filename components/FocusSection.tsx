@@ -9,7 +9,7 @@ const FocusSection = () => {
         <CardContent className="pt-3">
           <div className="group">
             <h3 className="text-lg font-medium flex items-center">
-              Strategic Partnerships, 
+              US Commercial Partnerships, 
               <a 
                 href="https://www.palantir.com" 
                 className="text-primary ml-2 group-hover:text-primary/80 transition-colors flex items-center" 
