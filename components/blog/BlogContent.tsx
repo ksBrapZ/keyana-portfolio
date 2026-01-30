@@ -61,8 +61,13 @@ export default function BlogContent({ frontmatter, content }: BlogContentProps) 
               ul: ({ node, ...props }) => <ul className="list-disc pl-6 my-4" {...props} />,
               ol: ({ node, ...props }) => <ol className="list-decimal pl-6 my-4" {...props} />,
               li: ({ node, ...props }) => <li className="my-1" {...props} />,
-              a: ({ node, ...props }) => (
-                <a className="text-primary hover:underline" {...props} />
+              a: ({ node, href, ...props }) => (
+                <a
+                  className="text-primary hover:underline"
+                  href={href}
+                  {...(href?.startsWith('http') ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+                  {...props}
+                />
               ),
               blockquote: ({ node, ...props }) => (
                 <blockquote className="pl-4 border-l-2 border-border/50 dark:border-border/20 italic my-4" {...props} />
