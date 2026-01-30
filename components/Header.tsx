@@ -98,20 +98,6 @@ const Header = () => {
                 <NavigationMenu>
                   <NavigationMenuList>
                     <NavigationMenuItem>
-                      <Link href="/toolkit" legacyBehavior passHref>
-                        <NavigationMenuLink 
-                          className={cn(
-                            "text-sm uppercase tracking-wider px-4 py-2 hover:text-primary transition-colors",
-                            pathname === "/toolkit" || pathname?.startsWith("/toolkit/") ? "text-primary" : "text-muted-foreground"
-                          )}
-                        >
-                          Toolkit
-                        </NavigationMenuLink>
-                      </Link>
-                    </NavigationMenuItem>
-                    
-                    {/* Blog link - now active */}
-                    <NavigationMenuItem>
                       <Link href="/blog" legacyBehavior passHref>
                         <NavigationMenuLink 
                           className={cn(
@@ -123,8 +109,18 @@ const Header = () => {
                         </NavigationMenuLink>
                       </Link>
                     </NavigationMenuItem>
-                    
-                    {/* Gallery link */}
+                    <NavigationMenuItem>
+                      <Link href="/toolkit" legacyBehavior passHref>
+                        <NavigationMenuLink 
+                          className={cn(
+                            "text-sm uppercase tracking-wider px-4 py-2 hover:text-primary transition-colors",
+                            pathname === "/toolkit" || pathname?.startsWith("/toolkit/") ? "text-primary" : "text-muted-foreground"
+                          )}
+                        >
+                          Toolkit
+                        </NavigationMenuLink>
+                      </Link>
+                    </NavigationMenuItem>
                     <NavigationMenuItem>
                       <Link href="/gallery" legacyBehavior passHref>
                         <NavigationMenuLink 
@@ -158,16 +154,6 @@ const Header = () => {
           <div className="md:hidden fixed top-24 right-6 w-1/2 py-4 px-5 bg-background border border-border/30 rounded-md shadow-sm z-50">
             <nav className="flex flex-col space-y-3">
               <Link 
-                href="/toolkit" 
-                className={cn(
-                  "text-sm uppercase tracking-wider py-2 hover:text-primary transition-colors",
-                  pathname === "/toolkit" || pathname?.startsWith("/toolkit/") ? "text-primary" : "text-muted-foreground"
-                )}
-                onClick={() => setMobileMenuOpen(false)}
-              >
-                Toolkit
-              </Link>
-              <Link 
                 href="/blog" 
                 className={cn(
                   "text-sm uppercase tracking-wider py-2 hover:text-primary transition-colors",
@@ -176,6 +162,16 @@ const Header = () => {
                 onClick={() => setMobileMenuOpen(false)}
               >
                 Blog
+              </Link>
+              <Link 
+                href="/toolkit" 
+                className={cn(
+                  "text-sm uppercase tracking-wider py-2 hover:text-primary transition-colors",
+                  pathname === "/toolkit" || pathname?.startsWith("/toolkit/") ? "text-primary" : "text-muted-foreground"
+                )}
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                Toolkit
               </Link>
               <Link 
                 href="/gallery" 
