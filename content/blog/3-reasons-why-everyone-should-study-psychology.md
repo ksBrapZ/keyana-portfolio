@@ -6,8 +6,6 @@ tags: ["Psychology", "Motivation", "Management"]
 published: true
 ---
 
-# What is Psychology?
-
 *On one level, its the study of the mind as it relates to behaviour.* But if we think about what that means, we'll see that psychology is ultimately concerned with the factors that motivate a person to take a specific action. *It's about the mental states which determine our decision to do anything.*
 
 **So when we ask why studying psychology is useful, we're really asking why understanding human motivation is useful.**

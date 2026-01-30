@@ -6,8 +6,6 @@ tags: ["Agents", "AI", "Automation"]
 published: true
 ---
 
-# The Case for Connected AI: Beyond Vertical Solutions
-
 Everyone is racing to build AI agents focused on vertical tasks—sales bots, customer support bots, scheduling assistants. On the surface, these agents promise enormous efficiency, automation, and cost-saving opportunities. But here's the core issue that too many are missing: **real-world teams don't operate in isolated verticals**. They collaborate, communicate, and share context fluidly.
 
 ## The Team Sport Analogy

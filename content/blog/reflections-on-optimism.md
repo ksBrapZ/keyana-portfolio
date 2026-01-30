@@ -6,8 +6,6 @@ tags: ["Philosophy", "Economics", "Futurism"]
 published: true
 ---
 
-# The Scourge of Pessimism
-
 Pessimism is rife in modern times.
 
 When thousands in the UK were recently asked if they believe that the world is improving, only 11% said that they did.

@@ -6,8 +6,6 @@ tags: ["Philosophy", "Stoicism", "Craftsmanship"]
 published: true
 ---
 
-# You Don't Own What You Can't Fix
-
 That $400 raw denim you've never washed. The $200 knife you only use to open Amazon packages. The Arc'teryx shell, still pristine after two years.
 
 You're not buying quality. You're buying the *feeling* of being the kind of person who buys quality.

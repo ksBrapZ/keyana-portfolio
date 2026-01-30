@@ -6,8 +6,6 @@ tags: ["UX", "AI", "Competition"]
 published: true
 ---
 
-# The User Experience Revolution: From GUI to AI
-
 **In the late 80s, the world was on the brink of a monumental transformation.** Personal computers had evolved into powerful tools capable of revolutionizing how we work, learn, and communicate. However, despite their immense potential, these machines remained largely inaccessible to the average person. The issue lay not in the technology itself, but in the way users interacted with it. Complex command lines and cryptic codes created a formidable barrier.
 
 *The breakthrough came with the advent of the graphical user interface (GUI)*. This innovation was more than just a technical upgrade; it was a democratizing force. The GUI replaced convoluted commands with intuitive visuals, transforming personal computers into something everyone could use. *By making technology accessible, the GUI didn't merely enable a few more people to use computers—it ignited a revolution that changed the world.* Computing became an integral part of daily life, heralding the dawn of the digital age.

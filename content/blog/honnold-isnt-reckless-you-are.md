@@ -6,8 +6,6 @@ tags: ["Risk", "Philosophy", "Society"]
 published: true
 ---
 
-# Honnold Isn't Reckless. You Are.
-
 Alex Honnold just climbed Taipei 101 without a rope, and statistically, *it's one of the safest career decisions he's ever made*.
 
 Yesterday morning, Honnold ascended 1,667 feet of steel and glass in ninety-one minutes. No harness. No net. Netflix built in a ten-second broadcast delay - exactly the time his body would take to hit the ground.
