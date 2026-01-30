@@ -36,10 +36,16 @@ const Header = () => {
       <div className="container mx-auto px-6 md:px-12 lg:px-16 max-w-screen-lg relative">
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center">
           <div className="flex flex-row justify-between items-center w-full">
-            {/* Keyana's Info */}
+            {/* Keyana's Info - name and tagline link to home */}
             <div>
-              <h1 className="text-2xl font-medium tracking-tight">Keyana Sapp</h1>
-              <p className="text-muted-foreground">Restoring tangible competence in a disposable world</p>
+              <Link
+                href="/"
+                className="block hover:opacity-80 transition-opacity focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 rounded-sm"
+                aria-label="Keyana Sapp – back to home"
+              >
+                <h1 className="text-2xl font-medium tracking-tight">Keyana Sapp</h1>
+                <p className="text-muted-foreground">Restoring tangible competence in a disposable world</p>
+              </Link>
               <p className="text-sm text-muted-foreground/70">Boulder, CO · {currentTime}</p>
             </div>
 
