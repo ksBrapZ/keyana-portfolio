@@ -1,7 +1,7 @@
 ---
 title: "Honnold Isn't Reckless. You Are."
 date: "2026-01-30"
-description: "Why the outrage at Alex Honnold scales inversely with actual risk—and what roofers, poker, and occupational fatality rates reveal about how we judge danger."
+description: "Why we call Honnold reckless but ignore the roofers dying at predictable rates."
 tags: ["Risk", "Philosophy", "Society"]
 published: true
 ---
