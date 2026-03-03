@@ -37,7 +37,7 @@ const Slider = ({ label, value, onChange, min, max, step, format, suffix }) => (
   </div>
 );
 
-const Row = ({ label, value, highlight, sub, warn }) => (
+const Row = ({ label, value, highlight, sub, warn, accent }) => (
   <div className="flex justify-between items-baseline py-2 border-b border-border/40">
     <span
       className={`font-sans ${sub ? "text-[0.7rem] text-muted-foreground/70 pl-4" : "text-xs text-muted-foreground"}`}
@@ -52,6 +52,7 @@ const Row = ({ label, value, highlight, sub, warn }) => (
         !sub && !highlight ? "text-sm text-foreground/90" : "",
         warn ? "text-destructive" : "",
       ].join(" ").trim()}
+      style={accent ? { color: "#f0ece6" } : undefined}
     >
       {value}
     </span>
@@ -65,36 +66,39 @@ const Section = ({ children }) => (
 );
 
 export default function HomeAffordability() {
-  const [downPayment, setDownPayment] = useState(200000);
-  const [rate, setRate] = useState(6.0);
-  const [propertyTaxRate, setPropertyTaxRate] = useState(0.45);
-  const [insurance, setInsurance] = useState(400);
-  const [hoa, setHoa] = useState(0);
-  const [closingCostPct, setClosingCostPct] = useState(3.0);
+  const [downPayment, setDownPayment] = useState(400000);
+  const [rate, setRate] = useState(6.25);
+  const [propertyTaxRate, setPropertyTaxRate] = useState(0.55);
+  const [insurance, setInsurance] = useState(600);
+  const [hoa, setHoa] = useState(200);
+  const [closingCostPct, setClosingCostPct] = useState(3.5);
   const [maxMonthly, setMaxMonthly] = useState(4500);
+  const [maintenanceRate, setMaintenanceRate] = useState(1.0);
+  const [buyerAgentPct, setBuyerAgentPct] = useState(2.8);
+  const [utilityIncrease, setUtilityIncrease] = useState(600);
 
   const calc = useMemo(() => {
     const monthlyRate = rate / 100 / 12;
     const n = 360;
 
-    // Work backwards from max monthly payment to find max loan
-    const availableForMortgage = maxMonthly - insurance - hoa - 1; // subtract insurance and HOA first
-    // But property tax depends on home price, so we need to iterate
-
-    // P&I + tax = availableForMortgage
-    // P&I = loan * [r(1+r)^n / ((1+r)^n - 1)]
-    // tax = homePrice * propertyTaxRate/100 / 12
-    // homePrice = loan + downPayment
-    // So: loan * factor + (loan + downPayment) * taxMonthly = available
-    // loan * (factor + taxMonthly) = available - downPayment * taxMonthly
-    // loan = (available - downPayment * taxMonthly) / (factor + taxMonthly)
+    // Work backwards from max true monthly cost to find max loan
+    // Max true cost includes: P&I + tax + insurance + HOA + PMI + utilities + maintenance
+    const availableForMortgage = maxMonthly - insurance - hoa - utilityIncrease - 1;
 
     const factor = monthlyRate > 0
       ? (monthlyRate * Math.pow(1 + monthlyRate, n)) / (Math.pow(1 + monthlyRate, n) - 1)
       : 1 / n;
     const taxMonthly = propertyTaxRate / 100 / 12;
+    const maintenanceMonthlyRate = maintenanceRate / 100 / 12;
 
-    const maxLoan = (availableForMortgage - downPayment * taxMonthly) / (factor + taxMonthly);
+    // P&I + tax + maintenance = availableForMortgage
+    // P&I = loan * factor
+    // tax = (loan + downPayment) * taxMonthly
+    // maintenance = (loan + downPayment) * maintenanceMonthlyRate
+    // => loan * (factor + taxMonthly + maintenanceMonthlyRate)
+    //    = availableForMortgage - downPayment * (taxMonthly + maintenanceMonthlyRate)
+    const baseMonthlyRate = factor + taxMonthly + maintenanceMonthlyRate;
+    const maxLoan = (availableForMortgage - downPayment * (taxMonthly + maintenanceMonthlyRate)) / baseMonthlyRate;
     const maxHomePrice = maxLoan + downPayment;
 
     const closingCosts = maxHomePrice * (closingCostPct / 100);
@@ -102,15 +106,16 @@ export default function HomeAffordability() {
     const cashRemaining = 500000 - totalCashNeeded;
     const ltv = (maxLoan / maxHomePrice) * 100;
     const needsPMI = ltv > 80;
-    const pmiMonthly = needsPMI ? maxLoan * 0.005 / 12 : 0;
 
     // Recalculate with PMI if needed
     let finalLoan = maxLoan;
     let finalHomePrice = maxHomePrice;
     if (needsPMI) {
-      const availableAfterPMI = availableForMortgage; // PMI comes out of the budget too
-      // loan * (factor + taxMonthly + 0.005/12) = available - downPayment * taxMonthly
-      const finalMaxLoan = (availableAfterPMI - downPayment * taxMonthly) / (factor + taxMonthly + 0.005 / 12);
+      const availableAfterPMI = availableForMortgage;
+      const pmiMonthlyRate = 0.005 / 12;
+      const rateWithPMI = factor + taxMonthly + maintenanceMonthlyRate + pmiMonthlyRate;
+      const finalMaxLoan =
+        (availableAfterPMI - downPayment * (taxMonthly + maintenanceMonthlyRate)) / rateWithPMI;
       finalLoan = finalMaxLoan;
       finalHomePrice = finalMaxLoan + downPayment;
     }
@@ -118,6 +123,7 @@ export default function HomeAffordability() {
     const monthlyPI = finalLoan * factor;
     const monthlyTax = finalHomePrice * taxMonthly;
     const finalPMI = (finalLoan / finalHomePrice) > 0.8 ? finalLoan * 0.005 / 12 : 0;
+    // Housing payment used for DTI (excludes maintenance + utilities)
     const totalMonthly = monthlyPI + monthlyTax + insurance + hoa + finalPMI;
     const finalClosing = finalHomePrice * (closingCostPct / 100);
     const finalCashNeeded = downPayment + finalClosing;
@@ -146,7 +152,19 @@ export default function HomeAffordability() {
       totalInterest,
       downPaymentPct: (downPayment / finalHomePrice) * 100,
     };
-  }, [downPayment, rate, propertyTaxRate, insurance, hoa, closingCostPct, maxMonthly]);
+  }, [
+    downPayment,
+    rate,
+    propertyTaxRate,
+    insurance,
+    hoa,
+    closingCostPct,
+    maxMonthly,
+    maintenanceRate,
+    utilityIncrease,
+  ]);
+
+  const maintenanceMonthly = (calc.homePrice * maintenanceRate) / 100 / 12;
 
   const pieData = [
     { label: "Principal & Interest", value: calc.monthlyPI, color: "#a5b4fc" }, // indigo-300
@@ -154,6 +172,8 @@ export default function HomeAffordability() {
     { label: "Insurance", value: calc.insurance, color: "#bbf7d0" }, // green-200
     ...(calc.hoa > 0 ? [{ label: "HOA", value: calc.hoa, color: "#fecaca" }] : []), // red-200
     ...(calc.pmi > 0 ? [{ label: "PMI", value: calc.pmi, color: "#fed7aa" }] : []), // orange-200
+    ...(maintenanceMonthly > 0 ? [{ label: "Maintenance", value: maintenanceMonthly, color: "#e5e7eb" }] : []), // gray-200
+    ...(utilityIncrease > 0 ? [{ label: "Utilities", value: utilityIncrease, color: "#ddd6fe" }] : []), // violet-200
   ];
   const pieTotal = pieData.reduce((s, d) => s + d.value, 0);
 
@@ -178,6 +198,12 @@ export default function HomeAffordability() {
         : `M ${cx},${cy} L ${x1},${y1} A ${r},${r} 0 ${largeArc} 1 ${x2},${y2} Z`;
     return { ...d, path, pct };
   });
+
+  const housingPayment = calc.totalMonthly;
+  const trueMonthlyCost = housingPayment + maintenanceMonthly + utilityIncrease;
+  const buyerAgentCommission = buyerAgentPct > 0 ? (calc.homePrice * buyerAgentPct) / 100 : 0;
+  const totalCashNeededWithAgent = calc.totalCashNeeded + buyerAgentCommission;
+  const cashRemainingWithAgent = 500000 - totalCashNeededWithAgent;
 
   return (
     <>
@@ -204,20 +230,24 @@ export default function HomeAffordability() {
 
               {/* Big Number */}
               <div className="text-center px-5 py-8 rounded-xl border border-border/40 bg-background/40">
+                <div className="text-[0.7rem] tracking-[0.18em] uppercase text-muted-foreground mb-1.5">
+                  Implied maximum home price
+                </div>
                 <div className="text-4xl md:text-5xl font-semibold text-primary leading-tight mb-1">
                   {formatFull(calc.homePrice)}
                 </div>
                 <div className="text-xs md:text-sm text-muted-foreground">
-                  at {formatFull(maxMonthly)}/mo all-in · {rate}% rate · {formatFull(downPayment)} down
+                  at {formatFull(maxMonthly)}/mo true cost · {rate}% rate · {formatFull(downPayment)} down
                 </div>
               </div>
 
               {/* Two Column Layout */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {/* Left: Controls */}
-                <div className="rounded-xl border border-border/40 bg-background/60 p-5 md:p-6">
+                <div className="rounded-xl border border-border/40 bg-background/60 p-5 md:p-6 space-y-1">
+                  {/* Budget & price */}
                   <Slider
-                    label="Max Monthly Housing"
+                    label="Max True Monthly Cost"
                     value={maxMonthly}
                     onChange={setMaxMonthly}
                     min={3000}
@@ -230,10 +260,12 @@ export default function HomeAffordability() {
                     value={downPayment}
                     onChange={setDownPayment}
                     min={50000}
-                    max={500000}
-                    step={10000}
+                    max={475000}
+                    step={25000}
                     format={formatFull}
                   />
+
+                  {/* Monthly cost components */}
                   <Slider
                     label="Mortgage Rate"
                     value={rate}
@@ -257,7 +289,7 @@ export default function HomeAffordability() {
                     value={insurance}
                     onChange={setInsurance}
                     min={150}
-                    max={700}
+                    max={1000}
                     step={25}
                     format={(v) => `$${v}`}
                   />
@@ -271,12 +303,41 @@ export default function HomeAffordability() {
                     format={(v) => `$${v}`}
                   />
                   <Slider
+                    label="Utility costs"
+                    value={utilityIncrease}
+                    onChange={setUtilityIncrease}
+                    min={0}
+                    max={1000}
+                    step={50}
+                    format={(v) => `$${v}`}
+                  />
+                  <Slider
+                    label="Maintenance Reserve"
+                    value={maintenanceRate}
+                    onChange={setMaintenanceRate}
+                    min={0.5}
+                    max={2.0}
+                    step={0.25}
+                    suffix="% of home value/yr"
+                  />
+
+                  {/* One-time costs */}
+                  <Slider
                     label="Closing Costs"
                     value={closingCostPct}
                     onChange={setClosingCostPct}
                     min={2.0}
                     max={5.0}
                     step={0.5}
+                    suffix="% of price"
+                  />
+                  <Slider
+                    label="Buyer's Agent Commission"
+                    value={buyerAgentPct}
+                    onChange={setBuyerAgentPct}
+                    min={0}
+                    max={3.0}
+                    step={0.1}
                     suffix="% of price"
                   />
                 </div>
@@ -287,7 +348,11 @@ export default function HomeAffordability() {
                   <div className="rounded-xl border border-border/40 bg-background/60 p-5 md:p-6 flex items-center gap-4 md:gap-6">
                     <svg width="180" height="180" viewBox="0 0 180 180" className="shrink-0">
                       {arcs.map((arc, i) => (
-                        <path key={i} d={arc.path} fill={arc.color} opacity={0.9} />
+                        <path key={i} d={arc.path} fill={arc.color} opacity={0.9}>
+                          <title>
+                            {arc.label}: ${Math.round(arc.value).toLocaleString()}
+                          </title>
+                        </path>
                       ))}
                       <circle cx="90" cy="90" r="44" fill="hsl(var(--background))" />
                       <text
@@ -299,7 +364,7 @@ export default function HomeAffordability() {
                         fontSize="16"
                         fontWeight="500"
                       >
-                        {formatFull(calc.totalMonthly)}
+                        {formatFull(trueMonthlyCost)}
                       </text>
                       <text
                         x="90"
@@ -346,22 +411,111 @@ export default function HomeAffordability() {
                       )}
                     </Section>
 
-                    <Section title="Cash at Closing">
+                    <Section>
                       <Row label="Down Payment" value={formatFull(downPayment)} sub />
                       <Row
                         label={`Closing Costs (~${closingCostPct}%)`}
                         value={formatFull(calc.closingCosts)}
                         sub
                       />
-                      <Row label="Total Cash Needed" value={formatFull(calc.totalCashNeeded)} highlight />
+                      {buyerAgentPct > 0 && (
+                        <Row
+                          label={`Buyer's Agent (~${buyerAgentPct}%)`}
+                          value={formatFull(buyerAgentCommission)}
+                          sub
+                        />
+                      )}
+                      <Row
+                        label="Total Cash Needed"
+                        value={formatFull(totalCashNeededWithAgent)}
+                        highlight
+                      />
                       <Row
                         label="Remaining from $500k Fund"
-                        value={formatFull(Math.max(0, calc.cashRemaining))}
-                        warn={calc.cashRemaining < 0}
+                        value={formatFull(Math.max(0, cashRemainingWithAgent))}
+                        warn={cashRemainingWithAgent < 0}
                       />
                     </Section>
 
-                    <Section title="Qualification Check">
+                    <Section>
+                      <div className="text-[0.65rem] tracking-[0.18em] uppercase text-muted-foreground mb-2.5">
+                        True Monthly Cost of Ownership
+                      </div>
+                      <Row
+                        label="Housing Payment (PITI + HOA)"
+                        value={formatFull(housingPayment)}
+                        highlight
+                      />
+                      <Row
+                        label="↳ Principal & Interest"
+                        value={formatFull(calc.monthlyPI)}
+                        sub
+                      />
+                      <Row
+                        label="↳ Property Tax"
+                        value={formatFull(calc.monthlyTax)}
+                        sub
+                      />
+                      <Row
+                        label="↳ Insurance"
+                        value={formatFull(insurance)}
+                        sub
+                      />
+                      {hoa > 0 && (
+                        <Row
+                          label="↳ HOA"
+                          value={formatFull(hoa)}
+                          sub
+                        />
+                      )}
+                      {calc.pmi > 0 && (
+                        <Row
+                          label="↳ PMI"
+                          value={formatFull(calc.pmi)}
+                          sub
+                          warn
+                        />
+                      )}
+                      <Row
+                        label="Maintenance Reserve"
+                        value={formatFull(maintenanceMonthly)}
+                      />
+                      <Row
+                        label="Utilities"
+                        value={formatFull(utilityIncrease)}
+                      />
+                      <Row
+                        label="True Monthly Cost"
+                        value={formatFull(trueMonthlyCost)}
+                        highlight
+                        accent
+                      />
+                      <div className="mt-1.5 text-[0.7rem] text-muted-foreground">
+                        Housing Payment is your hard commitment. Maintenance and utilities are
+                        variable but should be budgeted for.
+                      </div>
+                    </Section>
+
+                    <Section>
+                      <div className="text-[0.65rem] tracking-[0.18em] uppercase text-muted-foreground mb-2.5">
+                        Compared to Current Situation
+                      </div>
+                      <Row
+                        label="Current Total Housing Cost"
+                        value={formatFull(6100)}
+                      />
+                      <Row
+                        label="True Monthly Cost (owning)"
+                        value={formatFull(trueMonthlyCost)}
+                      />
+                      <Row
+                        label="Difference (owning - current)"
+                        value={formatFull(trueMonthlyCost - 6100)}
+                        warn={trueMonthlyCost > 6100}
+                      />
+                    </Section>
+
+                    <Section>
                       <Row
                         label="Front-end DTI"
                         value={`${calc.dti.toFixed(1)}%`}
@@ -404,14 +558,21 @@ export default function HomeAffordability() {
 
               {/* Scenario Comparison */}
               <div className="rounded-xl border border-border/40 bg-background/60 p-5 md:p-6">
+                <div className="text-[0.65rem] tracking-[0.18em] uppercase text-muted-foreground mb-4">
+                  {`Quick Scenarios at ${formatFull(maxMonthly)}/mo true cost · ${rate.toFixed(
+                    2,
+                  )}% Rate · ${propertyTaxRate.toFixed(2)}% Tax`}
+                </div>
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
                   {[100000, 200000, 300000, 400000].map((dp) => {
-                    const r = 0.06 / 12;
+                    const r = rate / 100 / 12;
                     const n = 360;
                     const fac = (r * Math.pow(1 + r, n)) / (Math.pow(1 + r, n) - 1);
-                    const taxM = 0.0045 / 12;
-                    const avail = 4500 - 400 - 0;
-                    const loan = (avail - dp * taxM) / (fac + taxM);
+                    const taxM = (propertyTaxRate / 100) / 12;
+                    const maintM = maintenanceRate / 100 / 12;
+                    const avail = maxMonthly - insurance - hoa - utilityIncrease;
+                    const combined = fac + taxM + maintM;
+                    const loan = (avail - dp * (taxM + maintM)) / combined;
                     const hp = loan + dp;
                     const ltvVal = (loan / hp) * 100;
                     const isActive = dp === downPayment;
@@ -454,26 +615,34 @@ export default function HomeAffordability() {
               <div className="mt-2 rounded-xl border border-emerald-800/40 bg-emerald-950/30 p-5 text-xs leading-relaxed">
                 <div className="space-y-1.5 text-emerald-100/80">
                   <p>
-                    • Colorado has some of the lowest effective property tax rates in the country
-                    (~0.35–0.55% depending on county and district). Front Range counties like
-                    Boulder, Jefferson, and Douglas tend toward 0.4–0.55%.
+                    • Property tax: Colorado has some of the lowest effective rates in the country.
+                    Front Range effective rates by county: Denver 0.48%, JeffCo 0.51%, Arapahoe 0.52%,
+                    Boulder 0.55%, Adams 0.60%. Douglas County is the lowest in the Denver metro.
                   </p>
                   <p>
-                    • Colorado insurance is expensive due to hail and wildfire risk — budget
-                    $350–550/mo for an $800k+ home. Impact-resistant roofing and shopping 3–5
-                    carriers can save significantly.
+                    • Insurance: Colorado Front Range is expensive due to hail (50% of premiums) and
+                    wildfire risk. Budget $350–550/mo for $800k+ homes. Impact-resistant (Class 4)
+                    roofing and shopping 3–5 carriers can save significantly. Note: hail deductibles
+                    are often 1–3% of dwelling coverage ($8k–$24k out of pocket per claim).
                   </p>
                   <p>
-                    • With one self-employed income, lenders typically want 2 years of tax
-                    returns. Your Esper income history looks consistent, which is good.
+                    • Self-employment: With one W-2 and one self-employed income, lenders typically
+                    require 2 years of tax returns for the self-employed earner and may price the
+                    rate slightly higher.
                   </p>
                   <p>
-                    • Your $132k emergency fund stays fully intact — this analysis only touches
-                    the $500k downpayment fund.
+                    • Emergency fund ($132k) stays fully intact — this analysis only uses the $500k
+                    downpayment fund.
                   </p>
                   <p>
-                    • Your front-end DTI at $4,500/mo is ~15.4% — extremely conservative. Lenders
-                    allow up to 43–50%.
+                    • Buyer's agent: Post-NAR settlement, sellers still typically cover buyer agent
+                    fees in Colorado's current market, but plan for the possibility of paying
+                    2.5–3% out of pocket (~$20–24k on an $800k home).
+                  </p>
+                  <p>
+                    • Maintenance: The 1%/year rule is a long-run average. Colorado's hail, UV
+                    exposure, and dry climate are especially hard on roofs, exterior paint, and
+                    landscaping. Budget accordingly.
                   </p>
                 </div>
               </div>
