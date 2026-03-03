@@ -14,7 +14,7 @@ const formatCurrency = (n) => {
 const formatFull = (n) =>
   "$" + Math.round(n).toLocaleString("en-US");
 
-const Slider = ({ label, value, onChange, min, max, step, format, suffix }) => (
+const Slider = ({ label, value, onChange, min, max, step, format, suffix, sublabel }) => (
   <div className="mb-5">
     <div className="flex items-baseline justify-between mb-1.5">
       <span className="text-[0.7rem] uppercase tracking-[0.12em] text-muted-foreground">
@@ -34,10 +34,15 @@ const Slider = ({ label, value, onChange, min, max, step, format, suffix }) => (
       className="w-full"
       style={{ accentColor: "#a5b4fc" }}
     />
+    {sublabel && (
+      <div className="mt-1 text-[0.65rem] text-muted-foreground">
+        {sublabel}
+      </div>
+    )}
   </div>
 );
 
-const Row = ({ label, value, highlight, sub, warn, accent }) => (
+const Row = ({ label, value, highlight, sub, warn, accent, positive }) => (
   <div className="flex justify-between items-baseline py-2 border-b border-border/40">
     <span
       className={`font-sans ${sub ? "text-[0.7rem] text-muted-foreground/70 pl-4" : "text-xs text-muted-foreground"}`}
@@ -51,6 +56,7 @@ const Row = ({ label, value, highlight, sub, warn, accent }) => (
         sub && !highlight ? "text-[0.7rem] text-muted-foreground/70" : "",
         !sub && !highlight ? "text-sm text-foreground/90" : "",
         warn ? "text-destructive" : "",
+        positive ? "text-emerald-300" : "",
       ].join(" ").trim()}
       style={accent ? { color: "#f0ece6" } : undefined}
     >
@@ -66,15 +72,15 @@ const Section = ({ children }) => (
 );
 
 export default function HomeAffordability() {
-  const [downPayment, setDownPayment] = useState(400000);
+  const [downPayment, setDownPayment] = useState(200000);
   const [rate, setRate] = useState(6.25);
   const [propertyTaxRate, setPropertyTaxRate] = useState(0.55);
-  const [insurance, setInsurance] = useState(600);
-  const [hoa, setHoa] = useState(200);
+  const [insurance, setInsurance] = useState(450);
+  const [hoa, setHoa] = useState(100);
   const [closingCostPct, setClosingCostPct] = useState(3.5);
-  const [maxMonthly, setMaxMonthly] = useState(4500);
+  const [maxMonthly, setMaxMonthly] = useState(5500);
   const [maintenanceRate, setMaintenanceRate] = useState(1.0);
-  const [buyerAgentPct, setBuyerAgentPct] = useState(2.8);
+  const [buyerAgentPct, setBuyerAgentPct] = useState(0);
   const [utilityIncrease, setUtilityIncrease] = useState(600);
 
   const calc = useMemo(() => {
@@ -204,6 +210,9 @@ export default function HomeAffordability() {
   const buyerAgentCommission = buyerAgentPct > 0 ? (calc.homePrice * buyerAgentPct) / 100 : 0;
   const totalCashNeededWithAgent = calc.totalCashNeeded + buyerAgentCommission;
   const cashRemainingWithAgent = 500000 - totalCashNeededWithAgent;
+  const CURRENT_MONTHLY_HOUSING = 6337;
+  const firstMonthInterest = calc.loanAmount * (rate / 100 / 12);
+  const firstMonthPrincipal = calc.monthlyPI - firstMonthInterest;
 
   return (
     <>
@@ -237,7 +246,7 @@ export default function HomeAffordability() {
                   {formatFull(calc.homePrice)}
                 </div>
                 <div className="text-xs md:text-sm text-muted-foreground">
-                  at {formatFull(maxMonthly)}/mo true cost · {rate}% rate · {formatFull(downPayment)} down
+                  at {formatFull(maxMonthly)}/mo total housing · {rate}% rate · {formatFull(downPayment)} down
                 </div>
               </div>
 
@@ -247,13 +256,14 @@ export default function HomeAffordability() {
                 <div className="rounded-xl border border-border/40 bg-background/60 p-5 md:p-6 space-y-1">
                   {/* Budget & price */}
                   <Slider
-                    label="Max True Monthly Cost"
+                    label="Max Total Monthly Housing"
                     value={maxMonthly}
                     onChange={setMaxMonthly}
-                    min={3000}
-                    max={7000}
+                    min={3500}
+                    max={8000}
                     step={100}
                     format={formatFull}
+                    sublabel="PITI + HOA + utilities + maintenance"
                   />
                   <Slider
                     label="Down Payment"
@@ -490,9 +500,20 @@ export default function HomeAffordability() {
                         highlight
                         accent
                       />
+                      <Row
+                        label="Monthly Equity Building (mo. 1)"
+                        value={formatFull(firstMonthPrincipal)}
+                        positive
+                      />
+                      <Row
+                        label="Effective Cost (after equity)"
+                        value={formatFull(trueMonthlyCost - firstMonthPrincipal)}
+                        sub
+                      />
                       <div className="mt-1.5 text-[0.7rem] text-muted-foreground">
                         Housing Payment is your hard commitment. Maintenance and utilities are
-                        variable but should be budgeted for.
+                        variable but should be budgeted for. The equity row shows how much of your
+                        P&amp;I goes to principal (increases over time).
                       </div>
                     </Section>
 
@@ -502,7 +523,7 @@ export default function HomeAffordability() {
                       </div>
                       <Row
                         label="Current Total Housing Cost"
-                        value={formatFull(6100)}
+                        value={formatFull(CURRENT_MONTHLY_HOUSING)}
                       />
                       <Row
                         label="True Monthly Cost (owning)"
@@ -510,8 +531,8 @@ export default function HomeAffordability() {
                       />
                       <Row
                         label="Difference (owning - current)"
-                        value={formatFull(trueMonthlyCost - 6100)}
-                        warn={trueMonthlyCost > 6100}
+                        value={formatFull(trueMonthlyCost - CURRENT_MONTHLY_HOUSING)}
+                        warn={trueMonthlyCost > CURRENT_MONTHLY_HOUSING}
                       />
                     </Section>
 
@@ -559,12 +580,12 @@ export default function HomeAffordability() {
               {/* Scenario Comparison */}
               <div className="rounded-xl border border-border/40 bg-background/60 p-5 md:p-6">
                 <div className="text-[0.65rem] tracking-[0.18em] uppercase text-muted-foreground mb-4">
-                  {`Quick Scenarios at ${formatFull(maxMonthly)}/mo true cost · ${rate.toFixed(
+                  {`Quick Scenarios at ${formatFull(maxMonthly)}/mo total housing · ${rate.toFixed(
                     2,
                   )}% Rate · ${propertyTaxRate.toFixed(2)}% Tax`}
                 </div>
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-                  {[100000, 200000, 300000, 400000].map((dp) => {
+                  {[150000, 200000, 300000, 400000].map((dp) => {
                     const r = rate / 100 / 12;
                     const n = 360;
                     const fac = (r * Math.pow(1 + r, n)) / (Math.pow(1 + r, n) - 1);
@@ -615,34 +636,45 @@ export default function HomeAffordability() {
               <div className="mt-2 rounded-xl border border-emerald-800/40 bg-emerald-950/30 p-5 text-xs leading-relaxed">
                 <div className="space-y-1.5 text-emerald-100/80">
                   <p>
-                    • Property tax: Colorado has some of the lowest effective rates in the country.
-                    Front Range effective rates by county: Denver 0.48%, JeffCo 0.51%, Arapahoe 0.52%,
-                    Boulder 0.55%, Adams 0.60%. Douglas County is the lowest in the Denver metro.
+                    • Property tax: Colorado effective rates by Front Range county — Denver 0.48%, JeffCo
+                    0.51%, Arapahoe 0.52%, Boulder 0.55%, Adams 0.60%. Douglas County is lowest in the metro.
+                    2026 tax year introduces a 6.8% local govt assessment rate with a 10% value exclusion
+                    (capped at $70k), yielding ~6.4% effective for most homes.
                   </p>
                   <p>
-                    • Insurance: Colorado Front Range is expensive due to hail (50% of premiums) and
-                    wildfire risk. Budget $350–550/mo for $800k+ homes. Impact-resistant (Class 4)
-                    roofing and shopping 3–5 carriers can save significantly. Note: hail deductibles
-                    are often 1–3% of dwelling coverage ($8k–$24k out of pocket per claim).
+                    • Insurance: Front Range premiums are high — hail drives ~50% of costs. Average is
+                    $4,200–$5,400/yr for this price range. Class 4 impact-resistant roofing helps
+                    significantly. Hail deductibles are often 1–3% of dwelling ($8k–$24k per claim).
+                    Shop 3–5 carriers.
                   </p>
                   <p>
-                    • Self-employment: With one W-2 and one self-employed income, lenders typically
-                    require 2 years of tax returns for the self-employed earner and may price the
-                    rate slightly higher.
+                    • Self-employment: One W-2 (Palantir) + one self-employed (Esper). Lenders require
+                    2 years of tax returns for the self-employed income. Esper income history is
+                    consistent (~$13–14k/mo), which helps. Rate may be priced slightly higher.
                   </p>
                   <p>
-                    • Emergency fund ($132k) stays fully intact — this analysis only uses the $500k
-                    downpayment fund.
+                    • Cash reserves: $132k emergency fund stays untouched. $500k downpayment fund is the
+                    only source for down payment + closing costs + buyer&apos;s agent (if applicable). $25k
+                    baby fund and $15k car fund also remain separate.
                   </p>
                   <p>
-                    • Buyer's agent: Post-NAR settlement, sellers still typically cover buyer agent
-                    fees in Colorado's current market, but plan for the possibility of paying
-                    2.5–3% out of pocket (~$20–24k on an $800k home).
+                    • Buyer&apos;s agent: Post-NAR settlement (Aug 2024), sellers still typically cover buyer
+                    agent fees in Colorado&apos;s current market. Default is 0% — toggle on to see the cash
+                    impact of paying 2.5–3% out of pocket if seller won&apos;t cover.
                   </p>
                   <p>
-                    • Maintenance: The 1%/year rule is a long-run average. Colorado's hail, UV
-                    exposure, and dry climate are especially hard on roofs, exterior paint, and
-                    landscaping. Budget accordingly.
+                    • Maintenance: 1%/yr is the standard rule of thumb. YNAB shows you already spend
+                    ~$633/mo on home upkeep as renters. Expect this to increase with ownership — Colorado&apos;s
+                    hail, UV, and dry climate are hard on roofs, paint, and landscaping.
+                  </p>
+                  <p>
+                    • Utilities: YNAB shows ~$553/mo current (electric/gas, water, trash, internet, cell).
+                    Water is seasonal ($400 summer, $0 winter) due to irrigation. Expect similar or higher
+                    with a yard. $600/mo is a reasonable conservative estimate.
+                  </p>
+                  <p>
+                    • Current total housing: $6,337/mo (YNAB 6-month average). At $5,500/mo target, ownership
+                    saves ~$837/mo vs. current rental spend while building equity.
                   </p>
                 </div>
               </div>
